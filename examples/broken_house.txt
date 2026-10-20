@@ -1,0 +1,21 @@
+grid 5x5
+     1    2    3    4    5
+A    R1   R2   R3   .    .
+B    .    R4   .    .    .
+C    .    .    .    .    .
+D    .    .    .    .    .
+E    .    .    .    .    .
+
+rooms
+R1  living room   A1
+R2  bedroom       A2
+R3  bedroom       A3
+R4  kitchen       B2
+
+doors
+A1|north          entrance
+A1|A2
+A3|east           entrance
+
+windows
+A2|north

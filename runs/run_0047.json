@@ -1,0 +1,52 @@
+{
+  "run_id": "run_0047",
+  "timestamp": "2026-10-19T23:43:05+00:00",
+  "label": "sonnet55-medium-c5-G",
+  "request": "add: bathroom",
+  "command_count": 3,
+  "accepted": true,
+  "errors": [],
+  "script": "room R16 bathroom D1\ndoor D1|D2\nwindow D1|west",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R2   R1   R4   .    .\nB    R6   R5   R7   .    .\nC    R10  R9   R11  .    .\nD    R16  R13  R14  .    .\nE    .    R15  .    .    .\n\nrooms\nR1  living room   A2\nR2  kitchen       A1\nR4  bathroom      A3\nR5  hallway       B2\nR6  bedroom       B1\nR7  bedroom       B3\nR9  hallway       C2\nR10 bedroom       C1\nR11 bathroom      C3\nR13 hallway       D2\nR14 bathroom      D3\nR15 bedroom       E2\nR16 bathroom      D1\n\ndoors\nA1|A2\nA2|north          entrance\nA2|A3\nA2|B2\nB1|B2\nB2|B3\nB2|C2\nC1|C2\nC2|C3\nC2|D2\nD1|D2\nD2|D3\nD2|E2\n\nwindows\nA1|north\nA1|west\nA3|north\nA3|east\nB1|west\nB3|east\nC1|west\nC3|east\nD1|west\nD3|east\nD3|south\nE2|south\nE2|west",
+  "drawing": "run_0047\nVALID\n\n      1       2       3       4       5\n  +--###--+[ENTRY]+--###--+\n  |   R2  |   R1  |   R4  |\nA |kitchen| living|  bath |\n  #                       #\n  +-------+-[   ]-+-------+\n  |   R6  |   R5  |   R7  |\nB |bedroom|hallway|bedroom|\n  #                       #\n  +-------+-[   ]-+-------+\n  |  R10  |   R9  |  R11  |\nC |bedroom|hallway|  bath |\n  #                       #\n  +-------+-[   ]-+-------+\n  |  R16  |  R13  |  R14  |\nD |  bath |hallway|  bath |\n  #                       #\n  +-------+-[   ]-+--###--+\n          |  R15  |\nE         |bedroom|\n          #       |\n          +--###--+\n\ncorridor rooms    0\nprivacy order     0.03\nwalking distance  2.77\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 0,
+    "privacy_order": 0.0312,
+    "walking_distance": 2.7692,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R16 bathroom D1",
+      "primitives": [
+        "room R16 bathroom D1"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "door D1|D2",
+      "primitives": [
+        "door D1|D2"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "window D1|west",
+      "primitives": [
+        "window D1|west"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 2008,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 275,
+    "thinking_tokens": 250,
+    "cost_usd": 0.010786,
+    "duration_ms": 3018
+  }
+}

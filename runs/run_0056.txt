@@ -1,0 +1,48 @@
+label: sonnet55-medium-c6-D   at 2026-10-19T23:44:30+00:00   commands: 12
+
+SCRIPT
+remove room R8
+room R9 hallway C2
+room R10 bathroom C1
+room R11 bedroom C3
+door B2|C2
+door C1|C2
+door C2|C3
+window C1|west
+window C1|south
+window C3|east
+window C3|south
+window C2|south
+
+run_0056
+VALID
+
+      1       2       3       4       5
+  +--###--+[ENTRY]+--###--+
+  |   R2  |   R1  |   R3  |
+A |kitchen| living|bedroom|
+  #                       #
+  +-------+-[   ]-+-------+
+  |   R6  |   R5  |   R7  |
+B |  bath |hallway|bedroom|
+  #                       #
+  +-------+-[   ]-+-------+
+  |  R10  |   R9  |  R11  |
+C |  bath |hallway|bedroom|
+  #                       #
+  +--###--+--###--+--###--+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.05
+walking distance  2.33
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

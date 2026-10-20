@@ -1,0 +1,4 @@
+remove window B2|east
+room R8 bathroom B3
+door B2|B3
+window B3|east

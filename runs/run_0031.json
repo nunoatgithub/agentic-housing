@@ -1,0 +1,108 @@
+{
+  "run_id": "run_0031",
+  "timestamp": "2026-10-19T23:41:14+00:00",
+  "label": "sonnet55-medium-c4-A",
+  "request": "build: living room, kitchen, bedroom, bathroom",
+  "command_count": 11,
+  "accepted": true,
+  "errors": [],
+  "script": "room R1 living room B1\nroom R2 kitchen A1\nroom R3 bedroom C1\nroom R4 bathroom B2\ndoor B1|west\ndoor B1|A1\ndoor B1|C1\ndoor B1|B2\nwindow A1|north\nwindow C1|south\nwindow B2|east",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R2   .    .    .    .\nB    R1   R4   .    .    .\nC    R3   .    .    .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   B1\nR2  kitchen       A1\nR3  bedroom       C1\nR4  bathroom      B2\n\ndoors\nA1|B1\nB1|B2\nB1|C1\nB1|west           entrance\n\nwindows\nA1|north\nB2|east\nC1|south",
+  "drawing": "run_0031\nVALID\n\n      1       2       3       4       5\n  +--###--+\n  |   R2  |\nA |kitchen|\n  |       |\n  +-[   ]-+-------+\n  |   R1  |   R4  |\nB | living|  bath |\n  E               #\n  +-[   ]-+-------+\n  |   R3  |\nC |bedroom|\n  |       |\n  +--###--+\n\nD\n\n\n\nE\n\n\n\ncorridor rooms    0\nprivacy order     0.25\nwalking distance  1.50\ncompactness       2\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 0,
+    "privacy_order": 0.25,
+    "walking_distance": 1.5,
+    "compactness": 2
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R1 living room B1",
+      "primitives": [
+        "room R1 living room B1"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "room R2 kitchen A1",
+      "primitives": [
+        "room R2 kitchen A1"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "room R3 bedroom C1",
+      "primitives": [
+        "room R3 bedroom C1"
+      ]
+    },
+    {
+      "line": 4,
+      "command": "room R4 bathroom B2",
+      "primitives": [
+        "room R4 bathroom B2"
+      ]
+    },
+    {
+      "line": 5,
+      "command": "door B1|west",
+      "primitives": [
+        "door B1|west"
+      ]
+    },
+    {
+      "line": 6,
+      "command": "door A1|B1",
+      "primitives": [
+        "door A1|B1"
+      ]
+    },
+    {
+      "line": 7,
+      "command": "door B1|C1",
+      "primitives": [
+        "door B1|C1"
+      ]
+    },
+    {
+      "line": 8,
+      "command": "door B1|B2",
+      "primitives": [
+        "door B1|B2"
+      ]
+    },
+    {
+      "line": 9,
+      "command": "window A1|north",
+      "primitives": [
+        "window A1|north"
+      ]
+    },
+    {
+      "line": 10,
+      "command": "window C1|D1",
+      "primitives": [
+        "window C1|D1"
+      ]
+    },
+    {
+      "line": 11,
+      "command": "window B2|B3",
+      "primitives": [
+        "window B2|B3"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 341,
+    "cache_read_input_tokens": 1404,
+    "output_tokens": 414,
+    "thinking_tokens": 326,
+    "cost_usd": 0.005648399999999999,
+    "duration_ms": 4092
+  }
+}

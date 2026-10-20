@@ -1,0 +1,3 @@
+room R20 bedroom E3
+door D3|E3
+window E3|south

@@ -1,0 +1,50 @@
+label: sonnet55-medium-c6-B   at 2026-10-19T23:44:13+00:00   commands: 11
+
+SCRIPT
+room R5 hallway B2
+door A2|B2
+room R6 bedroom B1
+door B1|B2
+room R7 bedroom B3
+door B2|B3
+room R8 bathroom C2
+door B2|C2
+window B1|west
+window B3|east
+window C2|south
+
+SCRIPT REJECTED, house unchanged:
+  line 1: room R5 hallway B2 -> cell B2 is already taken by R4
+
+run_0053
+VALID
+
+      1       2       3       4       5
+  +--###--+[ENTRY]+--###--+
+  |   R2  |   R1  |   R3  |
+A |kitchen| living|bedroom|
+  #                       #
+  +-------+-[   ]-+-------+
+          |   R4  |
+B         |  bath |
+          #       |
+          +--###--+
+
+C
+
+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.25
+walking distance  1.50
+compactness       2
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

@@ -1,0 +1,41 @@
+remove room R4
+room R5 hallway B2
+room R6 hallway B3
+room R7 hallway B4
+room R8 hallway B5
+room R9 hallway C2
+room R10 bedroom B1
+room R11 bedroom C1
+room R12 bathroom C3
+room R13 bedroom C4
+room R14 bathroom C5
+room R15 bathroom A4
+room R16 bedroom A5
+room R17 bathroom D2
+door A2|B2
+door B2|B3
+door B3|B4
+door B4|B5
+door B1|B2
+door B2|C2
+door C1|C2
+door C2|D2
+door B3|C3
+door B4|C4
+door B5|C5
+door A3|B3
+door A4|B4
+door A5|B5
+window A4|north
+window A5|north
+window A5|east
+window B5|east
+window C5|east
+window C5|south
+window C4|south
+window C3|south
+window D2|south
+window D2|west
+window C1|west
+window C1|south
+window B1|west

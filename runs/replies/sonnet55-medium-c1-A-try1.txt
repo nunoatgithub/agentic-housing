@@ -1,0 +1,13 @@
+room R1 living room A2
+room R2 kitchen A1
+room R3 bathroom A3
+room R4 bedroom B2
+door A2|north
+door A1|A2
+door A2|A3
+door A2|B2
+window A1|north
+window A3|north
+window B2|west
+window B2|east
+window B2|south

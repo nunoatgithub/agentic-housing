@@ -1,0 +1,353 @@
+{
+  "run_id": "run_0050",
+  "timestamp": "2026-10-19T23:43:48+00:00",
+  "label": "sonnet55-medium-c5-I",
+  "request": "build: living room, kitchen, bedroom x5, bathroom x4",
+  "command_count": 46,
+  "accepted": true,
+  "errors": [],
+  "script": "room R1 living room A3\nroom R2 kitchen A4\nroom R3 bedroom A1\nroom R4 bedroom A5\nroom R5 bedroom C1\nroom R6 bedroom C5\nroom R7 bedroom D2\nroom R8 bathroom A2\nroom R9 bathroom C2\nroom R10 bathroom C4\nroom R11 bathroom D4\nroom R12 hallway B1\nroom R13 hallway B2\nroom R14 hallway B3\nroom R15 hallway B4\nroom R16 hallway B5\nroom R17 hallway C3\nroom R18 hallway D3\ndoor A3|north\ndoor A3|A4\ndoor A3|B3\ndoor B1|B2\ndoor B2|B3\ndoor B3|B4\ndoor B4|B5\ndoor A1|B1\ndoor A2|B2\ndoor A5|B5\ndoor B1|C1\ndoor B2|C2\ndoor B4|C4\ndoor B5|C5\ndoor B3|C3\ndoor C3|D3\ndoor D2|D3\ndoor D3|D4\nwindow A1|north\nwindow A2|north\nwindow A4|north\nwindow A5|north\nwindow C1|west\nwindow C5|east\nwindow D2|west\nwindow D4|east\nwindow D2|south\nwindow D4|south",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R3   R8   R1   R2   R4\nB    R12  R13  R14  R15  R16\nC    R5   R9   R17  R10  R6\nD    .    R7   R18  R11  .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A3\nR2  kitchen       A4\nR3  bedroom       A1\nR4  bedroom       A5\nR5  bedroom       C1\nR6  bedroom       C5\nR7  bedroom       D2\nR8  bathroom      A2\nR9  bathroom      C2\nR10 bathroom      C4\nR11 bathroom      D4\nR12 hallway       B1\nR13 hallway       B2\nR14 hallway       B3\nR15 hallway       B4\nR16 hallway       B5\nR17 hallway       C3\nR18 hallway       D3\n\ndoors\nA1|B1\nA2|B2\nA3|north          entrance\nA3|A4\nA3|B3\nA5|B5\nB1|B2\nB1|C1\nB2|B3\nB2|C2\nB3|B4\nB3|C3\nB4|B5\nB4|C4\nB5|C5\nC3|D3\nD2|D3\nD3|D4\n\nwindows\nA1|north\nA2|north\nA4|north\nA5|north\nC1|west\nC5|east\nD2|south\nD2|west\nD4|east\nD4|south",
+  "drawing": "run_0050\nVALID\n\n      1       2       3       4       5\n  +--###--+--###--+[ENTRY]+--###--+--###--+\n  |   R3  |   R8  |   R1  |   R2  |   R4  |\nA |bedroom|  bath | living|kitchen|bedroom|\n  |       |       |               |       |\n  +-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+\n  |  R12  |  R13  |  R14  |  R15  |  R16  |\nB |hallway|hallway|hallway|hallway|hallway|\n  |                                       |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |   R5  |   R9  |  R17  |  R10  |   R6  |\nC |bedroom|  bath |hallway|  bath |bedroom|\n  #       |       |       |       |       #\n  +-------+-------+-[   ]-+-------+-------+\n          |   R7  |  R18  |  R11  |\nD         |bedroom|hallway|  bath |\n          #                       #\n          +--###--+-------+--###--+\n\nE\n\n\n\ncorridor rooms    0\nprivacy order     0.00\nwalking distance  3.46\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 0,
+    "privacy_order": 0.0,
+    "walking_distance": 3.4641,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R1 living room A3",
+      "primitives": [
+        "room R1 living room A3"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "room R2 kitchen A4",
+      "primitives": [
+        "room R2 kitchen A4"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "room R3 bedroom A1",
+      "primitives": [
+        "room R3 bedroom A1"
+      ]
+    },
+    {
+      "line": 4,
+      "command": "room R4 bedroom A5",
+      "primitives": [
+        "room R4 bedroom A5"
+      ]
+    },
+    {
+      "line": 5,
+      "command": "room R5 bedroom C1",
+      "primitives": [
+        "room R5 bedroom C1"
+      ]
+    },
+    {
+      "line": 6,
+      "command": "room R6 bedroom C5",
+      "primitives": [
+        "room R6 bedroom C5"
+      ]
+    },
+    {
+      "line": 7,
+      "command": "room R7 bedroom D2",
+      "primitives": [
+        "room R7 bedroom D2"
+      ]
+    },
+    {
+      "line": 8,
+      "command": "room R8 bathroom A2",
+      "primitives": [
+        "room R8 bathroom A2"
+      ]
+    },
+    {
+      "line": 9,
+      "command": "room R9 bathroom C2",
+      "primitives": [
+        "room R9 bathroom C2"
+      ]
+    },
+    {
+      "line": 10,
+      "command": "room R10 bathroom C4",
+      "primitives": [
+        "room R10 bathroom C4"
+      ]
+    },
+    {
+      "line": 11,
+      "command": "room R11 bathroom D4",
+      "primitives": [
+        "room R11 bathroom D4"
+      ]
+    },
+    {
+      "line": 12,
+      "command": "room R12 hallway B1",
+      "primitives": [
+        "room R12 hallway B1"
+      ]
+    },
+    {
+      "line": 13,
+      "command": "room R13 hallway B2",
+      "primitives": [
+        "room R13 hallway B2"
+      ]
+    },
+    {
+      "line": 14,
+      "command": "room R14 hallway B3",
+      "primitives": [
+        "room R14 hallway B3"
+      ]
+    },
+    {
+      "line": 15,
+      "command": "room R15 hallway B4",
+      "primitives": [
+        "room R15 hallway B4"
+      ]
+    },
+    {
+      "line": 16,
+      "command": "room R16 hallway B5",
+      "primitives": [
+        "room R16 hallway B5"
+      ]
+    },
+    {
+      "line": 17,
+      "command": "room R17 hallway C3",
+      "primitives": [
+        "room R17 hallway C3"
+      ]
+    },
+    {
+      "line": 18,
+      "command": "room R18 hallway D3",
+      "primitives": [
+        "room R18 hallway D3"
+      ]
+    },
+    {
+      "line": 19,
+      "command": "door A3|north",
+      "primitives": [
+        "door A3|north"
+      ]
+    },
+    {
+      "line": 20,
+      "command": "door A3|A4",
+      "primitives": [
+        "door A3|A4"
+      ]
+    },
+    {
+      "line": 21,
+      "command": "door A3|B3",
+      "primitives": [
+        "door A3|B3"
+      ]
+    },
+    {
+      "line": 22,
+      "command": "door B1|B2",
+      "primitives": [
+        "door B1|B2"
+      ]
+    },
+    {
+      "line": 23,
+      "command": "door B2|B3",
+      "primitives": [
+        "door B2|B3"
+      ]
+    },
+    {
+      "line": 24,
+      "command": "door B3|B4",
+      "primitives": [
+        "door B3|B4"
+      ]
+    },
+    {
+      "line": 25,
+      "command": "door B4|B5",
+      "primitives": [
+        "door B4|B5"
+      ]
+    },
+    {
+      "line": 26,
+      "command": "door A1|B1",
+      "primitives": [
+        "door A1|B1"
+      ]
+    },
+    {
+      "line": 27,
+      "command": "door A2|B2",
+      "primitives": [
+        "door A2|B2"
+      ]
+    },
+    {
+      "line": 28,
+      "command": "door A5|B5",
+      "primitives": [
+        "door A5|B5"
+      ]
+    },
+    {
+      "line": 29,
+      "command": "door B1|C1",
+      "primitives": [
+        "door B1|C1"
+      ]
+    },
+    {
+      "line": 30,
+      "command": "door B2|C2",
+      "primitives": [
+        "door B2|C2"
+      ]
+    },
+    {
+      "line": 31,
+      "command": "door B4|C4",
+      "primitives": [
+        "door B4|C4"
+      ]
+    },
+    {
+      "line": 32,
+      "command": "door B5|C5",
+      "primitives": [
+        "door B5|C5"
+      ]
+    },
+    {
+      "line": 33,
+      "command": "door B3|C3",
+      "primitives": [
+        "door B3|C3"
+      ]
+    },
+    {
+      "line": 34,
+      "command": "door C3|D3",
+      "primitives": [
+        "door C3|D3"
+      ]
+    },
+    {
+      "line": 35,
+      "command": "door D2|D3",
+      "primitives": [
+        "door D2|D3"
+      ]
+    },
+    {
+      "line": 36,
+      "command": "door D3|D4",
+      "primitives": [
+        "door D3|D4"
+      ]
+    },
+    {
+      "line": 37,
+      "command": "window A1|north",
+      "primitives": [
+        "window A1|north"
+      ]
+    },
+    {
+      "line": 38,
+      "command": "window A2|north",
+      "primitives": [
+        "window A2|north"
+      ]
+    },
+    {
+      "line": 39,
+      "command": "window A4|north",
+      "primitives": [
+        "window A4|north"
+      ]
+    },
+    {
+      "line": 40,
+      "command": "window A5|north",
+      "primitives": [
+        "window A5|north"
+      ]
+    },
+    {
+      "line": 41,
+      "command": "window C1|west",
+      "primitives": [
+        "window C1|west"
+      ]
+    },
+    {
+      "line": 42,
+      "command": "window C5|east",
+      "primitives": [
+        "window C5|east"
+      ]
+    },
+    {
+      "line": 43,
+      "command": "window D1|D2",
+      "primitives": [
+        "window D1|D2"
+      ]
+    },
+    {
+      "line": 44,
+      "command": "window D4|D5",
+      "primitives": [
+        "window D4|D5"
+      ]
+    },
+    {
+      "line": 45,
+      "command": "window D2|E2",
+      "primitives": [
+        "window D2|E2"
+      ]
+    },
+    {
+      "line": 46,
+      "command": "window D4|E4",
+      "primitives": [
+        "window D4|E4"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 342,
+    "cache_read_input_tokens": 1408,
+    "output_tokens": 1726,
+    "thinking_tokens": 1351,
+    "cost_usd": 0.018772800000000003,
+    "duration_ms": 12694
+  }
+}

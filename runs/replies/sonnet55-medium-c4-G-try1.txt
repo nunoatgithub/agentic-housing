@@ -1,0 +1,11 @@
+remove room R15
+room R16 hallway D3
+room R17 bedroom D2
+room R18 bathroom D4
+door C3|D3
+door D2|D3
+door D3|D4
+window D2|south
+window D3|south
+window D4|south
+window D4|east
