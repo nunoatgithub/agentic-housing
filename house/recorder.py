@@ -13,7 +13,7 @@ from .render import Drawing, render_house
 
 
 def build_record(run_id: str, timestamp: str, label: Optional[str],
-                 script: str, result: RunResult, request: Optional[str] = None) -> Dict[str, Any]:
+                 script: str, result: RunResult, request: Optional[str] = None, hallways: bool = False) -> Dict[str, Any]:
     """A plain dict, ready for JSON. A rejected script built nothing, so it has no validity, rules or scores."""
     built = result.accepted
     scores = result.scores if built else None
@@ -22,6 +22,7 @@ def build_record(run_id: str, timestamp: str, label: Optional[str],
         "timestamp": timestamp,
         "label": label,
         "request": request,
+        "hallways": hallways,
         "command_count": result.command_count,
         "accepted": built,
         "errors": [{"line": e.number, "text": e.text, "reason": e.reason} for e in result.errors],
@@ -31,10 +32,7 @@ def build_record(run_id: str, timestamp: str, label: Optional[str],
         "valid": result.valid if built else None,
         "violations": [{"rule": v.number, "name": v.rule, "message": v.message} for v in result.violations] if built else [],
         "scores": asdict(scores) if scores else None,
-        "expansion": [
-            {"line": e.number, "command": str(e.command), "primitives": [str(c) for c in e.expansion]}
-            for e in result.executed
-        ],
+        "cost": result.cost if built else None,
     }
 
 

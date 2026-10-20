@@ -23,6 +23,7 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 from .layout_format import empty_layout_text, parse_layout
 from .model import ROOM_TYPES
 from .prompt import build_prompt
+from .commands import script_cost
 from .requests import parse_request
 from .render import Drawing, render_side_by_side
 from .scores import score
@@ -145,12 +146,12 @@ def attach_usage(runs_dir: Path, label: Label, usage: Dict[str, float]) -> None:
 
 # ---------------------------------------------------------------- send
 
-def send(label: Label, script: str, runs_dir: Path, server: str) -> str:
+def send(label: Label, script: str, runs_dir: Path, server: str, hallways: bool = False) -> str:
     """Put the right starting house on the server, post the script, and say how it went (for you, not the agent)."""
     runs = load_runs(runs_dir)
     layout_text, request = request_for(label.step, runs, label)
     _http("PUT", server + "/layout", layout_text)
-    _http("POST", server + "/script?label=%s&request=%s" % (label, quote(request)), script)
+    _http("POST", server + "/script?label=%s&request=%s%s" % (label, quote(request), "&hallways=1" if hallways else ""), script)
     mine = [r for r in load_runs(runs_dir) if r["label"] == str(label)]
     last = mine[-1]
     if not last["accepted"]:
@@ -185,7 +186,7 @@ def _fmt(value: float) -> str:
     return "%d" % value if float(value).is_integer() else "%.2f" % value
 
 
-COLUMNS = ("tries", "corridor", "privacy", "walking", "compact")
+COLUMNS = ("tries", "corridor", "privacy", "walking", "compact", "cost")
 
 
 def _row(name: str, cells: Sequence[str]) -> str:
@@ -217,7 +218,7 @@ def report(runs: Sequence[dict]) -> str:
                 if final:
                     finals[chain][step] = final
                     s = scores_of(final)
-                    out.append(_row(step, [str(len(tries))] + [_fmt(s[n]) for n in SCORE_NAMES]))
+                    out.append(_row(step, [str(len(tries))] + [_fmt(s[n]) for n in SCORE_NAMES] + [str(script_cost(final["script"]))]))
                 else:
                     out.append(_row(step, [str(len(tries)), "no valid house"]))
         out += ["", "average over chains (valid houses only; n = chains measured)"]
@@ -226,9 +227,9 @@ def report(runs: Sequence[dict]) -> str:
             have = [finals[c][step] for c in finals if step in finals[c]]
             tries = [len(chains[c][step]) for c in chains if step in chains[c]]
             if have:
-                means = [_mean([scores_of(h)[n] for h in have]) for n in SCORE_NAMES]
+                means = [_mean([scores_of(h)[n] for h in have]) for n in SCORE_NAMES] + [_mean([script_cost(h["script"]) for h in have])]
                 out.append(_row(step, [str(len(have))] + [_fmt(m) for m in means]) + "   %s" % _fmt(_mean(tries)))
-        out.append("(scores are all lower-is-better)")
+        out.append("(scores are all lower-is-better; cost is what the step's script cost)")
         out += _usage_lines(runs, model, effort, len(chains))
         for chain in sorted(finals):
             drawings = [Drawing("%s (chain %d)" % (step, chain), parse_layout(finals[chain][step]["layout"]))
@@ -278,6 +279,7 @@ def main(argv: Sequence[str]) -> int:
         p.add_argument("--step", choices=STEPS, required=True)
         p.add_argument("--model", default=MODEL)
         p.add_argument("--effort", default=EFFORT)
+        p.add_argument("--hallways", action="store_true", help="a run that allows hallways")
         if name == "send":
             p.add_argument("reply", type=Path, help="file holding the agent's reply, exactly as it wrote it")
             p.add_argument("--server", default="http://127.0.0.1:8000")
@@ -292,9 +294,9 @@ def main(argv: Sequence[str]) -> int:
     label = Label(args.model, args.effort, args.chain, args.step)
     if args.command == "prompt":
         layout_text, request = request_for(args.step, load_runs(args.runs), label)
-        print(build_prompt(layout_text, request))
+        print(build_prompt(layout_text, request, hallways=args.hallways))
     else:
-        print(send(label, args.reply.read_text(), args.runs, args.server))
+        print(send(label, args.reply.read_text(), args.runs, args.server, args.hallways))
     return 0
 
 

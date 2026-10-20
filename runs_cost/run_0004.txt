@@ -1,0 +1,41 @@
+label: sonnet55-medium-c1-C   at 2026-10-20T11:25:02+00:00   commands: 2
+
+SCRIPT
+room R6 bathroom B1
+door R6|A1
+
+SCRIPT REJECTED, house unchanged:
+  line 2: door R6|A1 -> bad cell 'R6': expected a letter A-E and a digit 1-5, like B2
+
+run_0004
+VALID
+
+      1       2       3       4       5
+  +-------+[ENTRY]+-------+
+  |   R2  |   R1  |   R3  |
+A |kitchen| living|bedroom|
+  |                       |
+  +-------+-[   ]-+-[   ]-+
+          |   R4  |   R5  |
+B         |  bath |bedroom|
+          |       |       |
+          +-------+-------+
+
+C
+
+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    1
+privacy order     0.17
+walking distance  1.80
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

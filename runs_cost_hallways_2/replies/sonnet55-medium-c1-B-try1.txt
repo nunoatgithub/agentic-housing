@@ -1,0 +1,2 @@
+room R5 bedroom B3
+door B3|A3

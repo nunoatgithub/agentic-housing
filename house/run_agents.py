@@ -65,17 +65,18 @@ def ask_claude(prompt: str, model_id: str, effort: str) -> Reply:
 
 
 def run_chain(chain: int, model: str, effort: str, runs_dir: Path, server: str, max_tries: int,
-              ask: Callable[[str], Union[str, Reply]], log: Callable[[str], None] = print, steps: Optional[Sequence[str]] = None) -> bool:
+              ask: Callable[[str], Union[str, Reply]], log: Callable[[str], None] = print, steps: Optional[Sequence[str]] = None,
+              hallways: bool = False) -> bool:
     for step in steps or experiment.STEPS:
         label = Label(model, effort, chain, step)
         for attempt in range(1, max_tries + 1):
             layout_text, request = request_for(step, load_runs(runs_dir), label)
-            answer = ask(build_prompt(layout_text, request))
+            answer = ask(build_prompt(layout_text, request, hallways=hallways))
             reply, usage = (answer.text, answer.usage) if isinstance(answer, Reply) else (answer, None)
             replies = runs_dir / "replies"
             replies.mkdir(parents=True, exist_ok=True)
             (replies / ("%s-try%d.txt" % (label, attempt))).write_text(reply)
-            outcome = send(label, reply, runs_dir, server)
+            outcome = send(label, reply, runs_dir, server, hallways)
             if usage:
                 attach_usage(runs_dir, label, usage)
             log("%s try %d: %s" % (label, attempt, outcome))
@@ -95,6 +96,7 @@ def main(argv: Sequence[str]) -> int:
     parser.add_argument("--steps", nargs="+", choices=experiment.STEPS, default=list(experiment.STEPS), help="run only these steps")
     parser.add_argument("--model", default=MODEL, help="one of: " + ", ".join(MODEL_IDS))
     parser.add_argument("--effort", default=EFFORT)
+    parser.add_argument("--hallways", action="store_true", help="a run that allows hallways (prompt and rules)")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
     parser.add_argument("--server", default="http://127.0.0.1:8000")
     args = parser.parse_args(argv)
@@ -102,7 +104,7 @@ def main(argv: Sequence[str]) -> int:
         parser.error("unknown model %r; known: %s" % (args.model, ", ".join(MODEL_IDS)))
     ask = lambda prompt: ask_claude(prompt, MODEL_IDS[args.model], args.effort)   # a Reply: text plus token usage
     for chain in range(args.first_chain, args.first_chain + args.chains):
-        run_chain(chain, args.model, args.effort, args.runs, args.server, args.max_tries, ask, steps=args.steps)
+        run_chain(chain, args.model, args.effort, args.runs, args.server, args.max_tries, ask, steps=args.steps, hallways=args.hallways)
     return 0
 
 

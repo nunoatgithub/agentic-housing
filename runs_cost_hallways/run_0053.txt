@@ -1,0 +1,45 @@
+label: sonnet55-medium-c6-B   at 2026-10-20T12:03:35+00:00   commands: 9
+
+SCRIPT
+remove room R4
+room R5 hallway B2
+door A2|B2
+room R6 bedroom B3
+door B2|B3
+room R7 bathroom B1
+door B1|B2
+room R8 bedroom C2
+door B2|C2
+
+run_0053
+INVALID (rule 6)
+
+      1       2       3       4       5
+  +-------+[ENTRY]+-------+
+  |   R2  |   R1  |   R3  |
+A |kitchen| living|bedroom|
+  |                       |
+  +-------+-[   ]-+-------+
+  |   R7  |   R5  |   R6  |
+B |  bath |hallway|bedroom|
+  |                       |
+  +-------+-[   ]-+-------+
+          |   R8  |
+C         |bedroom|
+          |       |
+          +-------+
+
+D
+
+
+
+E
+
+
+
+scores: none (house is invalid)
+
+Broken rules:
+  rule 6 (requested rooms): 'add: bedroom' needs 2 bedroom but the house has 3
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

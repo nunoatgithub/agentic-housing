@@ -1,0 +1,2 @@
+room R8 bedroom B1
+door A1|B1

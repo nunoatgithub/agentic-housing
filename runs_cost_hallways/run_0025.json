@@ -1,0 +1,31 @@
+{
+  "run_id": "run_0025",
+  "timestamp": "2026-10-20T11:59:01+00:00",
+  "label": "sonnet55-medium-c3-D",
+  "request": "add: bedroom",
+  "hallways": true,
+  "command_count": 2,
+  "accepted": true,
+  "errors": [],
+  "script": "room R7 bedroom C1\ndoor B1|C1",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R2   R1   R3   .    .\nB    R5   R4   R6   .    .\nC    R7   .    .    .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A2\nR2  bedroom       A1\nR3  kitchen       A3\nR4  bathroom      B2\nR5  bedroom       B1\nR6  bathroom      B3\nR7  bedroom       C1\n\ndoors\nA1|A2\nA1|B1\nA2|north          entrance\nA2|A3\nA2|B2\nB1|C1\nB2|B3\n\nwindows",
+  "drawing": "run_0025\nVALID\n\n      1       2       3       4       5\n  +-------+[ENTRY]+-------+\n  |   R2  |   R1  |   R3  |\nA |bedroom| living|kitchen|\n  |                       |\n  +-[   ]-+-[   ]-+-------+\n  |   R5  |   R4  |   R6  |\nB |bedroom|  bath |  bath |\n  |       |               |\n  +-[   ]-+-------+-------+\n  |   R7  |\nC |bedroom|\n  |       |\n  +-------+\n\nD\n\n\n\nE\n\n\n\ncorridor rooms    4\nprivacy order     0.10\nwalking distance  2.38\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 4,
+    "privacy_order": 0.1,
+    "walking_distance": 2.381,
+    "compactness": 0
+  },
+  "cost": 5,
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 342,
+    "cache_read_input_tokens": 1498,
+    "output_tokens": 540,
+    "thinking_tokens": 521,
+    "cost_usd": 0.0069218000000000005,
+    "duration_ms": 8886
+  }
+}

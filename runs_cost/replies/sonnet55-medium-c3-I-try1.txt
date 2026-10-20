@@ -1,0 +1,22 @@
+room R1 living room B1
+room R2 kitchen A1
+room R3 bathroom B2
+room R4 bedroom C1
+room R5 bedroom A2
+room R6 bedroom A3
+room R7 bedroom B3
+room R8 bathroom C2
+room R9 bathroom C3
+room R10 bathroom D1
+room R11 bedroom D2
+door B1|west
+door A1|B1
+door B1|B2
+door B1|C1
+door B2|A2
+door A2|A3
+door B2|B3
+door C1|C2
+door C2|C3
+door C1|D1
+door D1|D2

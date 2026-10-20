@@ -6,6 +6,7 @@ POST /script   build a script on the current layout; always answers 204 with an 
                Optional free-text label for the run: /script?label=claude-patch-1
                Optional request the script answers, so the rooms asked for can be checked:
                /script?request=add:%20bedroom
+               hallways=1 if the run allows hallways (without it, a script that places one is rejected)
 PUT  /layout   operator only: replace the current layout with the text sent; an empty body resets to an empty grid
 
 The agent under test gets no feedback: POST /script never says whether the script was accepted, valid or
@@ -37,12 +38,13 @@ class App:
         self.out = out
         self.clock = clock
 
-    def build(self, script: str, label: Optional[str] = None, request: Optional[str] = None) -> RunResult:
-        result = run_script(script, self.layout, request)
+    def build(self, script: str, label: Optional[str] = None, request: Optional[str] = None,
+              hallways: bool = False) -> RunResult:
+        result = run_script(script, self.layout, request, hallways)
         if result.accepted and result.valid:    # an invalid house is recorded but never built on
             self.layout = result.layout
         run_id = next_run_id(self.runs_dir) if self.runs_dir.exists() else "run_0001"
-        record = build_record(run_id, self.clock().isoformat(timespec="seconds"), label, script, result, request)
+        record = build_record(run_id, self.clock().isoformat(timespec="seconds"), label, script, result, request, hallways)
         banner = ""
         if not result.accepted:
             banner = "SCRIPT REJECTED, house unchanged:\n" + "\n".join(
@@ -68,7 +70,8 @@ class Handler(BaseHTTPRequestHandler):
         query = parse_qs(url.query)
         label = (query.get("label") or [None])[0] or None
         request = (query.get("request") or [None])[0] or None
-        self.server.app.build(self._body(), label, request)
+        hallways = (query.get("hallways") or ["0"])[0] == "1"
+        self.server.app.build(self._body(), label, request, hallways)
         self._reply(204)        # same answer whatever happened
 
     def do_PUT(self) -> None:

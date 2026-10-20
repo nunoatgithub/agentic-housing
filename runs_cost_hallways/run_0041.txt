@@ -1,0 +1,61 @@
+label: sonnet55-medium-c4-J   at 2026-10-20T12:01:42+00:00   commands: 25
+
+SCRIPT
+remove room R4
+room R5 hallway B2
+room R6 hallway B3
+room R7 hallway B4
+room R8 hallway B5
+room R9 bathroom A2
+room R10 bathroom A3
+room R11 bathroom A4
+room R12 bathroom A5
+room R13 bedroom C2
+room R14 bedroom C3
+room R15 bedroom C4
+room R16 bedroom C5
+door B1|B2
+door B2|B3
+door B3|B4
+door B4|B5
+door A2|B2
+door A3|B3
+door A4|B4
+door A5|B5
+door C2|B2
+door C3|B3
+door C4|B4
+door C5|B5
+
+run_0041
+VALID
+
+      1       2       3       4       5
+  +-------+-------+-------+-------+-------+
+  |   R2  |   R9  |  R10  |  R11  |  R12  |
+A |kitchen|  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |   R1  |   R5  |   R6  |   R7  |   R8  |
+B | living|hallway|hallway|hallway|hallway|
+  E                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |   R3  |  R13  |  R14  |  R15  |  R16  |
+C |bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.03
+walking distance  3.05
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

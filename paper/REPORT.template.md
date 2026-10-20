@@ -6,7 +6,7 @@
 
 ## Abstract
 
-It is often claimed that an agent asked to make local changes to an existing artefact produces a worse design than an agent asked to build the same final requirements from scratch, even when redesign costs nothing. We tested this with Claude Sonnet 5.5 in a small world with exact rules: single-floor houses on a 5×5 grid, six validity rules and four automatic quality scores. In each of six chains, a fresh agent built a four-room house and seven further fresh agents each added one room to the previous agent's house, alternating bedrooms and bathrooms (stepwise patching). For the same final eleven rooms, one fresh agent built the house from scratch (planning) and one added all seven rooms to the first house in a single request (one-shot patching). Agents had no tools, no memory and no feedback, and the analyses were fixed before the run. We found no difference between the three conditions. Corridor rooms was 0 in all {{n_final}} final houses: no room was reachable only through a kitchen, bedroom or bathroom. Privacy order lay between {{privacy_min}} and {{privacy_max}} in every final house, and neither walking distance (on average {{mean_walking_distance_H}} doors stepwise, {{mean_walking_distance_I}} planned, {{mean_walking_distance_J}} one-shot) nor compactness differed between conditions (exact permutation tests, smallest p = {{smallest_p}} among eight). The patch agents did not simply attach rooms: in {{removed_one}} of {{n_patch_steps}} patch steps they removed an existing bathroom or bedroom, put a hallway in its cell and placed the room again elsewhere. {{n_failed}} of {{n_calls}} calls failed. A second run without hallways, where every cell must hold a requested room, again found no difference between patching and planning: no final house met the corridor principle, and the patch agents either attached the new room or removed every room and built the house again. A third run, the same model at low effort, patched more and rebuilt less, with the same result: in both runs without hallways almost every house, patched or planned, joined its rooms as a tree, with a single route to each room, and that set its scores.
+It is often claimed that an agent asked to make local changes to an existing artefact produces a worse design than an agent asked to build the same final requirements from scratch, even when redesign costs nothing. We tested this with Claude Sonnet 5.5 in a small world with exact rules: single-floor houses on a 5×5 grid, six validity rules and four automatic quality scores. In each of six chains, a fresh agent built a four-room house and seven further fresh agents each added one room to the previous agent's house, alternating bedrooms and bathrooms (stepwise patching). For the same final eleven rooms, one fresh agent built the house from scratch (planning) and one added all seven rooms to the first house in a single request (one-shot patching). Agents had no tools, no memory and no feedback, and the analyses were fixed before the run. We found no difference between the three conditions. Corridor rooms was 0 in all {{n_final}} final houses: no room was reachable only through a kitchen, bedroom or bathroom. Privacy order lay between {{privacy_min}} and {{privacy_max}} in every final house, and neither walking distance (on average {{mean_walking_distance_H}} doors stepwise, {{mean_walking_distance_I}} planned, {{mean_walking_distance_J}} one-shot) nor compactness differed between conditions (exact permutation tests, smallest p = {{smallest_p}} among eight). The patch agents did not simply attach rooms: in {{removed_one}} of {{n_patch_steps}} patch steps they removed an existing bathroom or bedroom, put a hallway in its cell and placed the room again elsewhere. {{n_failed}} of {{n_calls}} calls failed. A second run without hallways, where every cell must hold a requested room, again found no difference between patching and planning: no final house met the corridor principle, and the patch agents either attached the new room or removed every room and built the house again. A third run, the same model at low effort, patched more and rebuilt less, with the same result: in both runs without hallways almost every house, patched or planned, joined its rooms as a tree, with a single route to each room, and that set its scores. Finally, when building and demolishing had a price, in the world with hallways, step-by-step patching did end worse: in two runs every stepwise-patched house had rooms reachable only through a kitchen, bedroom or bathroom, while every planned house and every house patched in one go had none (exact permutation tests, p = {{ch_p_corridor}}). The patch agents mostly paid for the cheapest attachment, not for a hallway whose benefit would come only with later requests.
 
 ---
 
@@ -194,19 +194,81 @@ Patching still did not end worse than planning. The stepwise-patched houses had 
 
 How the rooms are joined explains why; this was not in the analysis plan. All but one of the {{nh_lo_final}} final houses of the second and third runs are trees: every room can be reached from the entrance by exactly one route, so every bedroom, bathroom or kitchen with rooms beyond it is a forced passage. Planning agents built trees just as patch agents did. The one exception, a stepwise-patched house of the third run, has one extra door that closes a loop, and it has the fewest forced passages of all of them. The scores are set by how the agents join the rooms, and planning from scratch did not join them differently. With nothing better to be compared against, patching cannot show a cost, whether the patch agent rebuilds or not.
 
-## 7. Limitations
+## 7. Building and demolishing cost
 
-Each run has six houses per condition from one model (Claude Sonnet 5.5), at medium reasoning effort in the first two runs and at low effort in the third. The six chains started from {{distinct_A}} distinct first houses in the first run, {{nh_distinct_A}} in the second and {{lo_distinct_A}} in the third. Differences smaller than the spread between chains would not be detected.
+### 7.1 Why
 
-## 8. Conclusion
+In every run so far nothing cost anything, and the patch agents showed no bias toward locality: they attached rooms while that worked and redesigned, moving a room or rebuilding the whole house, when it did not. If locality does not come from the agent, it may come from what change costs. A first try with a cost, in the world without hallways, made the patch agents purely local (no patch step removed a room) without making patching worse than planning: there was nothing to refactor towards. So the cost is tested here in the world of the first run, with hallways, where the patch agents had kept their houses good by refactoring: in {{ch_removed_first}} of 42 patch steps they removed a room and put a hallway in its cell.
+
+### 7.2 Setup
+
+Everything as in the first run (Section 2), with hallways, except that building and demolishing cost. The agents are told the prices, and that their work is also judged by the total cost of the script:
+
+```
+room, remove room           4 (a room is four walls)
+door, remove door           1
+window, remove window       1
+```
+
+A hallway is a room and costs 4. The planning agent pays for every room and hallway it builds too. There is no budget and no exchange rate between cost and quality, so the trade-off is the agent's own. The prompt (Appendix F) differs from the first run's in three other places: rule 6 says hallways "may be added or removed" instead of "are free to add or remove", the language section lists the room types, and the commands `wall`, `remove wall` and the two composites are gone (no agent used them in any run). The agents were Claude Sonnet 5.5 at medium effort, through Claude Code CLI 2.1.304, in six chains. The analyses were fixed beforehand in `paper/ANALYSIS_PLAN_cost_hallways.md`; the design was then run a second time, unchanged (the repeat), and the two runs are reported side by side. The planned tests are those of the first run, plus a comparison of each score with the first run (12 tests, Bonferroni threshold 0.004).
+
+### 7.3 Results
+
+Agent calls: {{ch_calls}}. Every chain produced a valid house at every step in both runs, and no planned build or one-shot patch failed.
+
+{{ch_completion}}
+
+Final houses, with the first run for comparison (mean ± standard deviation over six chains):
+
+{{ch_scores}}
+
+Planned tests, patched against planned (exact permutation tests; Bonferroni threshold 0.006):
+
+{{ch_tests}}
+
+{{ch_corridor_tests}}
+
+In both runs every stepwise-patched house had a corridor score of 3 or more and no planned house did (p = {{ch_p_corridor}}); the houses patched in one go scored 0, like the planned ones. No other planned test passed the threshold.
+
+Against the first run (exact permutation tests; Bonferroni threshold 0.004):
+
+{{ch_vs_first}}
+
+The cost made the stepwise-patched houses worse than in the first run and left the planned and one-shot houses as they were.
+
+Along the patch sequence (means over chains):
+
+{{ch_trajectory}}
+
+What the patch agents did:
+
+{{ch_patching}}
+
+Cost of each route at the prices above (mean, smallest–largest):
+
+{{ch_routes}}
+
+The agent calls cost {{ch_money}}, at list price. Distinct first houses among the six chains: {{ch_distinct_A}}.
+
+### 7.4 Why it happens
+
+Most patch steps cost exactly 5: the new room and one door into a room that was already there. A hallway would cost 4 more, and it pays off only for rooms that have not been requested yet, which the patch agent does not know about. So most steps take the cheapest valid answer and make a bedroom or bathroom a passage. The passages pile up step by step, and the corridor score rises with every patch step. The few refactorings came early: patch steps that removed a room to put a hallway in its cell numbered {{ch_removed}}, and none came after step {{ch_last_removal}}; in the first run, {{ch_removed_first}} steps did. No patch step added a hallway after step {{ch_last_hallway}}. In each run, every stepwise-patched house ended with fewer hallways than every planned house. The planning agent sees all eleven rooms at once and pays for a spine of hallways, and so does the agent that patches in one go: its houses were as good as the planned ones. It is not patching as such that hurts; it is change requested one piece at a time, combined with a cost for each change. In {{ch_cheaper}} of the 12 chains the stepwise route was also the cheapest of the three routes: the cheapest route gave the worst house.
+
+## 8. Limitations
+
+Each run has six houses per condition from one model (Claude Sonnet 5.5), at medium reasoning effort except in the third run, which used low effort. The six chains started from {{distinct_A}} distinct first houses in the first run, {{nh_distinct_A}} in the second, {{lo_distinct_A}} in the third; in the cost experiment, {{ch_distinct_A}}. The comparison of the cost runs with the first run also carries the small prompt differences listed in Section 7.2. Differences smaller than the spread between chains would not be detected.
+
+## 9. Conclusion
 
 On a 5×5 grid, with free redesign and explicit principles, step-by-step patching by Claude Sonnet 5.5 produced houses that scored no worse than houses planned from scratch for the same requirements: every final house met the corridor principle, and no score differed between patching and planning (smallest p = {{smallest_p}}). The patch agents often moved an existing room to make way for a hallway while adding the new one.
 
 Without hallways, patched and planned houses were equally far from the corridor principle. The patch agents either attached the new room or planned the whole house again: a patch agent that found attaching hard became a planner.
 
-At low effort the agents patched more and rebuilt less, but patching still did not end worse than planning. Planning and patching agents alike joined the rooms as a tree, and that, not the order of the requests, set the scores. Other models and higher effort levels were not tested.
+At low effort the agents patched more and rebuilt less, but patching still did not end worse than planning. Planning and patching agents alike joined the rooms as a tree, and that, not the order of the requests, set the scores.
 
-## 9. Reproducibility
+The agents showed no intrinsic bias toward locality. When building and demolishing had a price, in the world with hallways, step-by-step patching did end worse than planning, in both runs: the patch agents mostly bought the cheapest attachment and built no hallway after the first few steps, while agents that saw all the rooms at once, planning or patching in one go, built the hallways. Locality came from the price of change, combined with requirements that arrive one at a time. Other models and higher effort levels were not tested.
+
+## 10. Reproducibility
 
 Code in `house/` as of commit `0f79745`, prompt in `paper/prompt_5x5_run.txt`, analysis plan in `paper/ANALYSIS_PLAN.md`, data (one JSON record per script, raw agent replies) in `runs/`, this report generated by `python paper/build_report.py`. To repeat the run, check out commit `0f79745` and run:
 
@@ -222,11 +284,18 @@ python -m house.server --port 8000 --runs runs_no_hallways
 python -m house.run_agents --chains 6 --effort medium --runs runs_no_hallways
 ```
 
-The third run: the same code (`house/` is unchanged since commit `dd9ab04`), analysis plan in `paper/ANALYSIS_PLAN_no_hallways_low.md`, data in `runs_no_hallways_low/`. To repeat it, check out commit `dd9ab04` and run:
+The third run: the same code as the second run (commit `dd9ab04`), analysis plan in `paper/ANALYSIS_PLAN_no_hallways_low.md`, data in `runs_no_hallways_low/`. To repeat it, check out commit `dd9ab04` and run:
 
 ```
 python -m house.server --port 8000 --runs runs_no_hallways_low
 python -m house.run_agents --chains 6 --effort low --runs runs_no_hallways_low
+```
+
+The cost runs: code in `house/` as it is now, prompt in `house/prompt_template_hallways.txt`, analysis plan in `paper/ANALYSIS_PLAN_cost_hallways.md`, data in `runs_cost_hallways/` and `runs_cost_hallways_2/`; the first try without hallways (Section 7.1): plan `paper/ANALYSIS_PLAN_cost.md`, data `runs_cost/`. To repeat a cost run:
+
+```
+python -m house.server --port 8000 --runs runs_cost_hallways
+python -m house.run_agents --chains 6 --effort medium --hallways --runs runs_cost_hallways
 ```
 
 ---
@@ -253,4 +322,24 @@ python -m house.run_agents --chains 6 --effort low --runs runs_no_hallways_low
 
 ```
 {{drawing_2}}
+```
+
+## Appendix D. Scores of every final house (cost runs)
+
+{{ch_per_chain}}
+
+## Appendix E. Example houses (cost run, chain {{ch_example_chain}})
+
+The stepwise-patched house (H) and the planned house (I) of the chain whose corridor score is nearest the run's median. `[ENTRY]` is the entrance, `-[   ]-` a door; a gap on a cell's bottom line in a vertical wall is a door.
+
+```
+{{ch_drawing}}
+```
+
+## Appendix F. The prompt (cost runs)
+
+`{{LAYOUT}}` and `{{REQUEST}}` are replaced for each agent; the long layout-format paragraph is wrapped here for printing.
+
+```
+{{ch_prompt}}
 ```

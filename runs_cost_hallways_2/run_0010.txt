@@ -1,0 +1,72 @@
+label: sonnet55-medium-c1-I   at 2026-10-20T12:14:05+00:00   commands: 36
+
+SCRIPT
+room R1 bedroom A1
+room R2 kitchen A2
+room R3 living room A3
+room R4 bedroom A4
+room R5 bedroom A5
+room R6 hallway B1
+room R7 hallway B2
+room R8 hallway B3
+room R9 hallway B4
+room R10 hallway B5
+room R11 bathroom C1
+room R12 bedroom C2
+room R13 hallway C3
+room R14 bedroom C4
+room R15 bathroom C5
+room R16 bathroom D2
+room R17 hallway D3
+room R18 bathroom D4
+door A3|north
+door A3|A2
+door A3|B3
+door A1|B1
+door A4|B4
+door A5|B5
+door B1|B2
+door B2|B3
+door B3|B4
+door B4|B5
+door C1|B1
+door C2|B2
+door C4|B4
+door C5|B5
+door B3|C3
+door C3|D3
+door D3|D2
+door D3|D4
+
+run_0010
+VALID
+
+      1       2       3       4       5
+  +-------+-------+[ENTRY]+-------+-------+
+  |   R1  |   R2  |   R3  |   R4  |   R5  |
+A |bedroom|kitchen| living|bedroom|bedroom|
+  |       |               |       |       |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+
+  |   R6  |   R7  |   R8  |   R9  |  R10  |
+B |hallway|hallway|hallway|hallway|hallway|
+  |                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R11  |  R12  |  R13  |  R14  |  R15  |
+C |  bath |bedroom|hallway|bedroom|  bath |
+  |       |       |       |       |       |
+  +-------+-------+-[   ]-+-------+-------+
+          |  R16  |  R17  |  R18  |
+D         |  bath |hallway|  bath |
+          |                       |
+          +-------+-------+-------+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  3.46
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

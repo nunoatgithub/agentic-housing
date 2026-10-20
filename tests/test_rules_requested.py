@@ -48,11 +48,12 @@ def test_unlisted_types_in_a_build_are_free():
 
 def test_add_means_what_was_there_plus_the_additions(example_text):
     start = parse_layout(example_text)
-    ok = run_script("add bedroom next to R4\n", start, "add: bedroom")
+    bedroom = "room R6 bedroom B3\ndoor B2|B3\n"
+    ok = run_script(bedroom, start, "add: bedroom")
     assert ok.valid
-    dropped = run_script("remove room R5\nadd bedroom next to R4\n", start, "add: bedroom")
+    dropped = run_script("remove room R5\n" + bedroom, start, "add: bedroom")
     assert rules_broken(dropped) == [6] and "needs 1 bathroom but the house has 0" in dropped.violations[0].message
-    twice = run_script("add bedroom next to R4\nadd bedroom next to R4\n", start, "add: bedroom")
+    twice = run_script(bedroom + "room R7 bedroom C2\ndoor B2|C2\n", start, "add: bedroom")
     assert rules_broken(twice) == [6] and "needs 2 bedroom but the house has 3" in twice.violations[0].message
 
 

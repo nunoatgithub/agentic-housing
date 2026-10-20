@@ -1,0 +1,7 @@
+remove room R3
+room R3 hallway A3
+door A2|A3
+room R5 bedroom A4
+door A3|A4
+room R6 bedroom B3
+door A3|B3

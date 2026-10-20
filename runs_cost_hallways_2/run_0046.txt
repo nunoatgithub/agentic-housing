@@ -1,0 +1,41 @@
+label: sonnet55-medium-c5-C   at 2026-10-20T12:19:28+00:00   commands: 2
+
+SCRIPT
+room C2 bathroom C2
+door B2|C2
+
+SCRIPT REJECTED, house unchanged:
+  line 1: room C2 bathroom C2 -> cannot understand 'room C2 bathroom C2'; expected one of: room <id> <type> <cell> | remove room <id> | door <edge> | remove door <edge> | window <edge> | remove window <edge>
+
+run_0046
+VALID
+
+      1       2       3       4       5
+  +-------+[ENTRY]+-------+
+  |   R2  |   R1  |   R3  |
+A |kitchen| living|  bath |
+  |                       |
+  +-------+-[   ]-+-------+
+  |   R6  |   R5  |   R7  |
+B |bedroom|hallway|bedroom|
+  |                       |
+  +-------+-------+-------+
+
+C
+
+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.08
+walking distance  1.93
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

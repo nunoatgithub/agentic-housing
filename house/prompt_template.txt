@@ -25,22 +25,22 @@ GOOD-HOUSE PRINCIPLES (your work is judged by these)
 - Keep the house compact, with nothing sticking out.
 
 COST
-Building and removing walls, doors, windows and rooms costs nothing.
+Every command costs something, whether it builds or removes:
+room, remove room           4 (a room is four walls)
+door, remove door           1
+window, remove window       1
+Your work is also judged by the total cost of your script.
 You may change anything in the current layout.
 
 LANGUAGE
 Room types: living room, kitchen, bedroom, bathroom. There are no hallways.
 room R6 bedroom C2          place a new room on an empty cell; walls go up around it
 remove room R6              clear the room's cells and everything on its walls
-wall B2|B3                  add a wall on an edge
-remove wall B2|B3           remove a wall between two cells
 door B1|B2                  add a door in the wall between two cells
 door A1|north               add a door in an outer wall (living room only)
 remove door B1|B2
 window B2|east              add a window in an outer wall
 remove window B2|east
-add bathroom next to R4     composite: expands into the commands above
-remove bathroom R5          composite
 
 LAYOUT FORMAT
 Rows are A to E, columns 1 to 5. Each cell shows the id of the room on it, or . if empty. Walls are implied: a wall stands on every edge between cells of different rooms, and on every edge between a room and the outside. Doors and windows are listed by the edge they sit on.

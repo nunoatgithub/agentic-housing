@@ -1,0 +1,25 @@
+remove room R4
+room R5 hallway B2
+room R6 hallway C2
+room R7 hallway D2
+room R8 hallway E2
+room R9 bathroom B1
+room R10 bedroom B3
+room R11 bedroom C1
+room R12 bathroom C3
+room R13 bathroom D1
+room R14 bedroom D3
+room R15 bedroom E1
+room R16 bathroom E3
+door A2|B2
+door B2|C2
+door C2|D2
+door D2|E2
+door B1|B2
+door B2|B3
+door C1|C2
+door C2|C3
+door D1|D2
+door D2|D3
+door E1|E2
+door E2|E3

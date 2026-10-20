@@ -1,0 +1,30 @@
+{
+  "run_id": "run_0032",
+  "timestamp": "2026-10-20T11:29:46+00:00",
+  "label": "sonnet55-medium-c3-I",
+  "request": "build: living room, kitchen, bedroom x5, bathroom x4",
+  "command_count": 22,
+  "accepted": true,
+  "errors": [],
+  "script": "room R1 living room B1\nroom R2 kitchen A1\nroom R3 bathroom B2\nroom R4 bedroom C1\nroom R5 bedroom A2\nroom R6 bedroom A3\nroom R7 bedroom B3\nroom R8 bathroom C2\nroom R9 bathroom C3\nroom R10 bathroom D1\nroom R11 bedroom D2\ndoor B1|west\ndoor A1|B1\ndoor B1|B2\ndoor B1|C1\ndoor B2|A2\ndoor A2|A3\ndoor B2|B3\ndoor C1|C2\ndoor C2|C3\ndoor C1|D1\ndoor D1|D2",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R2   R5   R6   .    .\nB    R1   R3   R7   .    .\nC    R4   R8   R9   .    .\nD    R10  R11  .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   B1\nR2  kitchen       A1\nR3  bathroom      B2\nR4  bedroom       C1\nR5  bedroom       A2\nR6  bedroom       A3\nR7  bedroom       B3\nR8  bathroom      C2\nR9  bathroom      C3\nR10 bathroom      D1\nR11 bedroom       D2\n\ndoors\nA1|B1\nA2|A3\nA2|B2\nB1|B2\nB1|C1\nB1|west           entrance\nB2|B3\nC1|C2\nC1|D1\nC2|C3\nD1|D2\n\nwindows",
+  "drawing": "run_0032\nVALID\n\n      1       2       3       4       5\n  +-------+-------+-------+\n  |   R2  |   R5  |   R6  |\nA |kitchen|bedroom|bedroom|\n  |       |               |\n  +-[   ]-+-[   ]-+-------+\n  |   R1  |   R3  |   R7  |\nB | living|  bath |bedroom|\n  E                       |\n  +-[   ]-+-------+-------+\n  |   R4  |   R8  |   R9  |\nC |bedroom|  bath |  bath |\n  |                       |\n  +-[   ]-+-------+-------+\n  |  R10  |  R11  |\nD |  bath |bedroom|\n  |               |\n  +-------+-------+\n\nE\n\n\n\ncorridor rooms    10\nprivacy order     0.06\nwalking distance  2.95\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 10,
+    "privacy_order": 0.0556,
+    "walking_distance": 2.9455,
+    "compactness": 0
+  },
+  "cost": 55,
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 340,
+    "cache_read_input_tokens": 1347,
+    "output_tokens": 1405,
+    "thinking_tokens": 1209,
+    "cost_usd": 0.0155487,
+    "duration_ms": 13402
+  }
+}

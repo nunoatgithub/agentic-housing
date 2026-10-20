@@ -1,0 +1,2 @@
+room R9 bedroom A4
+door A3|A4

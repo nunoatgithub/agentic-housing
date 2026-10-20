@@ -1,0 +1,2 @@
+room B1 bathroom B1
+door B1|B2

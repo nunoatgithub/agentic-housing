@@ -121,9 +121,6 @@ def test_two_entrances_in_the_living_room_are_not_forbidden():
     ("window A1|A2", "not an outer wall"),
     ("room R1 living room A1\nroom R2 kitchen A2\nwindow A1|A2", "not an outer wall"),
     ("remove room R9", "no room R9"),
-    ("room R1 living room A1\nroom R2 kitchen A2\nremove wall A1|A2", "rooms are never joined"),
-    ("add bathroom next to R3", "no room R3"),
-    ("room R1 living room A1\nremove bathroom R1", "not a bathroom"),
 ])
 def test_unworkable_command_rejects_the_whole_script(script, reason):
     result = run_script(script)
@@ -138,7 +135,6 @@ def test_rejected_script_leaves_the_house_untouched_even_after_good_commands(exa
     assert not result.accepted
     assert result.layout == start
     assert result.errors[0].number == 2
-    assert result.executed == []
 
 
 def test_unparseable_line_rejects_the_script_and_all_bad_lines_are_listed():
@@ -177,54 +173,17 @@ def test_placing_a_room_removes_door_and_window_that_faced_the_outside():
     assert result.layout.doors == set() and result.layout.windows == set()
 
 
-def test_wall_on_an_existing_wall_does_nothing():
-    base = "room R1 living room A1\nroom R2 kitchen A2\n"
-    assert build(base + "wall A1|A2\nwall A1|north\n").layout == build(base).layout
-
-
 def test_remove_door_and_window_that_are_not_there_do_nothing(example_text):
     start = parse_layout(example_text)
     assert build("remove door D4|north\nremove window D4|east\n", start).layout == start
 
 
-# ------------------------------------------------------------ composites
+# ------------------------------------------------------------ cost
 
-def test_add_bathroom_next_to_expands_visibly_and_stays_valid(example_text):
-    result = build("add bathroom next to R4\n", parse_layout(example_text))
-    (executed,) = result.executed
-    assert [str(c) for c in executed.expansion] == ["room R6 bathroom B3", "door B2|B3"]
-    assert result.layout.rooms["R6"].type == "bathroom"
-    assert result.valid
-
-
-def test_new_room_gets_lowest_free_id(example_text):
-    result = build("remove room R2\nadd kitchen next to R1\n", parse_layout(example_text))
-    assert result.layout.rooms["R2"].type == "kitchen"      # R2 was free, so reused
-
-
-def test_add_next_to_picks_first_free_cell_in_grid_order():
-    result = build("room R1 living room B2\nadd bedroom next to R1\n")
-    assert result.layout.rooms["R2"].cells == frozenset({Cell(0, 1)})     # A2 comes before B1, B3, C2
-
-
-def test_add_next_to_with_no_free_cell_rejects():
-    result = run_script("room R1 living room A1\nroom R2 kitchen A2\nroom R3 kitchen B1\nadd bedroom next to R1\n")
-    assert not result.accepted and "no free cell" in result.errors[0].reason
-
-
-def test_remove_typed_expands_to_remove_room(example_text):
-    result = build("remove bathroom R5\n", parse_layout(example_text))
-    assert [str(c) for c in result.executed[0].expansion] == ["remove room R5"]
-    assert "R5" not in result.layout.rooms
-
-
-def test_primitive_expansion_is_itself():
-    result = build("room R1 living room A1\n")
-    assert result.executed[0].expansion == (result.executed[0].command,)
-
-
-def test_command_count_counts_composites_once(example_text):
-    assert build("add bathroom next to R4\nadd bedroom next to R4\n", parse_layout(example_text)).command_count == 2
+def test_an_accepted_script_has_its_cost_and_a_rejected_one_costs_nothing(example_text):
+    assert build(EXAMPLE_SCRIPT).cost == 5 * 4 + 5 + 2                      # five rooms, five doors, two windows
+    assert build("room R6 bedroom B3\ndoor B2|B3\n", parse_layout(example_text)).cost == 5
+    assert run_script("room R6 bedroom B3\nremove room R99\n", parse_layout(example_text)).cost == 0
 
 
 # ------------------------------------------------------------ rule 5: never more than one kitchen
@@ -245,6 +204,11 @@ def test_merging_does_not_exist():
     assert not result.accepted and "cannot understand" in result.errors[0].reason
 
 
-def test_a_wall_command_changes_nothing():
-    base = "room R1 living room A1\nroom R2 kitchen A2\ndoor A1|A2\n"
-    assert build(base + "wall A1|A2\nwall B3|B4\n").layout == build(base).layout
+# ------------------------------------------------------------ hallways, only in runs that allow them
+
+def test_a_hallway_is_rejected_unless_the_run_allows_hallways():
+    script = "room R1 living room A1\nroom R2 hallway A2\ndoor A1|north\ndoor A1|A2\n"
+    refused = run_script(script)
+    assert not refused.accepted and "no hallways" in refused.errors[0].reason
+    allowed = run_script(script, hallways=True)
+    assert allowed.accepted and allowed.layout.rooms["R2"].type == "hallway" and allowed.cost == 2 * 4 + 2

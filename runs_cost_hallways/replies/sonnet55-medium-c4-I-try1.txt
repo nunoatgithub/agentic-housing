@@ -1,0 +1,30 @@
+room R1 living room E3
+room R2 kitchen E2
+room R3 bedroom E4
+room R4 hallway D3
+room R5 hallway C3
+room R6 hallway B3
+room R7 hallway A3
+room R8 bathroom D2
+room R9 bathroom D4
+room R10 bedroom C2
+room R11 bedroom C4
+room R12 bathroom B2
+room R13 bathroom B4
+room R14 bedroom A2
+room R15 bedroom A4
+door E3|south
+door E3|E2
+door E3|E4
+door E3|D3
+door D3|C3
+door C3|B3
+door B3|A3
+door D3|D2
+door D3|D4
+door C3|C2
+door C3|C4
+door B3|B2
+door B3|B4
+door A3|A2
+door A3|A4

@@ -75,7 +75,7 @@ def test_rejected_script_leaves_the_house_unchanged(served, example_text):
 def test_patching_continues_from_the_current_layout(served):
     base, _, _ = served
     call("POST", base + "/script", EXAMPLE_SCRIPT)
-    call("POST", base + "/script", "add bathroom next to R4")
+    call("POST", base + "/script", "room R6 bathroom B3\ndoor B2|B3")
     assert "R6  bathroom" in call("GET", base + "/layout")[1]
 
 
@@ -133,15 +133,14 @@ def test_record_has_everything(served, example_text):
     assert rec["scores"] == {"corridor_rooms": 0, "privacy_order": 0.0, "walking_distance": 1.8, "compactness": 0}
 
 
-def test_record_lists_violations_and_expansions(served):
+def test_record_lists_violations_and_the_cost(served):
     base, _, runs = served
     call("POST", base + "/script?label=codex-patch",
-         "room R1 living room A1\nroom R2 bedroom A2\ndoor A1|north\ndoor A1|A2\nadd bathroom next to R2\n")
+         "room R1 living room A1\nroom R2 bedroom A2\ndoor A1|north\ndoor A1|A2\nroom R3 bathroom A3\ndoor A2|A3\n")
     rec = load(runs, 1)
-    assert rec["command_count"] == 5
+    assert rec["command_count"] == 6
     assert rec["valid"] is True
-    assert rec["expansion"][-1] == {"line": 5, "command": "add bathroom next to R2",
-                                    "primitives": ["room R3 bathroom A3", "door A2|A3"]}
+    assert rec["cost"] == 3 * 4 + 3
     call("POST", base + "/script", "room R9 kitchen D4\n")
     rec = load(runs, 2)
     assert rec["valid"] is False and rec["scores"] is None
@@ -196,7 +195,7 @@ def test_an_invalid_house_does_not_become_the_current_house(served, example_text
     assert "INVALID" in out.getvalue()
     rec = load(runs, 2)
     assert rec["valid"] is False and rec["violations"]                    # still recorded
-    call("POST", base + "/script", "add bathroom next to R4")             # next patch builds on the valid house
+    call("POST", base + "/script", "room R6 bathroom B3\ndoor B2|B3")     # next patch builds on the valid house
     assert "R6  bathroom" in call("GET", base + "/layout")[1]
 
 
@@ -206,3 +205,13 @@ def test_the_request_is_checked_and_recorded(served):
     rec = load(runs, 1)
     assert rec["request"] == "build: living room, bedroom"
     assert rec["valid"] is False and [v["rule"] for v in rec["violations"]] == [6]
+
+
+def test_the_script_says_whether_hallways_are_allowed_and_the_record_keeps_it(served):
+    base, _, runs = served
+    script = "room R1 living room A1\nroom R2 hallway A2\ndoor A1|north\ndoor A1|A2\n"
+    call("POST", base + "/script", script)
+    call("POST", base + "/script?hallways=1", script)
+    refused, built = load(runs, 1), load(runs, 2)
+    assert refused["accepted"] is False and refused["hallways"] is False
+    assert built["accepted"] is True and built["hallways"] is True and built["valid"] is True

@@ -15,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+from house.commands import script_cost  # noqa: E402
 from house.experiment import PATCHES, STEPS, Label, final_house, load_runs, parse_label, scores_of  # noqa: E402
 from house.layout_format import parse_layout  # noqa: E402
 from house.model import COLS, ROWS  # noqa: E402
@@ -386,6 +387,164 @@ assert loops(run[(c, s)][2]) == 1, "the house that is not a tree has one extra d
 assert run[(c, s)][1]["corridor_rooms"] < min(r[(k, t)][1]["corridor_rooms"] for r, k, t in both if (r, k, t) != not_trees[0]), \
     "the house that is not a tree has the fewest forced passages"
 T["nh_lo_final"] = str(len(both))
+
+# ---- building and demolishing cost: a run without hallways (one sentence of the text), and two runs with hallways
+free_cost = final_houses(load_runs(ROOT / "runs_cost"), EFFORT)
+assert all(s[2] == 0 for s in patch_steps(free_cost)), "without hallways, no costed patch step removed a room"
+assert min(perm_p([free_cost[(c, p)][1][s] for c in range(1, 7)], [free_cost[(c, "I")][1][s] for c in range(1, 7)])
+           for s in SCORES for p in "HJ") > 0.05, "without hallways, the cost did not make patching worse than planning"
+
+COST_RUNS = (("Cost run", "runs_cost_hallways"), ("Repeat", "runs_cost_hallways_2"))
+FIRST = "First run (no cost)"
+cr = {name: (load_runs(ROOT / folder), final_houses(load_runs(ROOT / folder), EFFORT)) for name, folder in COST_RUNS}
+houses_of = {FIRST: final, **{name: h for name, (_, h) in cr.items()}}
+vals = lambda name, step, score: [houses_of[name][(c, step)][1][score] for c in range(1, 7)]
+halls = lambda layout: sum(r.type == "hallway" for r in layout.rooms.values())
+hall_vals = lambda name, step: [halls(houses_of[name][(c, step)][2]) for c in range(1, 7)]
+cost_of = lambda name, c, step: script_cost(houses_of[name][(c, step)][0]["script"])
+assert all((c, s) in final for c in range(1, 7) for s in STEPS), "the first run has a house at every step, to compare with"
+
+
+def cause(r):
+    if not r["accepted"]:
+        e = r["errors"][0]["reason"]
+        for key, name in (("cannot understand", "line outside the language"), ("already in use", "room id already in use"),
+                          ("already taken", "cell already taken"), ("not an outer wall", "window on a wall that is not outer")):
+            if key in e:
+                return name
+        return "other rejection"
+    return "house broke rule %s" % ", ".join(str(n) for n in sorted({v["rule"] for v in r["violations"]}))
+
+
+rows = [("Run", "Calls", "Failed", "Failed patch steps", "Failed planned builds", "Failed one-shot patches", "Causes")]
+for name, (rs, _) in cr.items():
+    rs = [r for r in rs if parse_label(r["label"])]
+    bad = [r for r in rs if not ok(r)]
+    of = lambda steps: "%d of %d" % (sum(1 for r in bad if parse_label(r["label"]).step in steps), sum(1 for r in rs if parse_label(r["label"]).step in steps))
+    rows.append((name, str(len(rs)), str(len(bad)), of("".join(PATCHES)), of("I"), of("J"),
+                 "; ".join("%s (%d)" % kv for kv in Counter(cause(r) for r in bad).most_common()) or "none"))
+    assert not any(parse_label(r["label"]).step in "IJ" for r in bad), "no planned build or one-shot patch failed"
+T["ch_completion"] = md(rows)
+
+rows = [("Run", "House", "Corridor rooms", "Privacy order", "Walking distance", "Compactness", "Hallways (fewest–most)")]
+for name in houses_of:
+    for step, house in (("H", "H (patched step by step)"), ("I", "I (planned from scratch)"), ("J", "J (patched in one go)")):
+        h = hall_vals(name, step)
+        rows.append((name, house) + tuple(ms(vals(name, step, s)) for s in SCORES) + ("%d–%d" % (min(h), max(h)),))
+T["ch_scores"] = md(rows)
+
+names = [n for n, _ in COST_RUNS]
+both_runs = lambda a, b: "%s in each run" % a if a == b else "%s in the cost run and %s in the repeat" % (a, b)
+rows = [("Score", "Patched house") + tuple("%s: mean patched / planned, p" % n for n in names)]
+ch_p = {}
+for s, sname in zip(SCORES, NAMES):
+    for patched, pname in (("H", "H step by step"), ("J", "J in one go")):
+        cells = []
+        for n in names:
+            a, b = vals(n, patched, s), vals(n, "I", s)
+            ch_p[(n, s, patched)] = perm_p(a, b)
+            cells.append("%.2f / %.2f, %.3f%s" % (st.mean(a), st.mean(b), ch_p[(n, s, patched)], " (all equal)" if len(set(a + b)) == 1 else ""))
+        rows.append((sname, pname) + tuple(cells))
+T["ch_tests"] = md(rows)
+for n in names:
+    assert ch_p[(n, "corridor_rooms", "H")] < 0.05 / 8, "in each cost run, stepwise patching has more forced passages than planning"
+    assert all(p > 0.05 / 8 for (m, s, h), p in ch_p.items() if m == n and (s, h) != ("corridor_rooms", "H")), "no other planned test passes"
+T["ch_p_corridor"] = both_runs(*("%.3f" % ch_p[(n, "corridor_rooms", "H")] for n in names))
+
+rows = [("Run", "Patched house", "Corridor ≥ 3 (patched)", "Corridor ≥ 3 (planned I)", "Fisher exact p", "Rank-sum exact p")]
+for n in names:
+    for patched, pname in (("H", "H step by step"), ("J", "J in one go")):
+        a, b = vals(n, patched, "corridor_rooms"), vals(n, "I", "corridor_rooms")
+        ka, kb = sum(x >= 3 for x in a), sum(x >= 3 for x in b)
+        rows.append((n, pname, "%d of 6" % ka, "%d of 6" % kb, "%.3f" % fisher(ka, 6 - ka, kb, 6 - kb), "%.3f" % ranksum_p(a, b)))
+    assert all(x >= 3 for x in vals(n, "H", "corridor_rooms")) and not any(any(vals(n, s, "corridor_rooms")) for s in "IJ"), \
+        "every stepwise-patched house has a corridor score of 3 or more, every planned and one-shot house 0"
+T["ch_corridor_tests"] = md(rows)
+
+rows = [("Score", "House", "First run (no cost)") + tuple("%s, p against the first run" % n for n in names)]
+vs_first = {}
+for s, sname in zip(SCORES, NAMES):
+    for step in "HIJ":
+        cells = []
+        for n in names:
+            vs_first[(n, s, step)] = perm_p(vals(n, step, s), vals(FIRST, step, s))
+            cells.append("%.2f, %.3f" % (st.mean(vals(n, step, s)), vs_first[(n, s, step)]))
+        rows.append((sname, step, "%.2f" % st.mean(vals(FIRST, step, s))) + tuple(cells))
+T["ch_vs_first"] = md(rows)
+for n in names:
+    assert vs_first[(n, "corridor_rooms", "H")] < 0.05 / 12, "the cost made the stepwise-patched houses worse than in the first run"
+    assert all(vs_first[(n, s, step)] > 0.05 / 12 for s in SCORES for step in "IJ"), "the cost did not change the planned or one-shot houses"
+
+rows = [("Run", "") + tuple("ABCDEFGH")]
+for name in houses_of:
+    path = [st.mean(vals(name, s, "corridor_rooms")) for s in "ABCDEFGH"]
+    rows.append((name, "corridor rooms") + tuple("%.2f" % x for x in path))
+    rows.append(("", "hallways") + tuple("%.1f" % st.mean(hall_vals(name, s)) for s in "ABCDEFGH"))
+    if name != FIRST:
+        assert all(b > a for a, b in zip(path, path[1:])), "with a cost, corridor rooms rises with every patch step"
+T["ch_trajectory"] = md(rows)
+
+rows = [("Run", "Patch steps", "Removed no room", "Removed one room", "Removed more", "Last step that removed a room", "Median cost of a patch script")]
+last_removal = {}
+for name in houses_of:
+    steps_ = patch_steps(houses_of[name])
+    removals = [s for s in steps_ if s[2] > 0]
+    last_removal[name] = max(s[1] for s in removals)
+    costs = [cost_of(name, s[0], s[1]) for s in steps_]
+    rows.append((name, str(len(steps_)), str(sum(s[2] == 0 for s in steps_)), str(sum(s[2] == 1 for s in steps_)),
+                 str(sum(s[2] > 1 for s in steps_)), last_removal[name], "%g" % st.median(costs)))
+    if name != FIRST:
+        assert all(s[2] <= 1 for s in steps_), "a costed patch step removes at most one room"
+        for c, step, gone, before, kept in removals:
+            prev, cur = houses_of[name][(c, chr(ord(step) - 1))], houses_of[name][(c, step)]
+            assert all(cur[2].room_at(next(iter(prev[2].rooms[l.split()[2]].cells))).type == "hallway"
+                       for l in cur[0]["script"].splitlines() if l.startswith("remove room")), "every costed refactoring made a hallway"
+        assert sum(x == 5 for x in costs) > len(costs) / 2, "most costed patch steps cost exactly 5"
+        assert max(hall_vals(name, "H")) < min(hall_vals(name, "I")), "every stepwise-patched house has fewer hallways than every planned house"
+T["ch_patching"] = md(rows)
+T["ch_removed_first"] = str(sum(s[2] > 0 for s in patch_steps(final)))
+T["ch_removed"] = both_runs(*(str(sum(s[2] > 0 for s in patch_steps(houses_of[n]))) for n in names))
+T["ch_last_removal"] = max(last_removal[n] for n in names)
+hallway_path = lambda n: [st.mean(hall_vals(n, s)) for s in "ABCDEFGH"]
+T["ch_last_hallway"] = max("ABCDEFGH"[i] for n in names for i in range(1, 8) if hallway_path(n)[i] != hallway_path(n)[i - 1])
+assert all(hallway_path(n)["ABCDEFGH".index(T["ch_last_hallway"]):] == [hallway_path(n)[-1]] * (8 - "ABCDEFGH".index(T["ch_last_hallway"]))
+           for n in names), "no costed patch step added a hallway after the last one named in the text"
+
+rows = [("Run", "Stepwise route A to H", "Planned build I", "One-shot route A and J", "Chains where the stepwise route cost less than I")]
+cheaper = 0
+for name in houses_of:
+    route = lambda steps: [sum(cost_of(name, c, s) for s in steps) for c in range(1, 7)]
+    a, b, j = route("ABCDEFGH"), route("I"), route("AJ")
+    n_cheaper = sum(x < y for x, y in zip(a, b))
+    label_ = name if name != FIRST else "First run, priced the same"
+    rows.append((label_,) + tuple("%.0f (%d–%d)" % (st.mean(v), min(v), max(v)) for v in (a, b, j)) + ("%d of 6" % n_cheaper,))
+    if name != FIRST:
+        cheaper += n_cheaper
+        assert all(x < y for x, y in zip(a, j)), "a costed stepwise route always cost less than the one-shot route"
+        assert max(a) < min(route_first for route_first in [sum(cost_of(FIRST, c, s) for s in "ABCDEFGH") for c in range(1, 7)]), \
+            "every costed stepwise route cost less than any first-run stepwise route, priced the same"
+T["ch_routes"] = md(rows)
+T["ch_cheaper"] = str(cheaper)                 # cheaper than I, and always cheaper than A and J: the cheapest of the three
+T["ch_money"] = both_runs(*("%.2f USD" % sum(r["agent_usage"]["cost_usd"] for r in cr[n][0] if parse_label(r["label"])) for n in names))
+T["ch_calls"] = both_runs(*(str(sum(1 for r in cr[n][0] if parse_label(r["label"]))) for n in names))
+T["ch_distinct_A"] = both_runs(*(str(len({shape(houses_of[n][(c, "A")][2]) for c in range(1, 7)})) for n in names))
+
+rows = [("Run", "Chain", "House", "Corridor rooms", "Privacy order", "Walking distance", "Compactness", "Hallways", "Cost of the script")]
+for n in names:
+    for c in range(1, 7):
+        for step in "HIJ":
+            sc = houses_of[n][(c, step)][1]
+            rows.append((n, str(c), step, "%d" % sc["corridor_rooms"], "%.2f" % sc["privacy_order"], "%.2f" % sc["walking_distance"],
+                         "%d" % sc["compactness"], str(halls(houses_of[n][(c, step)][2])), str(cost_of(n, c, step))))
+T["ch_per_chain"] = md(rows)
+h_run1 = vals(names[0], "H", "corridor_rooms")
+ch_example = min(range(1, 7), key=lambda c: (abs(h_run1[c - 1] - st.median(h_run1)), c))
+T["ch_example_chain"] = str(ch_example)
+d = [Drawing("%s (chain %d)" % (s, ch_example), houses_of[names[0]][(ch_example, s)][2]) for s in "HI"]
+T["ch_drawing"] = render_side_by_side(d).split("\n\nLegend:")[0]
+T["ch_prompt"] = "\n".join(textwrap.fill(line, 78) if len(line) > 100 else line
+                           for line in (ROOT / "house" / "prompt_template_hallways.txt").read_text().rstrip("\n").splitlines())
+
 
 WORDS = {str(n): w for n, w in enumerate("no one two three four five six seven eight nine ten".split())}
 for key in ("nh_rebuilt_same", "nh_rebuild_step_n", "nh_rebuild_step_rooms", "nh_rebuild_chains", "nh_attach_chains", "nh_a_intact",

@@ -6,6 +6,7 @@
 
 The template is house/prompt_template.txt: the document's prompt, with its two reference sections filled in
 from the document (the command syntax block, and the layout format paragraph with its example).
+For a run that allows hallways (--hallways) it is house/prompt_template_hallways.txt.
 """
 from __future__ import annotations
 
@@ -19,6 +20,7 @@ from typing import Optional, Sequence
 from .layout_format import empty_layout_text, format_layout, parse_layout
 
 TEMPLATE_PATH = Path(__file__).with_name("prompt_template.txt")
+HALLWAYS_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_hallways.txt")
 
 _REQUEST = re.compile(r"[a-z][a-z-]*: \S.*")
 
@@ -36,10 +38,11 @@ def check_request(request: str) -> str:
     return request
 
 
-def build_prompt(layout_text: str, request: str, template: Optional[str] = None) -> str:
+def build_prompt(layout_text: str, request: str, template: Optional[str] = None, hallways: bool = False) -> str:
     """The layout text is re-printed in canonical form, so a malformed layout fails here, not in the agent."""
     layout = format_layout(parse_layout(layout_text))
-    template = TEMPLATE_PATH.read_text().rstrip("\n") if template is None else template
+    if template is None:
+        template = (HALLWAYS_TEMPLATE_PATH if hallways else TEMPLATE_PATH).read_text().rstrip("\n")
     return template.replace("{{LAYOUT}}", layout).replace("{{REQUEST}}", check_request(request))
 
 
@@ -55,6 +58,7 @@ def main(argv: Sequence[str]) -> int:
     source.add_argument("--layout", type=Path, help="layout file to use")
     source.add_argument("--empty", action="store_true", help="use an empty grid")
     parser.add_argument("--server", default="http://127.0.0.1:8000", help="where to get the current layout")
+    parser.add_argument("--hallways", action="store_true", help="the prompt for a run that allows hallways")
     args = parser.parse_args(argv)
     try:
         if args.empty:
@@ -63,7 +67,7 @@ def main(argv: Sequence[str]) -> int:
             layout_text = args.layout.read_text()
         else:
             layout_text = fetch_layout(args.server)
-        print(build_prompt(layout_text, args.request))
+        print(build_prompt(layout_text, args.request, hallways=args.hallways))
     except (RequestError, ValueError, OSError) as e:
         print("error: %s" % e, file=sys.stderr)
         return 1

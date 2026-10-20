@@ -1,0 +1,2 @@
+room R10 bathroom C3
+door C2|C3

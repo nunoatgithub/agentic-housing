@@ -1,0 +1,8 @@
+room R1 living room B1
+room R2 kitchen A1
+room R3 bedroom C1
+room R4 bathroom B2
+door B1|west
+door B1|A1
+door B1|C1
+door B1|B2

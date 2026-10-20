@@ -1,0 +1,2 @@
+room R6 bedroom C2
+door B2|C2

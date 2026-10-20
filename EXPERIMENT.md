@@ -22,6 +22,15 @@ The language no longer has hallways (see `HOUSE_DSL.md`, room types). The run wi
 `paper/ANALYSIS_PLAN_no_hallways.md`, and its own data folder: pass `--runs runs_no_hallways` to both the server and
 `house.run_agents`. The houses in `runs/` still load, so `REPORT.md` can be rebuilt.
 
+Building and demolishing now cost (`PRICES` in `house/commands.py`: a room 4, a door or a window 1, whether built or
+removed), and the agents are told so. The run with costs has its own plan, `paper/ANALYSIS_PLAN_cost.md`, and data
+folder: `--runs runs_cost`. Each record holds the cost of its script, and the report has a cost column.
+
+A run with hallways passes `--hallways` to `house.run_agents` (and to `house.experiment prompt` and `send`): the agents
+get `house/prompt_template_hallways.txt`, and every script is sent with `hallways=1`, so the server lets it place
+hallways and the record says so. The run with costs and hallways: plan `paper/ANALYSIS_PLAN_cost_hallways.md`, data
+`--runs runs_cost_hallways`.
+
 ## Agent settings (identical for every agent in a comparison)
 
 - Model: **Sonnet 5.5**, effort: **medium**. The run label records them (`sonnet55-medium-c1-B`).

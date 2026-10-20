@@ -1,0 +1,31 @@
+{
+  "run_id": "run_0030",
+  "timestamp": "2026-10-20T11:59:40+00:00",
+  "label": "sonnet55-medium-c3-I",
+  "request": "build: living room, kitchen, bedroom x5, bathroom x4",
+  "hallways": true,
+  "command_count": 30,
+  "accepted": true,
+  "errors": [],
+  "script": "room R1 living room E3\nroom R2 kitchen E2\nroom R3 bedroom E4\nroom R4 hallway D3\nroom R5 hallway C3\nroom R6 hallway B3\nroom R7 hallway A3\nroom R8 bathroom D2\nroom R9 bathroom D4\nroom R10 bedroom C2\nroom R11 bedroom C4\nroom R12 bedroom B2\nroom R13 bedroom B4\nroom R14 bathroom A2\nroom R15 bathroom A4\ndoor E3|south\ndoor E3|E2\ndoor E3|E4\ndoor E3|D3\ndoor D3|C3\ndoor C3|B3\ndoor B3|A3\ndoor D3|D2\ndoor D3|D4\ndoor C3|C2\ndoor C3|C4\ndoor B3|B2\ndoor B3|B4\ndoor A3|A2\ndoor A3|A4",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    .    R14  R7   R15  .\nB    .    R12  R6   R13  .\nC    .    R10  R5   R11  .\nD    .    R8   R4   R9   .\nE    .    R2   R1   R3   .\n\nrooms\nR1  living room   E3\nR2  kitchen       E2\nR3  bedroom       E4\nR4  hallway       D3\nR5  hallway       C3\nR6  hallway       B3\nR7  hallway       A3\nR8  bathroom      D2\nR9  bathroom      D4\nR10 bedroom       C2\nR11 bedroom       C4\nR12 bedroom       B2\nR13 bedroom       B4\nR14 bathroom      A2\nR15 bathroom      A4\n\ndoors\nA2|A3\nA3|A4\nA3|B3\nB2|B3\nB3|B4\nB3|C3\nC2|C3\nC3|C4\nC3|D3\nD2|D3\nD3|D4\nD3|E3\nE2|E3\nE3|E4\nE3|south          entrance\n\nwindows",
+  "drawing": "run_0030\nVALID\n\n      1       2       3       4       5\n          +-------+-------+-------+\n          |  R14  |   R7  |  R15  |\nA         |  bath |hallway|  bath |\n          |                       |\n          +-------+-[   ]-+-------+\n          |  R12  |   R6  |  R13  |\nB         |bedroom|hallway|bedroom|\n          |                       |\n          +-------+-[   ]-+-------+\n          |  R10  |   R5  |  R11  |\nC         |bedroom|hallway|bedroom|\n          |                       |\n          +-------+-[   ]-+-------+\n          |   R8  |   R4  |   R9  |\nD         |  bath |hallway|  bath |\n          |                       |\n          +-------+-[   ]-+-------+\n          |   R2  |   R1  |   R3  |\nE         |kitchen| living|bedroom|\n          |                       |\n          +-------+[ENTRY]+-------+\n\ncorridor rooms    0\nprivacy order     0.03\nwalking distance  3.05\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 0,
+    "privacy_order": 0.0278,
+    "walking_distance": 3.0476,
+    "compactness": 0
+  },
+  "cost": 75,
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 341,
+    "cache_read_input_tokens": 1406,
+    "output_tokens": 996,
+    "thinking_tokens": 732,
+    "cost_usd": 0.0114686,
+    "duration_ms": 9153
+  }
+}

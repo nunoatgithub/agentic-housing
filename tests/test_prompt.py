@@ -113,3 +113,41 @@ def test_the_prompt_example_is_a_valid_house():
     example = template[template.index("grid 5x5"):template.index("\n\nAn empty grid")]
     assert check_rules(parse_layout(example)) == []
     assert example == Path("examples/example_house.txt").read_text().rstrip("\n")
+
+
+def test_the_prices_in_the_prompt_are_the_prices_charged():
+    from house.commands import PRICES, AddDoor, AddWindow, PlaceRoom, RemoveDoor, RemoveRoom, RemoveWindow
+    prompt = build_prompt(empty_layout_text(), "add: bathroom")
+    listed = {}
+    for line in prompt[prompt.index("COST\n"):prompt.index("\n\nLANGUAGE")].splitlines():
+        m = re.fullmatch(r"(\w+), remove (\w+) +(\d+)\b.*", line)
+        if m:
+            listed[m[1]] = int(m[3])
+    assert listed == {"room": PRICES[PlaceRoom], "door": PRICES[AddDoor], "window": PRICES[AddWindow]}
+    assert PRICES[RemoveRoom] == PRICES[PlaceRoom] and PRICES[RemoveDoor] == PRICES[AddDoor] and PRICES[RemoveWindow] == PRICES[AddWindow]
+    assert "Your work is also judged by the total cost of your script." in prompt
+
+
+def test_the_hallway_prompt_differs_from_the_default_only_about_hallways():
+    def without_example(path):
+        text = Path(path).read_text()
+        return text[:text.index("grid 5x5")] + text[text.index("An empty grid"):]
+    plain, hallways = without_example("house/prompt_template.txt"), without_example("house/prompt_template_hallways.txt")
+    for a, b in (
+        ("current layout plus the ones listed. You may remove, replace or rebuild\n   rooms along the way; only the final count of each requested room type\n   matters.",
+         "current layout plus the ones listed. Hallways may be added or removed\n   unless the request names them. You may remove, replace or rebuild rooms\n   along the way; only the final count of each requested room type matters."),
+        ("sit further in.\n", "sit further in. Hallways are for passing through.\n"),
+        ("Room types: living room, kitchen, bedroom, bathroom. There are no hallways.", "Room types: living room, kitchen, bedroom, bathroom, hallway."),
+    ):
+        assert plain.count(a) == 1
+        plain = plain.replace(a, b)
+    assert plain == hallways
+
+
+def test_the_hallway_prompt_example_is_a_valid_house_with_a_hallway():
+    from house.layout_format import parse_layout
+    from house.rules import check_rules
+    template = Path("house/prompt_template_hallways.txt").read_text()
+    example = parse_layout(template[template.index("grid 5x5"):template.index("\n\nAn empty grid")])
+    assert check_rules(example) == [] and "hallway" in {r.type for r in example.rooms.values()}
+    assert build_prompt(empty_layout_text(), "add: bedroom", hallways=True).count("{{") == 0

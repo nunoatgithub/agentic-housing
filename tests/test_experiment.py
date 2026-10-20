@@ -21,9 +21,9 @@ door A1|B1
 door A2|B2
 door A2|A3
 """
-B = "add bathroom next to R4\n"
-C = "add bedroom next to R3\n"
-D = "add bedroom next to R7\n"
+B = "room R6 bathroom B3\ndoor B2|B3\n"
+C = "room R7 bedroom C1\ndoor B1|C1\n"
+D = "room R8 bedroom C2\ndoor C1|C2\n"
 F = B + C + D        # the big delta: all three additions in one script, on A's house
 E = """room R1 living room A1
 room R2 kitchen A2
@@ -124,7 +124,7 @@ def test_send_tells_the_operator_how_it_went(setup):
     runs, url, _ = setup
     ok = send(Label("sonnet55", "medium", 1, "A"), A, runs, url)
     assert ok.endswith("valid.")
-    rejected = send(Label("sonnet55", "medium", 1, "B"), "add bathroom next to R9\n", runs, url)
+    rejected = send(Label("sonnet55", "medium", 1, "B"), "remove room R9\n", runs, url)
     assert "REJECTED" in rejected and "fresh agent" in rejected
     invalid = send(Label("sonnet55", "medium", 1, "B"), "room R6 bedroom D4\n", runs, url)
     assert "INVALID (rules 1, 2, 3, 6)" in invalid
@@ -222,7 +222,7 @@ def test_e_builds_every_requested_room_whatever_the_patching_agents_did(setup):
         parse_layout_text_empty(), "build: living room, kitchen, bedroom x4, bathroom x2")
     for step, script in zip("ABC", (A, B, C)):
         send(Label("sonnet55", "medium", 1, step), script, runs, url)
-    send(Label("sonnet55", "medium", 1, "D"), "remove bathroom R6\nadd bedroom next to R7\n", runs, url)
+    send(Label("sonnet55", "medium", 1, "D"), "remove room R6\nroom R8 bedroom C2\ndoor C1|C2\n", runs, url)
     assert request_for("E", load_runs(runs), Label("sonnet55", "medium", 1, "E"))[1] == \
         "build: living room, kitchen, bedroom x4, bathroom x2"
 
@@ -302,3 +302,17 @@ def test_the_prompt_says_rooms_may_be_replaced_along_the_way():
     from house.prompt import build_prompt
     prompt = " ".join(build_prompt(empty_layout_text(), "add: bedroom").split())
     assert "only the final count of each requested room type matters" in prompt
+
+
+def test_a_run_with_hallways_gets_the_hallway_prompt_and_may_build_them(setup):
+    from house.run_agents import run_chain
+    runs, url, _ = setup
+    with_hallway = A + "room R6 hallway C1\ndoor B1|C1\n"           # A's house with a hallway off the bedroom
+    prompts = []
+    def agent(prompt):
+        prompts.append(prompt)
+        return with_hallway
+    assert run_chain(1, "sonnet55", "medium", runs, url, 1, agent, lambda m: None, steps=["A"], hallways=True)
+    record = load_runs(runs)[0]
+    assert record["valid"] and record["hallways"] is True and "R6  hallway" in record["layout"]
+    assert "Hallways are for passing through." in prompts[0] and "There are no hallways." not in prompts[0]

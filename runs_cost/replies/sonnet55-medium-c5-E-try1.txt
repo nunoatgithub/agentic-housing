@@ -1,0 +1,2 @@
+room R8 bathroom B4
+door B4|A4

@@ -22,7 +22,7 @@ A house is a single floor laid out on a small grid, where every room occupies on
 **Terms:** a *cell* is one square of the grid; a *room* is what occupies it.
 
 - **Grid:** 5×5 (25 cells), enough room for the house to grow over seven change requests without filling the grid. Checking one house against the rules and scores must be near-instant; enumerating every layout is optional.
-- **Room types:** living room, kitchen, bedroom, bathroom. There are no hallways. In the 5×5 run every final house had four to seven of them: a hallway costs nothing and fixes any access problem, so patched and planned houses both ended up as rooms hung off a spine of hallways, and the hallways hid any difference between them. Without hallways every cell holds a requested room, and a house is good or bad by where its rooms are and how its doors join them.
+- **Room types:** living room, kitchen, bedroom, bathroom. There are no hallways. In the 5×5 run every final house had four to seven of them: a hallway costs nothing and fixes any access problem, so patched and planned houses both ended up as rooms hung off a spine of hallways, and the hallways hid any difference between them. Without hallways every cell holds a requested room, and a house is good or bad by where its rooms are and how its doors join them. Hallways are a setting of a run: a run that allows them (`--hallways`) uses `house/prompt_template_hallways.txt`, and its scripts may place hallways; otherwise a script that places one is rejected.
 - **Adjacency:** two cells are neighbours if they share an edge (left, right, above, below). "Next to" always means this.
 - **No merging:** rooms are never merged. Every room is exactly one cell, so a room touches at most four others. The language has no command that joins two rooms.
 
@@ -30,21 +30,17 @@ A house is a single floor laid out on a small grid, where every room occupies on
 
 A program is an ordered sequence of commands; running it builds the house step by step, following the order of real construction: shell, then interior walls, then openings.
 
-**Low-level primitives** (mirror physical construction):
+**Commands** (mirror physical construction):
 
 | Add | Remove |
 | --- | --- |
-| add wall | remove wall |
+| place a room | remove a room |
 | add door to wall | remove door |
 | add window to wall | remove window |
 
+Walls are implied, never written: a wall stands on every edge between two different rooms and between a room and the outside. The language once had commands to add and remove walls, which changed nothing, and composite commands such as `add bathroom next to R4`; no agent used any of them in three runs, so they are gone.
+
 A door belongs to a wall, so it is automatically shared by the two spaces on either side. A door in an outer wall leads outside.
-
-**Composite commands** (pre-prepared compositions, like functions):
-
-- `add bathroom next to bedroom`, `remove bathroom`, `add kitchen`, and so on.
-- Each expands into low-level primitives, depending on context: it reuses existing walls (a bathroom next to a bedroom reuses their shared wall) and adds doors only where the rules require them.
-- The expansion is visible, so an experiment can compare what an agent wrote at each level.
 
 ## Hard rules (validity)
 
@@ -90,7 +86,7 @@ The only variable is how the task is framed; information, rules and good-house p
 | Attempts | One | One |
 | Allowed to demolish and rebuild | Yes | Not applicable |
 
-**Demolition and building are free.** Adding or removing a wall, door or window costs nothing. Agents already carry an implicit "smallest change that works" mandate, which stands in for both cost and risk. Pricing walls would model a different problem (financial or runtime cost) that agents do not actually weigh. With zero cost, any preference for patching is the agent's own habit, which is exactly what the experiment observes. The number of statements each agent changes is recorded as evidence of that habit, not as a cost.
+**Building and demolishing cost.** In the first runs nothing cost anything, so any preference for patching would have been the agent's own habit. None showed: agents attached rooms while that worked and redesigned, up to rebuilding the whole house, when it did not, so they have no intrinsic bias toward locality when redesign is free. Locality may come from cost instead. Every command now has a price, whether it builds or removes, because rebuilding means paying to remove the old and paying again to build it back: a room costs 4 (four walls), a door or a window 1. Agents are told the prices and that their work is also judged by the total cost of the script; there is no budget and no exchange rate between cost and quality, so the trade-off is the agent's own. Planning from scratch pays for every room too.
 
 **The agent is a professional, judged on design.** Each agent is briefed as an experienced house builder who already knows what makes a good house and why. It hands in its whole program in one go, as a single design, with no trial and error and no checks along the way. The design is then checked against the hard rules and scored once. The experiment studies how the agent designs the change, not how it implements it.
 
@@ -159,15 +155,11 @@ The example is a valid house of three rooms: the entrance is in the living room,
 ```
 room R6 bedroom C2          place a new room on an empty cell; walls go up around it
 remove room R6              clear the room's cells and everything on its walls
-wall B2|B3                  add a wall on an edge
-remove wall B2|B3           remove a wall between two cells
 door B1|B2                  add a door in the wall between two cells
 door A1|north               add a door in an outer wall (living room only)
 remove door B1|B2
 window B2|east              add a window in an outer wall
 remove window B2|east
-add bathroom next to R4     composite: expands into the commands above
-remove bathroom R5          composite
 ```
 
 **Standard prompt template** (identical for Claude, Codex, or any agent; preferred over a skill so it is not tied to one vendor):
@@ -205,7 +197,11 @@ GOOD-HOUSE PRINCIPLES (your work is judged by these)
 - Keep the house compact, with nothing sticking out.
 
 COST
-Building and removing walls, doors, windows and rooms costs nothing.
+Every command costs something, whether it builds or removes:
+room, remove room           4 (a room is four walls)
+door, remove door           1
+window, remove window       1
+Your work is also judged by the total cost of your script.
 You may change anything in the current layout.
 
 LANGUAGE

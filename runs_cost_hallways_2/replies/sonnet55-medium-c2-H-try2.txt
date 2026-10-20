@@ -1,0 +1,2 @@
+room R15 bedroom E2
+door D2|E2

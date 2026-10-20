@@ -15,9 +15,10 @@ COLS = 5
 ROW_LETTERS = "ABCDE"
 
 ROOM_TYPES = ("living room", "kitchen", "bedroom", "bathroom")
-# The houses of the 5x5 run also had hallways. The language no longer builds them (a hallway costs nothing and fixes
-# any access problem, so it hid every difference between patched and planned houses), but those houses still load.
-LOADABLE_TYPES = ROOM_TYPES + ("hallway",)
+# Hallways are built only in runs that allow them (run_script(..., hallways=True)). Without a cost, a hallway fixes any
+# access problem, so it hid every difference between patched and planned houses; the default world has none.
+HALLWAY = "hallway"
+LOADABLE_TYPES = ROOM_TYPES + (HALLWAY,)
 
 # Room ids are "R" followed by a number (no leading zero, at most 3 digits).
 ROOM_ID_RE = re.compile(r"R[1-9][0-9]{0,2}\Z")
