@@ -1,0 +1,39 @@
+label: sonnet55-medium-c4-E   at 2026-10-20T10:10:11+00:00   commands: 3
+
+SCRIPT
+room R8 bathroom A4
+door A3|A4
+window A4|north
+
+run_0038
+VALID
+
+      1       2       3       4       5
+  +--###--+[ENTRY]+--###--+--###--+
+  |   R2  |   R1  |   R3  |   R8  |
+A |kitchen| living|bedroom|  bath |
+  #                               |
+  +-------+-[   ]-+-[   ]-+-------+
+  |   R6  |   R5  |   R4  |
+B |  bath |bedroom|  bath |
+  #               |       #
+  +-------+-[   ]-+-------+
+          |   R7  |
+C         |bedroom|
+          |       |
+          +--###--+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    4
+privacy order     0.08
+walking distance  2.32
+compactness       2
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

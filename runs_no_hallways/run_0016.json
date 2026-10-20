@@ -1,0 +1,73 @@
+{
+  "run_id": "run_0016",
+  "timestamp": "2026-10-20T10:05:37+00:00",
+  "label": "sonnet55-medium-c2-D",
+  "request": "add: bedroom",
+  "command_count": 6,
+  "accepted": true,
+  "errors": [],
+  "script": "remove room R4\nroom R7 bedroom B2\ndoor A2|B2\nroom R8 bathroom B1\ndoor B1|B2\nwindow B2|south",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R2   R1   R3   .    .\nB    R8   R7   R5   R6   .\nC    .    .    .    .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A2\nR2  kitchen       A1\nR3  bedroom       A3\nR5  bedroom       B3\nR6  bathroom      B4\nR7  bedroom       B2\nR8  bathroom      B1\n\ndoors\nA1|A2\nA2|north          entrance\nA2|A3\nA2|B2\nA3|B3\nB1|B2\nB3|B4\n\nwindows\nA1|north\nA1|west\nA3|north\nA3|east\nB2|south",
+  "drawing": "run_0016\nVALID\n\n      1       2       3       4       5\n  +--###--+[ENTRY]+--###--+\n  |   R2  |   R1  |   R3  |\nA |kitchen| living|bedroom|\n  #                       #\n  +-------+-[   ]-+-[   ]-+-------+\n  |   R8  |   R7  |   R5  |   R6  |\nB |  bath |bedroom|bedroom|  bath |\n  |               |               |\n  +-------+--###--+-------+-------+\n\nC\n\n\n\nD\n\n\n\nE\n\n\n\ncorridor rooms    4\nprivacy order     0.10\nwalking distance  2.38\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 4,
+    "privacy_order": 0.1,
+    "walking_distance": 2.381,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "remove room R4",
+      "primitives": [
+        "remove room R4"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "room R7 bedroom B2",
+      "primitives": [
+        "room R7 bedroom B2"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "door A2|B2",
+      "primitives": [
+        "door A2|B2"
+      ]
+    },
+    {
+      "line": 4,
+      "command": "room R8 bathroom B1",
+      "primitives": [
+        "room R8 bathroom B1"
+      ]
+    },
+    {
+      "line": 5,
+      "command": "door B1|B2",
+      "primitives": [
+        "door B1|B2"
+      ]
+    },
+    {
+      "line": 6,
+      "command": "window B2|C2",
+      "primitives": [
+        "window B2|C2"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1833,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1529,
+    "thinking_tokens": 1480,
+    "cost_usd": 0.022626,
+    "duration_ms": 13792
+  }
+}

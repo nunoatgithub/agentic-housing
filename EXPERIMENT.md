@@ -18,6 +18,10 @@ scratch (I) differ on the four scores. The requests and the steps are defined at
 
 The grid is 5×5. The analysis plan of the run reported in `REPORT.md` is `paper/ANALYSIS_PLAN.md`; its data are in `runs/`.
 
+The language no longer has hallways (see `HOUSE_DSL.md`, room types). The run without them has its own plan,
+`paper/ANALYSIS_PLAN_no_hallways.md`, and its own data folder: pass `--runs runs_no_hallways` to both the server and
+`house.run_agents`. The houses in `runs/` still load, so `REPORT.md` can be rebuilt.
+
 ## Agent settings (identical for every agent in a comparison)
 
 - Model: **Sonnet 5.5**, effort: **medium**. The run label records them (`sonnet55-medium-c1-B`).

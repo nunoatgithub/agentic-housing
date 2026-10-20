@@ -42,8 +42,7 @@ def check_requested_rooms(before: Layout, after: Layout, request: Optional[str])
     """The finished house must have exactly the number of rooms the request asked for.
 
     'build': each room type listed, exactly that many. 'add': the rooms the house started with, plus the ones
-    asked for. Hallways are free unless the request names them. No request (or one this does not understand)
-    means nothing to check.
+    asked for. No request (or one this does not understand) means nothing to check.
     """
     parsed = parse_request(request)
     if not parsed:
@@ -52,8 +51,6 @@ def check_requested_rooms(before: Layout, after: Layout, request: Optional[str])
     count = lambda layout, t: sum(1 for r in layout.rooms.values() if r.type == t)
     violations = []
     for t in ROOM_TYPES:
-        if t == "hallway" and t not in asked:
-            continue
         need = count(before, t) + asked.get(t, 0) if kind == "add" else asked.get(t)
         if need is None or count(after, t) == need:
             continue

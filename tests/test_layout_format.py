@@ -11,7 +11,7 @@ def test_example_parses(example_text):
     assert {rid: (r.type, sorted(map(str, r.cells))) for rid, r in layout.rooms.items()} == {
         "R1": ("living room", ["A1"]),
         "R2": ("kitchen", ["A2"]),
-        "R3": ("hallway", ["B1"]),
+        "R3": ("living room", ["B1"]),
         "R4": ("bedroom", ["B2"]),
         "R5": ("bathroom", ["C1"]),
     }

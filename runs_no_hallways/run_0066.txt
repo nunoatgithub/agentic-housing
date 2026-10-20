@@ -1,0 +1,62 @@
+label: sonnet55-medium-c6-J   at 2026-10-20T10:16:52+00:00   commands: 23
+
+SCRIPT
+room R5 bedroom B1
+room R6 bedroom B3
+room R7 bathroom C2
+room R8 bedroom A4
+room R9 bedroom B4
+room R10 bathroom C1
+room R11 bathroom C3
+door B1|B2
+door B2|B3
+door B2|C2
+door A3|A4
+door B3|B4
+door C1|C2
+door C2|C3
+window B1|west
+window C1|west
+window C1|south
+window C2|south
+window C3|south
+window A4|north
+window A4|east
+window B4|east
+window B3|south
+
+SCRIPT REJECTED, house unchanged:
+  line 23: window B3|south -> B3|C3 is not an outer wall, so it cannot take a window
+
+run_0066
+VALID
+
+      1       2       3       4       5
+  +--###--+[ENTRY]+--###--+
+  |   R2  |   R1  |   R3  |
+A |kitchen| living|bedroom|
+  |                       #
+  +-------+-[   ]-+-------+
+          |   R4  |
+B         |  bath |
+          |       |
+          +--###--+
+
+C
+
+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.25
+walking distance  1.50
+compactness       2
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

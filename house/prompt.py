@@ -2,7 +2,7 @@
 
     python -m house.prompt "add: bathroom"                       layout from the running server
     python -m house.prompt "add: bathroom" --layout house.txt    layout from a file
-    python -m house.prompt "build: living room, kitchen, bedroom x2, bathroom, hallway" --empty
+    python -m house.prompt "build: living room, kitchen, bedroom x2, bathroom" --empty
 
 The template is house/prompt_template.txt: the document's prompt, with its two reference sections filled in
 from the document (the command syntax block, and the layout format paragraph with its example).
@@ -32,7 +32,7 @@ def check_request(request: str) -> str:
     request = " ".join(request.split())
     if not _REQUEST.fullmatch(request):
         raise RequestError("bad request %r: expected '<keyword>: <details>', like 'add: bathroom' or "
-                           "'build: living room, kitchen, bedroom x2, bathroom, hallway'" % request)
+                           "'build: living room, kitchen, bedroom x2, bathroom'" % request)
     return request
 
 

@@ -14,7 +14,10 @@ ROWS = 5
 COLS = 5
 ROW_LETTERS = "ABCDE"
 
-ROOM_TYPES = ("living room", "kitchen", "bedroom", "bathroom", "hallway")
+ROOM_TYPES = ("living room", "kitchen", "bedroom", "bathroom")
+# The houses of the 5x5 run also had hallways. The language no longer builds them (a hallway costs nothing and fixes
+# any access problem, so it hid every difference between patched and planned houses), but those houses still load.
+LOADABLE_TYPES = ROOM_TYPES + ("hallway",)
 
 # Room ids are "R" followed by a number (no leading zero, at most 3 digits).
 ROOM_ID_RE = re.compile(r"R[1-9][0-9]{0,2}\Z")
@@ -171,8 +174,8 @@ class Room:
     def __post_init__(self) -> None:
         if not ROOM_ID_RE.match(self.id):
             raise ModelError("bad room id %r: expected R followed by a number, like R3" % self.id)
-        if self.type not in ROOM_TYPES:
-            raise ModelError("bad room type %r: expected one of %s" % (self.type, ", ".join(ROOM_TYPES)))
+        if self.type not in LOADABLE_TYPES:
+            raise ModelError("bad room type %r: expected one of %s" % (self.type, ", ".join(LOADABLE_TYPES)))
         if not self.cells:
             raise ModelError("room %s has no cells" % self.id)
 

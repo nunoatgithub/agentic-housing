@@ -300,4 +300,5 @@ def test_usage_is_saved_in_the_run_record_and_reported(setup):
 def test_the_prompt_says_rooms_may_be_replaced_along_the_way():
     from house.layout_format import empty_layout_text
     from house.prompt import build_prompt
-    assert "only the final count of each requested room type matters" in build_prompt(empty_layout_text(), "add: bedroom")
+    prompt = " ".join(build_prompt(empty_layout_text(), "add: bedroom").split())
+    assert "only the final count of each requested room type matters" in prompt

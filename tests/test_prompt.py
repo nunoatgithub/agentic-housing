@@ -34,9 +34,9 @@ def test_slots_are_filled(example_text):
 
 
 def test_empty_grid_build_request():
-    prompt = build_prompt(empty_layout_text(), "build: living room, kitchen, bedroom x2, bathroom, hallway")
+    prompt = build_prompt(empty_layout_text(), "build: living room, kitchen, bedroom x2, bathroom")
     assert "CURRENT LAYOUT\n" + empty_layout_text() in prompt
-    assert "REQUEST\nbuild: living room, kitchen, bedroom x2, bathroom, hallway\n" in prompt
+    assert "REQUEST\nbuild: living room, kitchen, bedroom x2, bathroom\n" in prompt
 
 
 def test_prompt_never_mentions_scores_or_formulas():
@@ -46,7 +46,7 @@ def test_prompt_never_mentions_scores_or_formulas():
 
 
 @pytest.mark.parametrize("ok", [
-    "add: bathroom", "build: living room, kitchen, bedroom x2, bathroom, hallway", "build:  kitchen",
+    "add: bathroom", "build: living room, kitchen, bedroom x2, bathroom", "build:  kitchen",
     "remove: bedroom", "rebuild: everything",
 ])
 def test_structured_requests_are_accepted(ok):
@@ -67,7 +67,7 @@ def test_malformed_layout_is_refused():
 def test_cli_reads_a_layout_file(capsys):
     assert main(["add: bathroom", "--layout", "examples/example_house.txt"]) == 0
     out = capsys.readouterr().out
-    assert "R5  bathroom      C1" in out and out.rstrip().endswith("Reply with the script only, one command per line.")
+    assert "R3  bedroom       B1" in out and out.rstrip().endswith("Reply with the script only, one command per line.")
 
 
 def test_cli_empty_and_errors(capsys):
@@ -98,3 +98,18 @@ def test_prompt_lists_the_one_kitchen_rule_and_no_merging():
     prompt = build_prompt(empty_layout_text(), "add: bathroom")
     assert "5. A house never has more than one kitchen." in prompt
     assert "merge" not in prompt.lower()
+
+
+def test_the_prompt_names_the_room_types_and_has_no_hallways():
+    prompt = build_prompt(empty_layout_text(), "add: bathroom")
+    assert "Room types: living room, kitchen, bedroom, bathroom. There are no hallways." in prompt
+    assert prompt.lower().count("hallway") == 1
+
+
+def test_the_prompt_example_is_a_valid_house():
+    from house.layout_format import parse_layout
+    from house.rules import check_rules
+    template = Path("house/prompt_template.txt").read_text()
+    example = template[template.index("grid 5x5"):template.index("\n\nAn empty grid")]
+    assert check_rules(parse_layout(example)) == []
+    assert example == Path("examples/example_house.txt").read_text().rstrip("\n")

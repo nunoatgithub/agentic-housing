@@ -40,16 +40,10 @@ def test_too_many_rooms_is_invalid_too():
     assert rules_broken(result) == [6] and "needs 1 bedroom but the house has 2" in result.violations[0].message
 
 
-def test_unlisted_types_in_a_build_are_free_and_so_are_hallways():
-    result = run_script("room R1 living room A1\nroom R2 hallway A2\nroom R3 bedroom A3\nroom R4 kitchen B1\n"
-                        "door A1|north\ndoor A1|A2\ndoor A2|A3\ndoor A1|B1\n", request="build: living room, bedroom")
-    assert result.valid                          # the kitchen was not mentioned, the hallway never needs to be
-
-
-def test_a_build_that_names_hallways_must_match_them():
-    result = run_script("room R1 living room A1\nroom R2 bedroom A2\ndoor A1|north\ndoor A1|A2\n",
-                        request="build: living room, bedroom, hallway")
-    assert rules_broken(result) == [6]
+def test_unlisted_types_in_a_build_are_free():
+    result = run_script("room R1 living room A1\nroom R3 bedroom A3\nroom R2 bedroom A2\nroom R4 kitchen B1\n"
+                        "door A1|north\ndoor A1|A2\ndoor A2|A3\ndoor A1|B1\n", request="build: living room, bedroom x2")
+    assert result.valid                          # the kitchen was not mentioned
 
 
 def test_add_means_what_was_there_plus_the_additions(example_text):
@@ -68,10 +62,10 @@ def test_demolishing_and_rebuilding_is_fine_if_the_count_comes_out_right(example
     assert result.valid
 
 
-def test_hallways_may_be_added_to_a_patch(example_text):
+def test_a_patch_cannot_add_a_living_room_to_pass_through(example_text):
     start = parse_layout(example_text)
-    result = run_script("room R6 hallway B3\ndoor B2|B3\nroom R7 bedroom C3\ndoor B3|C3\n", start, "add: bedroom")
-    assert result.valid
+    result = run_script("room R6 living room B3\ndoor B2|B3\nroom R7 bedroom C3\ndoor B3|C3\n", start, "add: bedroom")
+    assert rules_broken(result) == [6] and "needs 2 living room but the house has 3" in result.violations[0].message
 
 
 def test_no_request_means_nothing_to_check():

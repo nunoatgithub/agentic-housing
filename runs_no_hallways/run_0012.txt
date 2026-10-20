@@ -1,0 +1,56 @@
+label: sonnet55-medium-c2-A   at 2026-10-20T10:04:49+00:00   commands: 14
+
+SCRIPT
+room L1 living room A1
+room K1 kitchen A2
+room B1 bedroom B1
+room T1 bathroom B2
+door A1|north
+door A1|A2
+door A1|B1
+door A2|B2
+window A2|north
+window A2|east
+window B1|west
+window B1|south
+window B2|east
+window B2|south
+
+SCRIPT REJECTED, house unchanged:
+  line 1: room L1 living room A1 -> cannot understand 'room L1 living room A1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 2: room K1 kitchen A2 -> cannot understand 'room K1 kitchen A2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 3: room B1 bedroom B1 -> cannot understand 'room B1 bedroom B1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 4: room T1 bathroom B2 -> cannot understand 'room T1 bathroom B2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+
+run_0012
+INVALID (rule 4)
+
+      1       2       3       4       5
+
+
+A
+
+
+
+B
+
+
+
+C
+
+
+
+D
+
+
+
+E
+
+
+
+scores: none (house is invalid)
+
+Broken rules:
+  rule 4 (one entrance): the house has no living room
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

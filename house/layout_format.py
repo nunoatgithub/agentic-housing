@@ -7,7 +7,7 @@ from typing import Dict, List, Optional, Set, Tuple
 from .model import (
     COLS,
     ROOM_ID_RE,
-    ROOM_TYPES,
+    LOADABLE_TYPES,
     ROW_LETTERS,
     ROWS,
     SIDE_ORDER,
@@ -200,8 +200,8 @@ def _parse_room_line(line: str, n: int) -> Room:
     room_id, type_words, cell_token = tokens[0], " ".join(tokens[1:-1]), tokens[-1]
     if not ROOM_ID_RE.match(room_id):
         raise ParseError("bad room id %r: expected R followed by a number, like R3" % room_id, n)
-    if type_words not in ROOM_TYPES:
-        raise ParseError("bad room type %r: expected one of %s" % (type_words, ", ".join(ROOM_TYPES)), n)
+    if type_words not in LOADABLE_TYPES:
+        raise ParseError("bad room type %r: expected one of %s" % (type_words, ", ".join(LOADABLE_TYPES)), n)
     try:
         cells = [Cell.parse(t) for t in cell_token.split(",")]
     except ModelError as e:

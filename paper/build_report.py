@@ -306,7 +306,56 @@ ds = {s: Drawing("%s (chain %d)" % (s, example_chain), final[(example_chain, s)]
 T["drawing_1"] = render_side_by_side([ds["A"], ds["H"]]).split("\n\nLegend:")[0]
 T["drawing_2"] = render_side_by_side([ds["I"], ds["J"]]).split("\n\nLegend:")[0]
 T["prompt"] = "\n".join(textwrap.fill(line, 78) if len(line) > 100 else line
-                        for line in (ROOT / "house" / "prompt_template.txt").read_text().rstrip("\n").splitlines())
+                        for line in (ROOT / "paper" / "prompt_5x5_run.txt").read_text().rstrip("\n").splitlines())
+
+# ---- second run: houses without hallways (only the counts the text uses; each claim in the text is checked here)
+assert all(sum(r.type == "hallway" for r in final[k][2].rooms.values()) >= 3 for k in finals), "every first-run final house has several hallways"
+nh_runs = load_runs(ROOT / "runs_no_hallways")
+nh = {}
+for chain in range(1, 7):
+    for step in STEPS:
+        f = final_house(nh_runs, Label("sonnet55", EFFORT, chain, step))
+        if f:
+            nh[(chain, step)] = (f, scores_of(f), parse_layout(f["layout"]))
+nh_values = lambda step, score: [nh[(c, step)][1][score] for c in range(1, 7)]
+assert all((c, s) in nh for c in range(1, 7) for s in STEPS), "every chain has a valid house at every step"
+assert all(x >= 3 for s in "HIJ" for x in nh_values(s, "corridor_rooms")), "every final house has a corridor score of 3 or more"
+assert st.mean(nh_values("I", "corridor_rooms")) >= st.mean(nh_values("H", "corridor_rooms")), "planning found no fewer forced passages"
+assert len({x for s in "HIJ" for x in nh_values(s, "privacy_order")}) == 1, "privacy order is the same in every final house"
+assert min(perm_p(nh_values(p, s), nh_values("I", s)) for s in SCORES for p in "HJ") > 0.05, "no planned test comes near a difference"
+corridor_path = [st.mean(nh_values(s, "corridor_rooms")) for s in "ABCDEFGH"]
+assert all(b > a for a, b in zip(corridor_path, corridor_path[1:])), "corridor rooms rises with every patch step"
+steps = []                                   # (chain, step, rooms removed, rooms before, share of the previous house unchanged)
+for c in range(1, 7):
+    for step in PATCHES:
+        prev, cur = nh[(c, chr(ord(step) - 1))], nh[(c, step)]
+        gone = [l for l in cur[0]["script"].splitlines() if l.strip().startswith("remove room") and l.split()[2] in prev[2].rooms]
+        steps.append((c, step, len(gone), len(prev[2].rooms), same(prev[2], cur[2])))
+rebuilds = [s for s in steps if s[2] == s[3]]
+assert all(s[2] in (0, 1) for s in steps if s not in rebuilds), "a step removes no room, one room or every room"
+T["nh_patch_steps"] = str(len(steps))
+assert all(s[4] == 1 for s in steps if s[2] == 0), "a step that removes no room keeps every room where it was"
+T["nh_attached"] = str(sum(1 for s in steps if s[2] == 0))
+T["nh_one_room"] = str(sum(1 for s in steps if s[2] == 1))
+T["nh_rebuilt"] = str(len(rebuilds))
+T["nh_rebuilt_same"] = str(sum(1 for s in rebuilds if s[4] >= 0.5))
+step_counts = Counter(s[1] for s in rebuilds)
+top_step, top_n = step_counts.most_common(1)[0]
+T["nh_rebuild_step"], T["nh_rebuild_step_n"] = top_step, str(top_n)
+T["nh_rebuild_step_rooms"] = str(next(s[3] for s in rebuilds if s[1] == top_step))
+rebuild_chains = sorted({s[0] for s in rebuilds})
+attach_chains = [c for c in range(1, 7) if c not in rebuild_chains]
+T["nh_rebuild_chains"], T["nh_attach_chains"] = str(len(rebuild_chains)), str(len(attach_chains))
+assert st.mean(nh[(c, "H")][1]["corridor_rooms"] for c in rebuild_chains) >= st.mean(nh[(c, "H")][1]["corridor_rooms"] for c in attach_chains), \
+    "chains that rebuilt ended no better than chains that only attached"
+a_kept = [same(nh[(c, "A")][2], nh[(c, "H")][2]) for c in range(1, 7)]
+T["nh_a_intact"] = str(sum(x == 1 for x in a_kept))
+T["nh_a_quarter"] = str(sum(x <= 0.25 for x in a_kept))
+T["nh_distinct_A"] = str(len({shape(nh[(c, "A")][2]) for c in range(1, 7)}))
+WORDS = {str(n): w for n, w in enumerate("no one two three four five six seven eight nine ten".split())}
+for key in ("nh_rebuilt_same", "nh_rebuild_step_n", "nh_rebuild_step_rooms", "nh_rebuild_chains", "nh_attach_chains", "nh_a_intact", "nh_a_quarter", "nh_one_room"):
+    T[key] = WORDS.get(T[key], T[key])
+
 
 if __name__ == "__main__":
     text = (ROOT / "paper" / "REPORT.template.md").read_text()

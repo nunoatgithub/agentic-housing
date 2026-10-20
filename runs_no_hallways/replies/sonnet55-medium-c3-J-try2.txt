@@ -1,0 +1,35 @@
+remove room R1
+remove room R2
+remove room R3
+remove room R4
+room R1 living room A3
+room R2 kitchen A2
+room R3 bedroom A1
+room R4 bedroom A4
+room R5 bathroom A5
+room R6 bathroom B1
+room R7 bedroom B2
+room R8 bedroom B3
+room R9 bathroom B4
+room R10 bedroom B5
+room R11 bathroom C3
+door A3|north
+door A2|A3
+door A3|A4
+door A3|B3
+door B3|B2
+door B3|B4
+door B3|C3
+door B2|B1
+door B1|A1
+door B4|B5
+door B5|A5
+window A1|north
+window A2|north
+window A4|north
+window A5|north
+window B1|west
+window A1|west
+window B5|east
+window A5|east
+window C3|south

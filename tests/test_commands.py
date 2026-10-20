@@ -53,6 +53,7 @@ def test_multiword_type_and_flexible_spaces():
     "room R1 bedroom F6", "room R0 bedroom A1", "room R1 bedroom A1 extra", "remove room", "remove room 6",
     "wall", "wall B2", "wall B2|B4", "door A1|up", "door A1|north now", "merge R1 R2 into living room", "add bathroom", "add bathroom next to bedroom",
     "add bathroom next to", "remove bathroom", "remove R5", "# a comment", "```",
+    "room R6 hallway C2", "add hallway next to R4",                 # hallways are no longer a room type
 ])
 def test_bad_syntax_is_a_parse_error(bad):
     with pytest.raises(ParseError):

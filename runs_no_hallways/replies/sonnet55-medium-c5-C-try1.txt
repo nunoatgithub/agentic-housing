@@ -1,0 +1,4 @@
+remove door B2|C2
+room R6 bathroom D1
+door C1|D1
+window D1|west

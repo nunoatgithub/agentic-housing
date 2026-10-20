@@ -23,8 +23,8 @@ def test_chain_house_scores_badly():
 
 
 def test_corridor_counts_only_forced_passages():
-    # R4 can be reached through the hallway or through bedroom R2, so no bedroom is a forced passage.
-    assert scores_of("room R1 living room A1\nroom R2 bedroom A2\nroom R3 hallway B1\nroom R4 bedroom B2\n"
+    # R4 can be reached through the kitchen R3 or through bedroom R2, so neither is a forced passage.
+    assert scores_of("room R1 living room A1\nroom R2 bedroom A2\nroom R3 kitchen B1\nroom R4 bedroom B2\n"
                      "door A1|north\ndoor A1|A2\ndoor A1|B1\ndoor B1|B2\ndoor A2|B2\n").corridor_rooms == 0
 
 
@@ -40,10 +40,15 @@ def test_a_kitchen_is_a_passage_too():
     assert s.corridor_rooms == 1
 
 
-def test_hallways_and_the_entrance_living_room_may_be_passed_through():
-    s = scores_of("room R1 living room A1\nroom R2 hallway A2\nroom R3 bedroom A3\nroom R4 kitchen B1\n"
+def test_living_rooms_may_be_passed_through():
+    s = scores_of("room R1 living room A1\nroom R2 living room A2\nroom R3 bedroom A3\nroom R4 kitchen B1\n"
                   "door A1|north\ndoor A1|A2\ndoor A2|A3\ndoor A1|B1\n")
     assert s.corridor_rooms == 0
+
+
+def test_houses_of_the_5x5_run_still_load_and_their_hallways_may_be_passed_through(example_text):
+    s = score(parse_layout(example_text.replace("R3  living room   B1", "R3  hallway       B1")))
+    assert s == Scores(0, 0.0, 1.8, 0)
 
 
 def test_privacy_bathroom_beside_kitchen_off_living_room_is_a_tie():

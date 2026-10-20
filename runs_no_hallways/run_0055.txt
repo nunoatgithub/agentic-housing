@@ -1,0 +1,71 @@
+label: sonnet55-medium-c5-J   at 2026-10-20T10:14:02+00:00   commands: 35
+
+SCRIPT
+remove room R1
+remove room R2
+remove room R3
+remove room R4
+room R1 living room C1
+room R2 kitchen B1
+room R3 bedroom C2
+room R4 bathroom D2
+room R5 bedroom B2
+room R6 bedroom A2
+room R7 bathroom A1
+room R8 bathroom A3
+room R9 bathroom B3
+room R10 bedroom C3
+room R11 bedroom D1
+door C1|west
+door C1|B1
+door C1|D1
+door C1|C2
+door C2|B2
+door C2|C3
+door C2|D2
+door B2|A2
+door B2|B3
+door A2|A1
+door A2|A3
+window B1|west
+window A1|north
+window A2|north
+window A3|north
+window B3|east
+window C3|east
+window D1|west
+window D2|south
+window C3|south
+
+run_0055
+VALID
+
+      1       2       3       4       5
+  +--###--+--###--+--###--+
+  |   R7  |   R6  |   R8  |
+A |  bath |bedroom|  bath |
+  |                       |
+  +-------+-[   ]-+-------+
+  |   R2  |   R5  |   R9  |
+B |kitchen|bedroom|  bath |
+  #       |               #
+  +-[   ]-+-[   ]-+-------+
+  |   R1  |   R3  |  R10  |
+C | living|bedroom|bedroom|
+  E                       #
+  +-[   ]-+-[   ]-+--###--+
+  |  R11  |   R4  |
+D |bedroom|  bath |
+  #       |       |
+  +-------+--###--+
+
+E
+
+
+
+corridor rooms    13
+privacy order     0.06
+walking distance  2.69
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

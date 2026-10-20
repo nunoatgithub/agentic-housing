@@ -1,0 +1,46 @@
+{
+  "run_id": "run_0012",
+  "timestamp": "2026-10-20T10:04:49+00:00",
+  "label": "sonnet55-medium-c2-A",
+  "request": "build: living room, kitchen, bedroom, bathroom",
+  "command_count": 14,
+  "accepted": false,
+  "errors": [
+    {
+      "line": 1,
+      "text": "room L1 living room A1",
+      "reason": "cannot understand 'room L1 living room A1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>"
+    },
+    {
+      "line": 2,
+      "text": "room K1 kitchen A2",
+      "reason": "cannot understand 'room K1 kitchen A2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>"
+    },
+    {
+      "line": 3,
+      "text": "room B1 bedroom B1",
+      "reason": "cannot understand 'room B1 bedroom B1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>"
+    },
+    {
+      "line": 4,
+      "text": "room T1 bathroom B2",
+      "reason": "cannot understand 'room T1 bathroom B2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>"
+    }
+  ],
+  "script": "room L1 living room A1\nroom K1 kitchen A2\nroom B1 bedroom B1\nroom T1 bathroom B2\ndoor A1|north\ndoor A1|A2\ndoor A1|B1\ndoor A2|B2\nwindow A2|north\nwindow A2|east\nwindow B1|west\nwindow B1|south\nwindow B2|east\nwindow B2|south",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    .    .    .    .    .\nB    .    .    .    .    .\nC    .    .    .    .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\n\ndoors\n\nwindows",
+  "drawing": "run_0012\nINVALID (rule 4)\n\n      1       2       3       4       5\n\n\nA\n\n\n\nB\n\n\n\nC\n\n\n\nD\n\n\n\nE\n\n\n\nscores: none (house is invalid)\n\nBroken rules:\n  rule 4 (one entrance): the house has no living room\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": null,
+  "violations": [],
+  "scores": null,
+  "expansion": [],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 342,
+    "cache_read_input_tokens": 1371,
+    "output_tokens": 490,
+    "thinking_tokens": 384,
+    "cost_usd": 0.0064091,
+    "duration_ms": 5131
+  }
+}

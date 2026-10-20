@@ -1,0 +1,3 @@
+room R8 bathroom A4
+door A3|A4
+window A4|north

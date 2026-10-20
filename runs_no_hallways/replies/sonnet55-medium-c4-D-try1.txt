@@ -1,0 +1,6 @@
+remove door B2|B3
+door A3|B3
+remove window B2|south
+room R7 bedroom C2
+door B2|C2
+window C2|south

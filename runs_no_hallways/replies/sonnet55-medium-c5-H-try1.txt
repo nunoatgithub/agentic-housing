@@ -1,0 +1,3 @@
+room R11 bedroom B3
+door B2|B3
+window B3|north

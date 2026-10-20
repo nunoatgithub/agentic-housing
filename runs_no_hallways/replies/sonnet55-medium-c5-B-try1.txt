@@ -1,0 +1,5 @@
+room R5 bedroom C2
+door C1|C2
+door B2|C2
+window C2|south
+window C2|east

@@ -1,0 +1,3 @@
+room R10 bathroom D3
+door D2|D3
+window D3|east

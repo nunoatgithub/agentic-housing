@@ -1,0 +1,14 @@
+room R5 bedroom A4
+room R6 bedroom B3
+room R7 bathroom B1
+room R8 bedroom C2
+room R9 bathroom C3
+room R10 bedroom A5
+room R11 bathroom B4
+door A3|A4
+door B2|B3
+door B1|B2
+door B2|C2
+door C2|C3
+door A4|A5
+door A4|B4

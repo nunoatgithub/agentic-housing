@@ -1,0 +1,52 @@
+{
+  "run_id": "run_0020",
+  "timestamp": "2026-10-20T10:06:31+00:00",
+  "label": "sonnet55-medium-c2-H",
+  "request": "add: bedroom",
+  "command_count": 3,
+  "accepted": true,
+  "errors": [],
+  "script": "room R12 bedroom D4\ndoor C4|D4\nwindow D4|east",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    .    R2   R1   R3   .\nB    .    R8   R5   R6   .\nC    .    R9   R7   R10  .\nD    .    .    R11  R12  .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A3\nR2  kitchen       A2\nR3  bedroom       A4\nR5  bedroom       B3\nR6  bathroom      B4\nR7  bedroom       C3\nR8  bathroom      B2\nR9  bathroom      C2\nR10 bedroom       C4\nR11 bathroom      D3\nR12 bedroom       D4\n\ndoors\nA2|A3\nA3|north          entrance\nA3|A4\nA3|B3\nB2|B3\nB3|B4\nB3|C3\nC2|C3\nC3|C4\nC3|D3\nC4|D4\n\nwindows\nA2|north\nA2|west\nA4|north\nA4|east\nB2|west\nB4|east\nC2|south\nD3|south\nD4|east",
+  "drawing": "run_0020\nVALID\n\n      1       2       3       4       5\n          +--###--+[ENTRY]+--###--+\n          |   R2  |   R1  |   R3  |\nA         |kitchen| living|bedroom|\n          #                       #\n          +-------+-[   ]-+-------+\n          |   R8  |   R5  |   R6  |\nB         |  bath |bedroom|  bath |\n          #                       #\n          +-------+-[   ]-+-------+\n          |   R9  |   R7  |  R10  |\nC         |  bath |bedroom|bedroom|\n          |                       |\n          +--###--+-[   ]-+-[   ]-+\n                  |  R11  |  R12  |\nD                 |  bath |bedroom|\n                  |       |       #\n                  +--###--+-------+\n\nE\n\n\n\ncorridor rooms    12\nprivacy order     0.06\nwalking distance  2.58\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 12,
+    "privacy_order": 0.0556,
+    "walking_distance": 2.5818,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R12 bedroom D4",
+      "primitives": [
+        "room R12 bedroom D4"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "door C4|D4",
+      "primitives": [
+        "door C4|D4"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "window D4|D5",
+      "primitives": [
+        "window D4|D5"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1926,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 687,
+    "thinking_tokens": 662,
+    "cost_usd": 0.014578,
+    "duration_ms": 6714
+  }
+}

@@ -1,0 +1,23 @@
+room R5 bedroom B1
+room R6 bedroom B3
+room R7 bathroom C2
+room R8 bedroom A4
+room R9 bedroom B4
+room R10 bathroom C1
+room R11 bathroom C3
+door B1|B2
+door B2|B3
+door B2|C2
+door A3|A4
+door B3|B4
+door C1|C2
+door C2|C3
+window B1|west
+window C1|west
+window C1|south
+window C2|south
+window C3|south
+window A4|north
+window A4|east
+window B4|east
+window B3|south

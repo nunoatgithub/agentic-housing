@@ -1,0 +1,4 @@
+room R7 bedroom A2
+door A1|A2
+window A2|north
+window A2|east

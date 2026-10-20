@@ -13,7 +13,7 @@ EXAMPLE_PLAN = [
     "  |               |",
     "  +-[   ]-+-------+",
     "  |   R3  |   R4  |",
-    "B |hallway|bedroom|",
+    "B | living|bedroom|",
     "  |               #",
     "  +-[   ]-+-------+",
     "  |   R5  |",

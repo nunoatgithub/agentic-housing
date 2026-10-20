@@ -7,7 +7,7 @@ from house.model import Cell, Layout
 EXAMPLE_SCRIPT = """
 room R1 living room A1
 room R2 kitchen A2
-room R3 hallway B1
+room R3 living room B1
 room R4 bedroom B2
 room R5 bathroom C1
 door A1|north

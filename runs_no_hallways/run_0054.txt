@@ -1,0 +1,85 @@
+label: sonnet55-medium-c5-J   at 2026-10-20T10:13:51+00:00   commands: 36
+
+SCRIPT
+remove room R1
+remove room R2
+remove room R3
+remove room R4
+room L1 living room C1
+room K1 kitchen C2
+room B1 bedroom B1
+room B2 bedroom D1
+room B3 bedroom B2
+room B4 bedroom D2
+room B5 bedroom B3
+room T1 bathroom A1
+room T2 bathroom E1
+room T3 bathroom A2
+room T4 bathroom E2
+door C1|west
+door C1|C2
+door C1|B1
+door C1|D1
+door B1|A1
+door D1|E1
+door B1|B2
+door D1|D2
+door B2|A2
+door D2|E2
+door B2|B3
+window C2|east
+window B3|east
+window B3|north
+window A1|north
+window A2|north
+window E1|south
+window E2|south
+window D2|east
+window B1|west
+window D1|west
+
+SCRIPT REJECTED, house unchanged:
+  line 5: room L1 living room C1 -> cannot understand 'room L1 living room C1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 6: room K1 kitchen C2 -> cannot understand 'room K1 kitchen C2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 7: room B1 bedroom B1 -> cannot understand 'room B1 bedroom B1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 8: room B2 bedroom D1 -> cannot understand 'room B2 bedroom D1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 9: room B3 bedroom B2 -> cannot understand 'room B3 bedroom B2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 10: room B4 bedroom D2 -> cannot understand 'room B4 bedroom D2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 11: room B5 bedroom B3 -> cannot understand 'room B5 bedroom B3'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 12: room T1 bathroom A1 -> cannot understand 'room T1 bathroom A1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 13: room T2 bathroom E1 -> cannot understand 'room T2 bathroom E1'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 14: room T3 bathroom A2 -> cannot understand 'room T3 bathroom A2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+  line 15: room T4 bathroom E2 -> cannot understand 'room T4 bathroom E2'; expected one of: room <id> <type> <cell> | remove room <id> | wall <edge> | remove wall <edge> | door <edge> | remove door <edge> | window <edge> | remove window <edge> | add <type> next to <id> | remove <type> <id>
+
+run_0054
+VALID
+
+      1       2       3       4       5
+  +--###--+
+  |   R2  |
+A |kitchen|
+  |       |
+  +-[   ]-+-------+
+  |   R1  |   R4  |
+B | living|  bath |
+  E               #
+  +-[   ]-+-------+
+  |   R3  |
+C |bedroom|
+  |       |
+  +--###--+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    0
+privacy order     0.25
+walking distance  1.50
+compactness       2
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

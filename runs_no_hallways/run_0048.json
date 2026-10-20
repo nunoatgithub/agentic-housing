@@ -1,0 +1,59 @@
+{
+  "run_id": "run_0048",
+  "timestamp": "2026-10-20T10:12:25+00:00",
+  "label": "sonnet55-medium-c5-D",
+  "request": "add: bedroom",
+  "command_count": 4,
+  "accepted": true,
+  "errors": [],
+  "script": "room R7 bedroom A2\ndoor A1|A2\nwindow A2|north\nwindow A2|east",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R2   R7   .    .    .\nB    R1   R4   .    .    .\nC    R3   R5   .    .    .\nD    R6   .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   B1\nR2  kitchen       A1\nR3  bedroom       C1\nR4  bathroom      B2\nR5  bedroom       C2\nR6  bathroom      D1\nR7  bedroom       A2\n\ndoors\nA1|A2\nA1|B1\nB1|B2\nB1|C1\nB1|west           entrance\nC1|C2\nC1|D1\n\nwindows\nA1|north\nA2|north\nA2|east\nB2|east\nC2|east\nC2|south\nD1|west",
+  "drawing": "run_0048\nVALID\n\n      1       2       3       4       5\n  +--###--+--###--+\n  |   R2  |   R7  |\nA |kitchen|bedroom|\n  |               #\n  +-[   ]-+-------+\n  |   R1  |   R4  |\nB | living|  bath |\n  E               #\n  +-[   ]-+-------+\n  |   R3  |   R5  |\nC |bedroom|bedroom|\n  |               #\n  +-[   ]-+--###--+\n  |   R6  |\nD |  bath |\n  #       |\n  +-------+\n\nE\n\n\n\ncorridor rooms    3\nprivacy order     0.10\nwalking distance  2.19\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 3,
+    "privacy_order": 0.1,
+    "walking_distance": 2.1905,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R7 bedroom A2",
+      "primitives": [
+        "room R7 bedroom A2"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "door A1|A2",
+      "primitives": [
+        "door A1|A2"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "window A2|north",
+      "primitives": [
+        "window A2|north"
+      ]
+    },
+    {
+      "line": 4,
+      "command": "window A2|A3",
+      "primitives": [
+        "window A2|A3"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 343,
+    "cache_read_input_tokens": 1492,
+    "output_tokens": 1776,
+    "thinking_tokens": 1745,
+    "cost_usd": 0.019285200000000002,
+    "duration_ms": 15931
+  }
+}

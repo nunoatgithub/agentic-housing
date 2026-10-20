@@ -22,9 +22,9 @@ A house is a single floor laid out on a small grid, where every room occupies on
 **Terms:** a *cell* is one square of the grid; a *room* is what occupies it.
 
 - **Grid:** 5×5 (25 cells), enough room for the house to grow over seven change requests without filling the grid. Checking one house against the rules and scores must be near-instant; enumerating every layout is optional.
-- **Room types:** living room, kitchen, bedroom, bathroom, hallway. A hallway is a space meant for passing through, needed because a one-cell living room touches at most four other rooms.
+- **Room types:** living room, kitchen, bedroom, bathroom. There are no hallways. In the 5×5 run every final house had four to seven of them: a hallway costs nothing and fixes any access problem, so patched and planned houses both ended up as rooms hung off a spine of hallways, and the hallways hid any difference between them. Without hallways every cell holds a requested room, and a house is good or bad by where its rooms are and how its doors join them.
 - **Adjacency:** two cells are neighbours if they share an edge (left, right, above, below). "Next to" always means this.
-- **No merging:** rooms are never merged. Every room is exactly one cell, so a room touches at most four others and the centre of a house needs a hallway. The language has no command that joins two rooms.
+- **No merging:** rooms are never merged. Every room is exactly one cell, so a room touches at most four others. The language has no command that joins two rooms.
 
 ## The language
 
@@ -55,7 +55,7 @@ A house is valid only if a person can walk in through the front door, visit ever
 3. **Every room has a door:** at least one, shared with a neighbouring room.
 4. **One entrance:** only the living room may have a door in an outer wall, so every house needs a living room.
 5. **One kitchen:** a house never has more than one kitchen. A house with no kitchen is allowed.
-6. **Requested rooms:** the finished house has exactly the rooms that were asked for. A `build:` request lists each room type and how many; an `add:` request means the rooms the house already had plus the ones listed. Rooms may be removed or rebuilt on the way, but the final count of each requested type must match. Hallways are free to add or remove unless the request names them.
+6. **Requested rooms:** the finished house has exactly the rooms that were asked for. A `build:` request lists each room type and how many; an `add:` request means the rooms the house already had plus the ones listed. Rooms may be removed or rebuilt on the way, but the final count of each requested type must match.
 7. **Rules are rechecked after every change,** including removals. Anything not written down is allowed.
 
 A badly placed bathroom must still pass all of these. Validity is the equivalent of "the code runs"; quality is measured separately.
@@ -132,31 +132,27 @@ The whole sequence is repeated many times; drawings and scores are saved automat
 grid 5x5
      1    2    3    4    5
 A    R1   R2   .    .    .
-B    R3   R4   .    .    .
-C    R5   .    .    .    .
+B    R3   .    .    .    .
+C    .    .    .    .    .
 D    .    .    .    .    .
 E    .    .    .    .    .
 
 rooms
 R1  living room   A1
 R2  kitchen       A2
-R3  hallway       B1
-R4  bedroom       B2
-R5  bathroom      C1
+R3  bedroom       B1
 
 doors
 A1|north          entrance
 A1|A2
 A1|B1
-B1|B2
-B1|C1
 
 windows
 A2|north
-B2|east
+B1|west
 ```
 
-The example is a valid, well-designed house: the entrance is in the living room, the hallway serves the bedroom and bathroom, and nobody walks through a private room. An empty grid has all cells `.` and empty `rooms`, `doors` and `windows` lists.
+The example is a valid house of three rooms: the entrance is in the living room, and the kitchen and the bedroom both open off it. An empty grid has all cells `.` and empty `rooms`, `doors` and `windows` lists.
 
 **Command syntax** (what `POST /script` accepts, one command per line):
 
@@ -177,7 +173,7 @@ remove bathroom R5          composite
 **Standard prompt template** (identical for Claude, Codex, or any agent; preferred over a skill so it is not tied to one vendor):
 
 - **Fixed part:** you are a professional house builder; the language; the hard rules; the good-house principles and why they matter.
-- **Variable slots:** current layout (from `GET /layout`) and a structured request, such as `build: living room, kitchen, bedroom ×2, bathroom, hallway` or `add: bathroom`, never a free-form sentence.
+- **Variable slots:** current layout (from `GET /layout`) and a structured request, such as `build: living room, kitchen, bedroom ×2, bathroom` or `add: bathroom`, never a free-form sentence.
 
 **Prompt template** (fixed text, with two slots filled per run):
 
@@ -195,16 +191,16 @@ RULES (a house that breaks any rule is invalid)
 5. A house never has more than one kitchen.
 6. The finished house has exactly the rooms requested: for "build:" the
    listed number of each room type, for "add:" the rooms already in the
-   current layout plus the ones listed. Hallways are free to add or remove
-   unless the request names them. You may remove, replace or rebuild rooms
-   along the way; only the final count of each requested room type matters.
+   current layout plus the ones listed. You may remove, replace or rebuild
+   rooms along the way; only the final count of each requested room type
+   matters.
 Anything not forbidden is allowed.
 
 GOOD-HOUSE PRINCIPLES (your work is judged by these)
 - Bedrooms, bathrooms and the kitchen are destinations, never passages:
   nobody should have to walk through one to reach another room.
 - Public rooms (living room, kitchen) sit near the entrance; private rooms
-  (bedrooms, bathrooms) sit further in. Hallways are for passing through.
+  (bedrooms, bathrooms) sit further in.
 - Any two rooms should be as few doors apart as possible.
 - Keep the house compact, with nothing sticking out.
 
@@ -213,6 +209,7 @@ Building and removing walls, doors, windows and rooms costs nothing.
 You may change anything in the current layout.
 
 LANGUAGE
+Room types: living room, kitchen, bedroom, bathroom. There are no hallways.
 <command syntax reference>
 
 LAYOUT FORMAT
@@ -231,7 +228,7 @@ Slot values by use case:
 
 | Use case | `{{LAYOUT}}` | `{{REQUEST}}` |
 | --- | --- | --- |
-| Initial build | Empty grid | `build: living room, kitchen, bedroom x2, bathroom, hallway` |
+| Initial build | Empty grid | `build: living room, kitchen, bedroom x2, bathroom` |
 | Change request | Output of `GET /layout` | `add: bathroom` (one item per run) |
 | Planned build | Empty grid | `build:` the initial rooms plus every requested addition |
 

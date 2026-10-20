@@ -1,0 +1,3 @@
+room R9 bedroom C1
+door C1|C2
+window C1|west

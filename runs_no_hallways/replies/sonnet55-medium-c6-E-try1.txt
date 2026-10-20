@@ -1,0 +1,5 @@
+room R8 bathroom C3
+door C2|C3
+window C3|south
+remove door B2|B3
+door A3|B3
