@@ -193,7 +193,7 @@ python -m house.server --port 8000 --runs runs
 python -m house.run_agents --chains 6 --effort medium --runs runs
 ```
 
-The second run: code in `house/` as it is now (no hallways), prompt in `house/prompt_template.txt`, analysis plan in `paper/ANALYSIS_PLAN_no_hallways.md`, data in `runs_no_hallways/`. To repeat it:
+The second run: code in `house/` as of commit `dd9ab04`, prompt in `house/prompt_template.txt` of that commit, analysis plan in `paper/ANALYSIS_PLAN_no_hallways.md`, data in `runs_no_hallways/`. To repeat it, check out commit `dd9ab04` and run:
 
 ```
 python -m house.server --port 8000 --runs runs_no_hallways
