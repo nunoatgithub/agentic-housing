@@ -394,7 +394,7 @@ python -m house.server --port 8000 --runs runs_no_hallways_low
 python -m house.run_agents --chains 6 --effort low --runs runs_no_hallways_low
 ```
 
-The cost runs: code in `house/` as it is now, prompt in `house/prompt_template_hallways.txt`, analysis plan in `paper/ANALYSIS_PLAN_cost_hallways.md`, data in `runs_cost_hallways/` and `runs_cost_hallways_2/`; the first try without hallways (Section 7.1): plan `paper/ANALYSIS_PLAN_cost.md`, data `runs_cost/`. To repeat a cost run:
+The cost runs: code in `house/` as of commit `25e3cef`, prompt in `house/prompt_template_hallways.txt` of that commit, analysis plan in `paper/ANALYSIS_PLAN_cost_hallways.md`, data in `runs_cost_hallways/` and `runs_cost_hallways_2/`; the first try without hallways (Section 7.1): plan `paper/ANALYSIS_PLAN_cost.md`, data `runs_cost/`. To repeat a cost run, check out commit `25e3cef` and run:
 
 ```
 python -m house.server --port 8000 --runs runs_cost_hallways
