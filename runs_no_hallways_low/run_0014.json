@@ -1,0 +1,52 @@
+{
+  "run_id": "run_0014",
+  "timestamp": "2026-10-20T10:48:22+00:00",
+  "label": "sonnet55-low-c2-D",
+  "request": "add: bedroom",
+  "command_count": 3,
+  "accepted": true,
+  "errors": [],
+  "script": "room R7 bedroom C3\ndoor B3|C3\nwindow C3|south",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    .    R2   R1   R3   .\nB    .    R6   R5   R4   .\nC    .    .    R7   .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A3\nR2  kitchen       A2\nR3  bedroom       A4\nR4  bathroom      B4\nR5  bedroom       B3\nR6  bathroom      B2\nR7  bedroom       C3\n\ndoors\nA2|A3\nA3|north          entrance\nA3|A4\nA3|B3\nB2|B3\nB3|B4\nB3|C3\n\nwindows\nA2|north\nA4|north\nA4|east\nB2|west\nB4|east\nC3|south",
+  "drawing": "run_0014\nVALID\n\n      1       2       3       4       5\n          +--###--+[ENTRY]+--###--+\n          |   R2  |   R1  |   R3  |\nA         |kitchen| living|bedroom|\n          |                       #\n          +-------+-[   ]-+-------+\n          |   R6  |   R5  |   R4  |\nB         |  bath |bedroom|  bath |\n          #                       #\n          +-------+-[   ]-+-------+\n                  |   R7  |\nC                 |bedroom|\n                  |       |\n                  +--###--+\n\nD\n\n\n\nE\n\n\n\ncorridor rooms    3\nprivacy order     0.10\nwalking distance  2.00\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 3,
+    "privacy_order": 0.1,
+    "walking_distance": 2.0,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R7 bedroom C3",
+      "primitives": [
+        "room R7 bedroom C3"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "door B3|C3",
+      "primitives": [
+        "door B3|C3"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "window C3|D3",
+      "primitives": [
+        "window C3|D3"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1838,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 761,
+    "thinking_tokens": 736,
+    "cost_usd": 0.014966,
+    "duration_ms": 7419
+  }
+}

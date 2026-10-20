@@ -1,0 +1,29 @@
+room R1 living room E3
+room R2 kitchen D3
+room R3 bedroom E2
+room R4 bedroom E4
+room R5 bedroom D2
+room R6 bedroom D4
+room R7 bathroom E1
+room R8 bathroom E5
+room R9 bathroom D1
+room R10 bathroom D5
+room R11 bedroom C2
+door E3|south
+door E3|D3
+door E3|E2
+door E3|E4
+door E2|E1
+door E2|D2
+door D2|D1
+door D2|C2
+door E4|E5
+door E4|D4
+door D4|D5
+window D3|east
+window D3|west
+window C2|north
+window D1|west
+window D5|east
+window E1|south
+window E5|south

@@ -1,0 +1,4 @@
+room R11 bedroom D3
+door C3|D3
+window D3|south
+window D3|east

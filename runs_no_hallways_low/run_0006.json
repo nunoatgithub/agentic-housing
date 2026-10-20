@@ -1,0 +1,59 @@
+{
+  "run_id": "run_0006",
+  "timestamp": "2026-10-20T10:46:44+00:00",
+  "label": "sonnet55-low-c1-F",
+  "request": "add: bedroom",
+  "command_count": 4,
+  "accepted": true,
+  "errors": [],
+  "script": "room R9 bedroom C3\ndoor B3|C3\nwindow C3|east\nwindow C3|south",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    R3   R1   R4   .    .\nB    R5   R2   R6   .    .\nC    R7   R8   R9   .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A2\nR2  kitchen       B2\nR3  bedroom       A1\nR4  bathroom      A3\nR5  bedroom       B1\nR6  bathroom      B3\nR7  bedroom       C1\nR8  bathroom      C2\nR9  bedroom       C3\n\ndoors\nA1|A2\nA1|B1\nA2|north          entrance\nA2|A3\nA2|B2\nA3|B3\nB1|C1\nB2|C2\nB3|C3\n\nwindows\nA1|north\nA1|west\nA3|north\nA3|east\nB3|east\nC1|west\nC2|south\nC3|east\nC3|south",
+  "drawing": "run_0006\nVALID\n\n      1       2       3       4       5\n  +--###--+[ENTRY]+--###--+\n  |   R3  |   R1  |   R4  |\nA |bedroom| living|  bath |\n  #                       #\n  +-[   ]-+-[   ]-+-[   ]-+\n  |   R5  |   R2  |   R6  |\nB |bedroom|kitchen|  bath |\n  |       |       |       #\n  +-[   ]-+-[   ]-+-[   ]-+\n  |   R7  |   R8  |   R9  |\nC |bedroom|  bath |bedroom|\n  #       |       |       #\n  +-------+--###--+--###--+\n\nD\n\n\n\nE\n\n\n\ncorridor rooms    7\nprivacy order     0.07\nwalking distance  2.83\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 7,
+    "privacy_order": 0.0714,
+    "walking_distance": 2.8333,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "room R9 bedroom C3",
+      "primitives": [
+        "room R9 bedroom C3"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "door B3|C3",
+      "primitives": [
+        "door B3|C3"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "window C3|C4",
+      "primitives": [
+        "window C3|C4"
+      ]
+    },
+    {
+      "line": 4,
+      "command": "window C3|D3",
+      "primitives": [
+        "window C3|D3"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 1880,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 1151,
+    "thinking_tokens": 1120,
+    "cost_usd": 0.019034,
+    "duration_ms": 10300
+  }
+}

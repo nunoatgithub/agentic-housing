@@ -1,0 +1,5 @@
+remove door A1|A2
+door A2|B2
+room R9 bedroom C3
+door C2|C3
+window C3|east

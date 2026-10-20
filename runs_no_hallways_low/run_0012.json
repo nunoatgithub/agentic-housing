@@ -1,0 +1,171 @@
+{
+  "run_id": "run_0012",
+  "timestamp": "2026-10-20T10:48:03+00:00",
+  "label": "sonnet55-low-c2-B",
+  "request": "add: bedroom",
+  "command_count": 20,
+  "accepted": true,
+  "errors": [],
+  "script": "remove room R1\nremove room R2\nremove room R3\nremove room R4\nroom R1 living room A3\nroom R2 kitchen A2\nroom R3 bedroom A4\nroom R5 bedroom B3\nroom R4 bathroom B4\ndoor A3|north\ndoor A2|A3\ndoor A3|A4\ndoor A3|B3\ndoor B3|B4\nwindow A2|north\nwindow A4|north\nwindow A4|east\nwindow B3|south\nwindow B4|east\nwindow B3|west",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    .    R2   R1   R3   .\nB    .    .    R5   R4   .\nC    .    .    .    .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\nR1  living room   A3\nR2  kitchen       A2\nR3  bedroom       A4\nR4  bathroom      B4\nR5  bedroom       B3\n\ndoors\nA2|A3\nA3|north          entrance\nA3|A4\nA3|B3\nB3|B4\n\nwindows\nA2|north\nA4|north\nA4|east\nB3|south\nB3|west\nB4|east",
+  "drawing": "run_0012\nVALID\n\n      1       2       3       4       5\n          +--###--+[ENTRY]+--###--+\n          |   R2  |   R1  |   R3  |\nA         |kitchen| living|bedroom|\n          |                       #\n          +-------+-[   ]-+-------+\n                  |   R5  |   R4  |\nB                 |bedroom|  bath |\n                  #               #\n                  +--###--+-------+\n\nC\n\n\n\nD\n\n\n\nE\n\n\n\ncorridor rooms    1\nprivacy order     0.17\nwalking distance  1.80\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 1,
+    "privacy_order": 0.1667,
+    "walking_distance": 1.8,
+    "compactness": 0
+  },
+  "expansion": [
+    {
+      "line": 1,
+      "command": "remove room R1",
+      "primitives": [
+        "remove room R1"
+      ]
+    },
+    {
+      "line": 2,
+      "command": "remove room R2",
+      "primitives": [
+        "remove room R2"
+      ]
+    },
+    {
+      "line": 3,
+      "command": "remove room R3",
+      "primitives": [
+        "remove room R3"
+      ]
+    },
+    {
+      "line": 4,
+      "command": "remove room R4",
+      "primitives": [
+        "remove room R4"
+      ]
+    },
+    {
+      "line": 5,
+      "command": "room R1 living room A3",
+      "primitives": [
+        "room R1 living room A3"
+      ]
+    },
+    {
+      "line": 6,
+      "command": "room R2 kitchen A2",
+      "primitives": [
+        "room R2 kitchen A2"
+      ]
+    },
+    {
+      "line": 7,
+      "command": "room R3 bedroom A4",
+      "primitives": [
+        "room R3 bedroom A4"
+      ]
+    },
+    {
+      "line": 8,
+      "command": "room R5 bedroom B3",
+      "primitives": [
+        "room R5 bedroom B3"
+      ]
+    },
+    {
+      "line": 9,
+      "command": "room R4 bathroom B4",
+      "primitives": [
+        "room R4 bathroom B4"
+      ]
+    },
+    {
+      "line": 10,
+      "command": "door A3|north",
+      "primitives": [
+        "door A3|north"
+      ]
+    },
+    {
+      "line": 11,
+      "command": "door A2|A3",
+      "primitives": [
+        "door A2|A3"
+      ]
+    },
+    {
+      "line": 12,
+      "command": "door A3|A4",
+      "primitives": [
+        "door A3|A4"
+      ]
+    },
+    {
+      "line": 13,
+      "command": "door A3|B3",
+      "primitives": [
+        "door A3|B3"
+      ]
+    },
+    {
+      "line": 14,
+      "command": "door B3|B4",
+      "primitives": [
+        "door B3|B4"
+      ]
+    },
+    {
+      "line": 15,
+      "command": "window A2|north",
+      "primitives": [
+        "window A2|north"
+      ]
+    },
+    {
+      "line": 16,
+      "command": "window A4|north",
+      "primitives": [
+        "window A4|north"
+      ]
+    },
+    {
+      "line": 17,
+      "command": "window A4|A5",
+      "primitives": [
+        "window A4|A5"
+      ]
+    },
+    {
+      "line": 18,
+      "command": "window B3|C3",
+      "primitives": [
+        "window B3|C3"
+      ]
+    },
+    {
+      "line": 19,
+      "command": "window B4|B5",
+      "primitives": [
+        "window B4|B5"
+      ]
+    },
+    {
+      "line": 20,
+      "command": "window B2|B3",
+      "primitives": [
+        "window B2|B3"
+      ]
+    }
+  ],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 342,
+    "cache_read_input_tokens": 1461,
+    "output_tokens": 1046,
+    "thinking_tokens": 898,
+    "cost_usd": 0.0119781,
+    "duration_ms": 9095
+  }
+}

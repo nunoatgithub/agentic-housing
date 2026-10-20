@@ -1,0 +1,56 @@
+label: sonnet55-low-c2-B   at 2026-10-20T10:48:03+00:00   commands: 20
+
+SCRIPT
+remove room R1
+remove room R2
+remove room R3
+remove room R4
+room R1 living room A3
+room R2 kitchen A2
+room R3 bedroom A4
+room R5 bedroom B3
+room R4 bathroom B4
+door A3|north
+door A2|A3
+door A3|A4
+door A3|B3
+door B3|B4
+window A2|north
+window A4|north
+window A4|east
+window B3|south
+window B4|east
+window B3|west
+
+run_0012
+VALID
+
+      1       2       3       4       5
+          +--###--+[ENTRY]+--###--+
+          |   R2  |   R1  |   R3  |
+A         |kitchen| living|bedroom|
+          |                       #
+          +-------+-[   ]-+-------+
+                  |   R5  |   R4  |
+B                 |bedroom|  bath |
+                  #               #
+                  +--###--+-------+
+
+C
+
+
+
+D
+
+
+
+E
+
+
+
+corridor rooms    1
+privacy order     0.17
+walking distance  1.80
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

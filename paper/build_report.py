@@ -310,31 +310,41 @@ T["prompt"] = "\n".join(textwrap.fill(line, 78) if len(line) > 100 else line
 
 # ---- second run: houses without hallways (only the counts the text uses; each claim in the text is checked here)
 assert all(sum(r.type == "hallway" for r in final[k][2].rooms.values()) >= 3 for k in finals), "every first-run final house has several hallways"
-nh_runs = load_runs(ROOT / "runs_no_hallways")
-nh = {}
-for chain in range(1, 7):
-    for step in STEPS:
-        f = final_house(nh_runs, Label("sonnet55", EFFORT, chain, step))
-        if f:
-            nh[(chain, step)] = (f, scores_of(f), parse_layout(f["layout"]))
+def final_houses(runs, effort):
+    """(chain, step) -> (record, scores, layout) of the last valid house, for a run where every step has one."""
+    houses = {}
+    for chain in range(1, 7):
+        for step in STEPS:
+            f = final_house(runs, Label("sonnet55", effort, chain, step))
+            assert f, "every chain has a valid house at every step"
+            houses[(chain, step)] = (f, scores_of(f), parse_layout(f["layout"]))
+    return houses
+
+
+def patch_steps(houses):
+    """(chain, step, rooms removed, rooms before, share of the previous house unchanged) for every patch step."""
+    out = []
+    for c in range(1, 7):
+        for step in PATCHES:
+            prev, cur = houses[(c, chr(ord(step) - 1))], houses[(c, step)]
+            gone = [l for l in cur[0]["script"].splitlines() if l.strip().startswith("remove room") and l.split()[2] in prev[2].rooms]
+            out.append((c, step, len(gone), len(prev[2].rooms), same(prev[2], cur[2])))
+    assert all(s[4] == 1 for s in out if s[2] == 0), "a step that removes no room keeps every room where it was"
+    return out
+
+
+nh = final_houses(load_runs(ROOT / "runs_no_hallways"), EFFORT)
 nh_values = lambda step, score: [nh[(c, step)][1][score] for c in range(1, 7)]
-assert all((c, s) in nh for c in range(1, 7) for s in STEPS), "every chain has a valid house at every step"
 assert all(x >= 3 for s in "HIJ" for x in nh_values(s, "corridor_rooms")), "every final house has a corridor score of 3 or more"
 assert st.mean(nh_values("I", "corridor_rooms")) >= st.mean(nh_values("H", "corridor_rooms")), "planning found no fewer forced passages"
 assert len({x for s in "HIJ" for x in nh_values(s, "privacy_order")}) == 1, "privacy order is the same in every final house"
 assert min(perm_p(nh_values(p, s), nh_values("I", s)) for s in SCORES for p in "HJ") > 0.05, "no planned test comes near a difference"
 corridor_path = [st.mean(nh_values(s, "corridor_rooms")) for s in "ABCDEFGH"]
 assert all(b > a for a, b in zip(corridor_path, corridor_path[1:])), "corridor rooms rises with every patch step"
-steps = []                                   # (chain, step, rooms removed, rooms before, share of the previous house unchanged)
-for c in range(1, 7):
-    for step in PATCHES:
-        prev, cur = nh[(c, chr(ord(step) - 1))], nh[(c, step)]
-        gone = [l for l in cur[0]["script"].splitlines() if l.strip().startswith("remove room") and l.split()[2] in prev[2].rooms]
-        steps.append((c, step, len(gone), len(prev[2].rooms), same(prev[2], cur[2])))
+steps = patch_steps(nh)
 rebuilds = [s for s in steps if s[2] == s[3]]
 assert all(s[2] in (0, 1) for s in steps if s not in rebuilds), "a step removes no room, one room or every room"
 T["nh_patch_steps"] = str(len(steps))
-assert all(s[4] == 1 for s in steps if s[2] == 0), "a step that removes no room keeps every room where it was"
 T["nh_attached"] = str(sum(1 for s in steps if s[2] == 0))
 T["nh_one_room"] = str(sum(1 for s in steps if s[2] == 1))
 T["nh_rebuilt"] = str(len(rebuilds))
@@ -352,8 +362,34 @@ a_kept = [same(nh[(c, "A")][2], nh[(c, "H")][2]) for c in range(1, 7)]
 T["nh_a_intact"] = str(sum(x == 1 for x in a_kept))
 T["nh_a_quarter"] = str(sum(x <= 0.25 for x in a_kept))
 T["nh_distinct_A"] = str(len({shape(nh[(c, "A")][2]) for c in range(1, 7)}))
+
+# ---- third run: houses without hallways at low effort (as above: the counts the text uses, and its claims checked)
+lo_runs = load_runs(ROOT / "runs_no_hallways_low")
+lo = final_houses(lo_runs, "low")
+lo_values = lambda step, score: [lo[(c, step)][1][score] for c in range(1, 7)]
+assert all(ok(r) for r in lo_runs if parse_label(r["label"]).step in PATCHES), "no patch step failed"
+assert st.mean(lo_values("H", "corridor_rooms")) <= st.mean(lo_values("I", "corridor_rooms")), "patched houses had no more forced passages"
+assert len({x for s in "HIJ" for x in lo_values(s, "privacy_order")}) == 1, "privacy order is the same in every final house"
+assert min(perm_p(lo_values(p, s), lo_values("I", s)) for s in SCORES for p in "HJ") > 0.05, "no planned test comes near a difference"
+lo_steps = patch_steps(lo)
+lo_attached, lo_rebuilt = sum(1 for s in lo_steps if s[2] == 0), sum(1 for s in lo_steps if s[2] == s[3])
+assert lo_attached > int(T["nh_attached"]) and lo_rebuilt < int(T["nh_rebuilt"]), "the weaker agents patched more and rebuilt less"
+T["lo_attached"], T["lo_rebuilt"] = str(lo_attached), str(lo_rebuilt)
+T["lo_a_intact"] = str(sum(same(lo[(c, "A")][2], lo[(c, "H")][2]) == 1 for c in range(1, 7)))
+T["lo_distinct_A"] = str(len({shape(lo[(c, "A")][2]) for c in range(1, 7)}))
+loops = lambda layout: sum(len(v) for v in door_graph(layout).values()) // 2 - (len(layout.rooms) - 1)   # 0 for a tree
+both = [(run, c, s) for run in (nh, lo) for c in range(1, 7) for s in "HIJ"]
+not_trees = [(run, c, s) for run, c, s in both if loops(run[(c, s)][2]) > 0]
+assert len(not_trees) == 1 and not_trees[0][0] is lo and not_trees[0][2] == "H", "one stepwise-patched low-effort house is not a tree"
+run, c, s = not_trees[0]
+assert loops(run[(c, s)][2]) == 1, "the house that is not a tree has one extra door"
+assert run[(c, s)][1]["corridor_rooms"] < min(r[(k, t)][1]["corridor_rooms"] for r, k, t in both if (r, k, t) != not_trees[0]), \
+    "the house that is not a tree has the fewest forced passages"
+T["nh_lo_final"] = str(len(both))
+
 WORDS = {str(n): w for n, w in enumerate("no one two three four five six seven eight nine ten".split())}
-for key in ("nh_rebuilt_same", "nh_rebuild_step_n", "nh_rebuild_step_rooms", "nh_rebuild_chains", "nh_attach_chains", "nh_a_intact", "nh_a_quarter", "nh_one_room"):
+for key in ("nh_rebuilt_same", "nh_rebuild_step_n", "nh_rebuild_step_rooms", "nh_rebuild_chains", "nh_attach_chains", "nh_a_intact",
+            "nh_a_quarter", "nh_one_room", "lo_a_intact"):
     T[key] = WORDS.get(T[key], T[key])
 
 

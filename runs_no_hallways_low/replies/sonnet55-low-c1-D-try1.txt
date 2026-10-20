@@ -1,0 +1,3 @@
+room R7 bedroom C1
+door B1|C1
+window C1|west

@@ -1,0 +1,3 @@
+room R6 bathroom B2
+door B2|B3
+window B2|west

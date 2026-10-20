@@ -1,0 +1,31 @@
+{
+  "run_id": "run_0029",
+  "timestamp": "2026-10-20T10:51:39+00:00",
+  "label": "sonnet55-low-c3-I",
+  "request": "build: living room, kitchen, bedroom x5, bathroom x4",
+  "command_count": 29,
+  "accepted": false,
+  "errors": [
+    {
+      "line": 23,
+      "text": "window D3|east",
+      "reason": "D3|D4 is not an outer wall, so it cannot take a window"
+    }
+  ],
+  "script": "room R1 living room E3\nroom R2 kitchen D3\nroom R3 bedroom E2\nroom R4 bedroom E4\nroom R5 bedroom D2\nroom R6 bedroom D4\nroom R7 bathroom E1\nroom R8 bathroom E5\nroom R9 bathroom D1\nroom R10 bathroom D5\nroom R11 bedroom C2\ndoor E3|south\ndoor E3|D3\ndoor E3|E2\ndoor E3|E4\ndoor E2|E1\ndoor E2|D2\ndoor D2|D1\ndoor D2|C2\ndoor E4|E5\ndoor E4|D4\ndoor D4|D5\nwindow D3|east\nwindow D3|west\nwindow C2|north\nwindow D1|west\nwindow D5|east\nwindow E1|south\nwindow E5|south",
+  "layout": "grid 5x5\n     1    2    3    4    5\nA    .    .    .    .    .\nB    .    .    .    .    .\nC    .    .    .    .    .\nD    .    .    .    .    .\nE    .    .    .    .    .\n\nrooms\n\ndoors\n\nwindows",
+  "drawing": "run_0029\nINVALID (rule 4)\n\n      1       2       3       4       5\n\n\nA\n\n\n\nB\n\n\n\nC\n\n\n\nD\n\n\n\nE\n\n\n\nscores: none (house is invalid)\n\nBroken rules:\n  rule 4 (one entrance): the house has no living room\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": null,
+  "violations": [],
+  "scores": null,
+  "expansion": [],
+  "agent_usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 343,
+    "cache_read_input_tokens": 1375,
+    "output_tokens": 1343,
+    "thinking_tokens": 1105,
+    "cost_usd": 0.014943500000000002,
+    "duration_ms": 13584
+  }
+}

@@ -1,0 +1,41 @@
+label: sonnet55-low-c3-F   at 2026-10-20T10:50:58+00:00   commands: 5
+
+SCRIPT
+remove door A1|A2
+door A2|B2
+room R9 bedroom C3
+door C2|C3
+window C3|east
+
+run_0026
+VALID
+
+      1       2       3       4       5
+  +--###--+--###--+
+  |   R2  |   R6  |
+A |kitchen|  bath |
+  |       |       |
+  +-[   ]-+-[   ]-+
+  |   R1  |   R4  |
+B | living|  bath |
+  E               #
+  +-[   ]-+-------+-------+
+  |   R3  |   R5  |   R9  |
+C |bedroom|bedroom|bedroom|
+  |                       #
+  +-[   ]-+-------+-------+
+  |   R7  |   R8  |
+D |bedroom|  bath |
+  #               |
+  +--###--+--###--+
+
+E
+
+
+
+corridor rooms    7
+privacy order     0.07
+walking distance  2.61
+compactness       2
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

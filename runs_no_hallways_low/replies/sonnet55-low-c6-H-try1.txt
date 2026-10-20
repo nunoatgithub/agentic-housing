@@ -1,0 +1,4 @@
+room R11 bedroom A4
+door A3|A4
+window A4|north
+window A4|east
