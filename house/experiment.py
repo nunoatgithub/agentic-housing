@@ -1,4 +1,5 @@
-"""The experiment: one chain is agents A, B, C, D patching a house in turn, then E building the same rooms from scratch.
+"""The experiment: one chain is agents A to J. A builds a house, B to H each patch the previous agent's house,
+I builds from scratch every room A to H were asked for, and J patches A's house with B to H's rooms in one request.
 
     python -m house.experiment prompt --chain 1 --step B      print the prompt for that agent
     python -m house.experiment send   --chain 1 --step B reply.txt   send the agent's reply to the server

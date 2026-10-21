@@ -8,7 +8,7 @@ from house.layout_format import empty_layout_text
 from house.prompt import RequestError, build_prompt, check_request, fetch_layout, main
 from house.server import make_server
 
-DOC = Path("HOUSE_DSL.md")
+DOC = Path("docs/study-design.md")
 
 
 def test_fixed_text_matches_the_document():

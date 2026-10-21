@@ -115,7 +115,7 @@ def make_server(host: str = "127.0.0.1", port: int = 8000, runs_dir: Path = Path
 
 
 def main(argv: Sequence[str]) -> int:
-    parser = argparse.ArgumentParser(description="House DSL server")
+    parser = argparse.ArgumentParser(description="House server")
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--runs", type=Path, default=Path("runs"), help="folder for saved runs")
     parser.add_argument("--layout", type=Path, help="layout file to start from (default: empty grid)")

@@ -1,8 +1,10 @@
-# House DSL: Modelling Local Patching vs Global Design in AI Agents
+# Study design: patching versus planning, in a world of houses
 
-Oct 19, 2026 · Nuno
+Nuno Oliveira · first written 19 October 2026
 
-## Thesis
+This document defines the house world (its language, rules and scores) and the experiment run in it. The results are in [the report](../REPORT.md); how to run the experiment is in [running the experiment](running-the-experiment.md). The analysis plans of the first runs refer to this document by its earlier file name, `HOUSE_DSL.md`.
+
+## Hypothesis
 
 An AI agent asked to make a local change to an existing artefact will produce a worse result than an agent asked to build the same final requirements from scratch, even when both have the same rules, tools and quality measures. The cause is the framing of the request, not a lack of information.
 
@@ -22,7 +24,7 @@ A house is a single floor laid out on a small grid, where every room occupies on
 **Terms:** a *cell* is one square of the grid; a *room* is what occupies it.
 
 - **Grid:** 5×5 (25 cells), enough room for the house to grow over seven change requests without filling the grid. Checking one house against the rules and scores must be near-instant; enumerating every layout is optional.
-- **Room types:** living room, kitchen, bedroom, bathroom. There are no hallways. In the 5×5 run every final house had four to seven of them: a hallway costs nothing and fixes any access problem, so patched and planned houses both ended up as rooms hung off a spine of hallways, and the hallways hid any difference between them. Without hallways every cell holds a requested room, and a house is good or bad by where its rooms are and how its doors join them. Hallways are a setting of a run: a run that allows them (`--hallways`) uses `house/prompt_template_hallways.txt`, and its scripts may place hallways; otherwise a script that places one is rejected.
+- **Room types:** living room, kitchen, bedroom, bathroom, and hallway in runs that allow hallways. Hallways are a setting of each run: a run that allows them (`--hallways`) uses `house/prompt_template_hallways.txt`, and its scripts may place hallways; otherwise a script that places one is rejected. In the first run, which allowed them, every final house had four to seven hallways: a free hallway fixes any access problem, so patched and planned houses both ended up as rooms hung off a spine of hallways, and the hallways hid any difference between them. Without hallways every cell holds a requested room, and a house is good or bad by where its rooms are and how its doors join them.
 - **Adjacency:** two cells are neighbours if they share an edge (left, right, above, below). "Next to" always means this.
 - **No merging:** rooms are never merged. Every room is exactly one cell, so a room touches at most four others. The language has no command that joins two rooms.
 
@@ -38,7 +40,7 @@ A program is an ordered sequence of commands; running it builds the house step b
 | add door to wall | remove door |
 | add window to wall | remove window |
 
-Walls are implied, never written: a wall stands on every edge between two different rooms and between a room and the outside. The language once had commands to add and remove walls, which changed nothing, and composite commands such as `add bathroom next to R4`; no agent used any of them in three runs, so they are gone.
+Walls are implied, never written: a wall stands on every edge between two different rooms and between a room and the outside. The first runs also had commands to add and remove walls, which changed nothing, and composite commands such as `add bathroom next to R4`; no agent used any of them, so they were dropped.
 
 A door belongs to a wall, so it is automatically shared by the two spaces on either side. A door in an outer wall leads outside.
 
@@ -69,8 +71,6 @@ Among valid houses, quality is measured by four fitness functions. They are used
 | Walking distance | Average number of doors between every pair of rooms | New room added at the far end of a chain |
 | Compactness | How close the outline is to a compact shape (perimeter against area) | Bathroom sticking out as an add-on |
 
-**Ground truth:** the grid is small enough to enumerate every valid layout for a given set of rooms. That gives the best possible score exactly, so the gap between an agent's house and the optimum is a measurable number, not an opinion.
-
 The four scores are reported separately, never combined. Together with the drawings, they are the only way to characterise a solution.
 
 ## Experiment design
@@ -80,13 +80,13 @@ The only variable is how the task is framed; information, rules and good-house p
 |  | Patch agent | Planned agent |
 | --- | --- | --- |
 | Starts from | An existing valid house built by another agent | An empty grid |
-| Request | "Add an extra bathroom to this house" | "Build a house with these rooms" (original rooms plus the bathroom) |
+| Request | One room at a time, such as `add: bathroom` | `build:` the original rooms plus every room added |
 | Professional briefing (language, hard rules, good-house principles and why) | Yes | Yes |
 | Score feedback while designing | No | No |
 | Attempts | One | One |
 | Allowed to demolish and rebuild | Yes | Not applicable |
 
-**Building and demolishing cost.** In the first runs nothing cost anything, so any preference for patching would have been the agent's own habit. None showed: agents attached rooms while that worked and redesigned, up to rebuilding the whole house, when it did not, so they have no intrinsic bias toward locality when redesign is free. Locality may come from cost instead. Every command now has a price, whether it builds or removes, because rebuilding means paying to remove the old and paying again to build it back: a room costs 4 (four walls), a door or a window 1. Agents are told the prices and that their work is also judged by the total cost of the script; there is no budget and no exchange rate between cost and quality, so the trade-off is the agent's own. Planning from scratch pays for every room too.
+**Building and demolishing cost.** In the first runs nothing cost anything, so any preference for patching would have been the agent's own habit. None showed: agents attached rooms while that worked and redesigned, up to rebuilding the whole house, when it did not, so they have no intrinsic bias toward locality when redesign is free. Locality may come from cost instead. In the cost runs every command has a price, whether it builds or removes, because rebuilding means paying to remove the old and paying again to build it back: a room costs 4 (four walls), a door or a window 1. Agents are told the prices and that their work is also judged by the total cost of the script; there is no budget and no exchange rate between cost and quality, so the trade-off is the agent's own. Planning from scratch pays for every room too.
 
 **The agent is a professional, judged on design.** Each agent is briefed as an experienced house builder who already knows what makes a good house and why. It hands in its whole program in one go, as a single design, with no trial and error and no checks along the way. The design is then checked against the hard rules and scored once. The experiment studies how the agent designs the change, not how it implements it.
 
@@ -95,9 +95,11 @@ Procedure:
 1. A first agent builds a base house from a room list.
 2. The patch agent receives the base house and one change request.
 3. The planned agent receives the final room list and builds from scratch.
-4. Score both houses and the enumerated optimum with the fitness functions.
-5. Repeat with a sequence of five or six change requests, patching each time, to see whether the gap grows (accumulating debt).
-6. Repeat across agents (for example Claude, Codex) and many base houses.
+4. Score both houses with the fitness functions.
+5. Repeat with a sequence of seven change requests, a fresh patch agent each time, to see whether the gap grows (accumulating debt). One more agent receives the base house and all seven rooms in a single request.
+6. Repeat the whole sequence over several base houses (six chains per run), and across agents and effort levels.
+
+[Running the experiment](running-the-experiment.md) gives the exact steps and requests of a chain.
 
 **Prediction:** the patch agent's houses score worse than the planned agent's, and the gap widens with each change request, even though rebuilding was always allowed.
 
@@ -115,12 +117,13 @@ The whole sequence is repeated many times; drawings and scores are saved automat
 
 **Fresh agent per request.** Each change request goes to a new agent that sees only the current layout and the request, never earlier conversations, so its decisions are not polluted by history.
 
-**HTTP server, two endpoints:**
+**HTTP server:**
 
 | Endpoint | Purpose |
 | --- | --- |
 | `GET /layout` | Returns the current layout as text, including walls and doors, not only room types |
 | `POST /script` | Accepts a script in the house language, builds the house, renders it in ASCII and computes the four scores |
+| `PUT /layout` | Loads a layout to start from (an empty body resets to the empty grid); used to give each agent its starting house |
 
 **Layout format** (what `GET /layout` returns). Rows are A to E, columns 1 to 5. Each cell shows the id of the room on it, or `.` if empty. Walls are implied: a wall stands on every edge between cells of different rooms, and on every edge between a room and the outside. Doors and windows are listed by the edge they sit on.
 
@@ -230,7 +233,7 @@ Slot values by use case:
 
 ## Visualisation
 
-Every program renders as an ASCII floor plan: walls, doors, windows and room labels drawn with plain characters, so the difference between a patched and a planned house is visible at a glance. No graphical front end. A side-by-side view (patched, planned, optimum) with the four scores underneath is the core exhibit.
+Every program renders as an ASCII floor plan: walls, doors, windows and room labels drawn with plain characters, so the difference between a patched and a planned house is visible at a glance. No graphical front end. A side-by-side view (patched and planned) with the four scores underneath is the core exhibit.
 
 ## Implementation
 
