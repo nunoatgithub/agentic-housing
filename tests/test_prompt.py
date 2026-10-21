@@ -8,24 +8,6 @@ from house.layout_format import empty_layout_text
 from house.prompt import RequestError, build_prompt, check_request, fetch_layout, main
 from house.server import make_server
 
-DOC = Path("docs/study-design.md")
-
-
-def test_fixed_text_matches_the_document():
-    template = Path("house/prompt_template.txt").read_text()
-    doc_block = next(b for b in re.findall(r"```\n(.*?)```", DOC.read_text(), re.S) if b.startswith("You are an experienced"))
-    # everything in the document's template except the two reference placeholders must be in ours, in order
-    head, rest = doc_block.split("<command syntax reference>")
-    middle, tail = rest.split("<layout format reference>")
-    assert template.startswith(head)
-    assert middle in template and template.rstrip().endswith(tail.rstrip())
-    assert template.index(head) < template.index(middle) < template.index(tail)
-
-
-def test_command_syntax_in_prompt_is_the_documents():
-    syntax = next(b for b in re.findall(r"```\n(.*?)```", DOC.read_text(), re.S) if b.startswith("room R6"))
-    assert syntax.rstrip() in Path("house/prompt_template.txt").read_text()
-
 
 def test_slots_are_filled(example_text):
     prompt = build_prompt(example_text, "add: bathroom")

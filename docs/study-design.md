@@ -86,7 +86,7 @@ The only variable is how the task is framed; information, rules and good-house p
 | Attempts | One | One |
 | Allowed to demolish and rebuild | Yes | Not applicable |
 
-**Building and demolishing cost.** In the first runs nothing cost anything, so any preference for patching would have been the agent's own habit. None showed: agents attached rooms while that worked and redesigned, up to rebuilding the whole house, when it did not, so they have no intrinsic bias toward locality when redesign is free. Locality may come from cost instead. In the cost runs every command has a price, whether it builds or removes, because rebuilding means paying to remove the old and paying again to build it back: a room costs 4 (four walls), a door or a window 1. Agents are told the prices and that their work is also judged by the total cost of the script; there is no budget and no exchange rate between cost and quality, so the trade-off is the agent's own. Planning from scratch pays for every room too.
+**Building and demolishing are free.** No command costs anything, whether it builds or removes. Putting a price on change would be a methodological error: the experiment asks whether agents have an intrinsic bias toward locality, and a price would give them an outside reason to keep their changes small. With nothing to pay, any preference for patching is the agent's own habit.
 
 **The agent is a professional, judged on design.** Each agent is briefed as an experienced house builder who already knows what makes a good house and why. It hands in its whole program in one go, as a single design, with no trial and error and no checks along the way. The design is then checked against the hard rules and scored once. The experiment studies how the agent designs the change, not how it implements it.
 
@@ -199,12 +199,6 @@ GOOD-HOUSE PRINCIPLES (your work is judged by these)
 - Any two rooms should be as few doors apart as possible.
 - Keep the house compact, with nothing sticking out.
 
-COST
-Every command costs something, whether it builds or removes:
-room, remove room           4 (a room is four walls)
-door, remove door           1
-window, remove window       1
-Your work is also judged by the total cost of your script.
 You may change anything in the current layout.
 
 LANGUAGE

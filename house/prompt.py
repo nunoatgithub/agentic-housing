@@ -4,8 +4,7 @@
     python -m house.prompt "add: bathroom" --layout house.txt    layout from a file
     python -m house.prompt "build: living room, kitchen, bedroom x2, bathroom" --empty
 
-The template is house/prompt_template.txt: the prompt in docs/study-design.md, with its two reference sections filled
-in from that document (the command syntax block, and the layout format paragraph with its example).
+The template is house/prompt_template.txt.
 For a run that allows hallways (--hallways) it is house/prompt_template_hallways.txt.
 """
 from __future__ import annotations
