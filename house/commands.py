@@ -88,7 +88,7 @@ class ScriptLine:
 
 
 _TYPE = "(%s)" % "|".join(re.escape(t) for t in LOADABLE_TYPES)     # hallways parse; the interpreter decides if they may be built
-_ID = r"(R[1-9][0-9]{0,2})"
+_ID = r"(R[1-9][0-9]*)"
 _EDGE = r"(\S+)"
 
 

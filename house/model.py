@@ -6,13 +6,23 @@ Doors and windows are stored as sets of geometric edges.
 from __future__ import annotations
 
 import re
+import string
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, Iterator, List, Optional, Set, Tuple
 
+# Every house of a run stands on the same square grid: 5x5 unless the run calls set_grid_size before building anything.
 ROWS = 5
 COLS = 5
 ROW_LETTERS = "ABCDE"
+
+
+def set_grid_size(size: int) -> None:
+    global ROWS, COLS, ROW_LETTERS
+    if not 1 <= size <= len(string.ascii_uppercase):
+        raise ModelError("a grid is 1 to 26 cells a side, not %d" % size)
+    ROWS = COLS = size
+    ROW_LETTERS = string.ascii_uppercase[:size]
 
 ROOM_TYPES = ("living room", "kitchen", "bedroom", "bathroom")
 # Hallways are built only in runs that allow them (run_script(..., hallways=True)). Without a cost, a hallway fixes any
@@ -20,8 +30,8 @@ ROOM_TYPES = ("living room", "kitchen", "bedroom", "bathroom")
 HALLWAY = "hallway"
 LOADABLE_TYPES = ROOM_TYPES + (HALLWAY,)
 
-# Room ids are "R" followed by a number (no leading zero, at most 3 digits).
-ROOM_ID_RE = re.compile(r"R[1-9][0-9]{0,2}\Z")
+# Room ids are "R" followed by a number (no leading zero).
+ROOM_ID_RE = re.compile(r"R[1-9][0-9]*\Z")
 
 
 class ModelError(ValueError):
@@ -63,9 +73,10 @@ class Cell:
 
     @staticmethod
     def parse(text: str) -> "Cell":
-        m = re.fullmatch(r"([%s])([1-%d])" % (ROW_LETTERS, COLS), text)
+        m = re.fullmatch(r"([%s])(%s)" % (ROW_LETTERS, "|".join(str(c) for c in range(COLS, 0, -1))), text)
         if not m:
-            raise ModelError("bad cell %r: expected a letter %s-%s and a digit 1-%d, like B2" % (text, ROW_LETTERS[0], ROW_LETTERS[-1], COLS))
+            raise ModelError("bad cell %r: expected a letter %s-%s and a %s 1-%d, like B2"
+                             % (text, ROW_LETTERS[0], ROW_LETTERS[-1], "digit" if COLS < 10 else "number", COLS))
         return Cell(ROW_LETTERS.index(m.group(1)), int(m.group(2)) - 1)
 
     def neighbour(self, side: Side) -> Optional["Cell"]:

@@ -4,12 +4,10 @@ from __future__ import annotations
 import re
 from typing import Dict, List, Optional, Set, Tuple
 
+from . import model
 from .model import (
-    COLS,
     ROOM_ID_RE,
     LOADABLE_TYPES,
-    ROW_LETTERS,
-    ROWS,
     SIDE_ORDER,
     Cell,
     Edge,
@@ -23,11 +21,9 @@ from .model import (
     room_id_number,
 )
 
-GRID_HEADER = "grid %dx%d" % (ROWS, COLS)
-CELL_WIDTH = 5      # grid columns
-ID_WIDTH = 4        # room id column in the rooms list
+CELL_WIDTH = 5      # grid columns; wider only when an id needs it
+ID_WIDTH = 4        # room id column in the rooms list; wider only when an id needs it
 TYPE_WIDTH = 14     # room type column in the rooms list
-EDGE_WIDTH = ID_WIDTH + TYPE_WIDTH   # the "entrance" note lines up with the room cells column
 ENTRANCE = "entrance"
 EMPTY = "."
 
@@ -62,23 +58,25 @@ def format_layout(layout: Layout) -> str:
     if errors:
         raise ModelError("cannot print a malformed layout: " + "; ".join(errors))
     owner = layout.cell_map()
-    lines: List[str] = [GRID_HEADER]
-    lines.append((" " * CELL_WIDTH + "".join(str(c + 1).ljust(CELL_WIDTH) for c in range(COLS))).rstrip())
-    for r in range(ROWS):
-        row = ROW_LETTERS[r].ljust(CELL_WIDTH)
-        row += "".join(owner.get(Cell(r, c), EMPTY).ljust(CELL_WIDTH) for c in range(COLS))
+    lines: List[str] = [grid_header()]
+    cell_width = max([CELL_WIDTH] + [len(rid) + 1 for rid in layout.rooms])
+    lines.append((" " * cell_width + "".join(str(c + 1).ljust(cell_width) for c in range(model.COLS))).rstrip())
+    for r in range(model.ROWS):
+        row = model.ROW_LETTERS[r].ljust(cell_width)
+        row += "".join(owner.get(Cell(r, c), EMPTY).ljust(cell_width) for c in range(model.COLS))
         lines.append(row.rstrip())
 
     lines += ["", "rooms"]
+    id_width = max([ID_WIDTH] + [len(rid) + 1 for rid in layout.rooms])
     for room in sorted(layout.rooms.values(), key=lambda r: room_id_number(r.id)):
         cells = ",".join(str(c) for c in sorted(room.cells))
-        lines.append(_pad(room.id, ID_WIDTH) + room.type.ljust(TYPE_WIDTH) + cells)
+        lines.append(room.id.ljust(id_width) + room.type.ljust(TYPE_WIDTH) + cells)
 
     lines += ["", "doors"]
     for edge in _sorted_edges(layout, layout.doors):
         text = edge_text(layout, edge)
         if layout.wall_kind(edge) is WallKind.OUTER:
-            lines.append(_pad(text, EDGE_WIDTH) + ENTRANCE)
+            lines.append(_pad(text, id_width + TYPE_WIDTH) + ENTRANCE)     # in line with the rooms' cells
         else:
             lines.append(text)
 
@@ -86,6 +84,10 @@ def format_layout(layout: Layout) -> str:
     for edge in _sorted_edges(layout, layout.windows):
         lines.append(edge_text(layout, edge))
     return "\n".join(lines)
+
+
+def grid_header() -> str:
+    return "grid %dx%d" % (model.ROWS, model.COLS)
 
 
 def _pad(text: str, width: int) -> str:
@@ -116,20 +118,20 @@ def parse_layout(text: str) -> Layout:
         pos += 1
         return numbered[pos - 1]
 
-    n, line = take("%r" % GRID_HEADER)
-    if line.strip() != GRID_HEADER:
-        raise ParseError("expected %r, found %r" % (GRID_HEADER, line.strip()), n)
+    n, line = take("%r" % grid_header())
+    if line.strip() != grid_header():
+        raise ParseError("expected %r, found %r" % (grid_header(), line.strip()), n)
 
     n, line = take("the column numbers 1 2 3 4")
-    if line.split() != [str(c + 1) for c in range(COLS)]:
-        raise ParseError("expected the column numbers %s" % " ".join(str(c + 1) for c in range(COLS)), n)
+    if line.split() != [str(c + 1) for c in range(model.COLS)]:
+        raise ParseError("expected the column numbers %s" % " ".join(str(c + 1) for c in range(model.COLS)), n)
 
     grid: Dict[Cell, str] = {}
-    for r in range(ROWS):
-        n, line = take("row %s of the grid" % ROW_LETTERS[r])
+    for r in range(model.ROWS):
+        n, line = take("row %s of the grid" % model.ROW_LETTERS[r])
         tokens = line.split()
-        if len(tokens) != COLS + 1 or tokens[0] != ROW_LETTERS[r]:
-            raise ParseError("expected row label %s followed by %d cells" % (ROW_LETTERS[r], COLS), n)
+        if len(tokens) != model.COLS + 1 or tokens[0] != model.ROW_LETTERS[r]:
+            raise ParseError("expected row label %s followed by %d cells" % (model.ROW_LETTERS[r], model.COLS), n)
         for c, token in enumerate(tokens[1:]):
             if token == EMPTY:
                 continue

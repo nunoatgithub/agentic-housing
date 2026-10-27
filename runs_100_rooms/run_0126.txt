@@ -1,0 +1,193 @@
+label: sonnet55-medium-h3-c1-all00   at 2026-10-25T19:31:33+00:00   commands: 117
+
+SCRIPT
+remove room R103
+room R118 hallway K2
+door J2|K2
+room R119 hallway K3
+room R120 hallway K4
+room R121 hallway K5
+room R122 hallway K6
+room R123 hallway K7
+room R124 hallway K8
+room R125 hallway K9
+room R126 hallway K10
+room R127 hallway K11
+room R128 hallway K12
+room R129 hallway K13
+room R130 hallway K14
+room R131 hallway K15
+door K2|K3
+door K3|K4
+door K4|K5
+door K5|K6
+door K6|K7
+door K7|K8
+door K8|K9
+door K9|K10
+door K10|K11
+door K11|K12
+door K12|K13
+door K13|K14
+door K14|K15
+room R132 hallway J15
+room R133 hallway I15
+room R134 hallway H15
+room R135 hallway G15
+room R136 hallway F15
+room R137 hallway E15
+room R138 hallway D15
+room R139 hallway C15
+room R140 hallway B15
+room R141 hallway A15
+door K15|J15
+door J15|I15
+door I15|H15
+door H15|G15
+door G15|F15
+door F15|E15
+door E15|D15
+door D15|C15
+door C15|B15
+door B15|A15
+room R142 hallway L15
+room R143 hallway M15
+room R144 hallway N15
+door K15|L15
+door L15|M15
+door M15|N15
+room R145 bedroom K1
+door K1|K2
+room R146 bathroom J4
+door J4|K4
+room R147 bedroom J5
+door J5|K5
+room R148 bathroom J6
+door J6|K6
+room R149 bedroom J7
+door J7|K7
+room R150 bathroom J8
+door J8|K8
+room R151 bedroom J9
+door J9|K9
+room R152 bathroom J10
+door J10|K10
+room R153 bedroom J11
+door J11|K11
+room R154 bathroom J12
+door J12|K12
+room R155 bedroom J13
+door J13|K13
+room R156 bathroom J14
+door J14|K14
+room R157 bedroom L1
+door L1|K1
+room R158 bathroom L2
+door L2|K2
+room R159 bedroom L3
+door L3|K3
+room R160 bathroom L4
+door L4|K4
+room R161 bedroom L5
+door L5|K5
+room R162 bathroom L6
+door L6|K6
+room R163 bedroom L7
+door L7|K7
+room R164 bathroom L8
+door L8|K8
+room R165 bedroom L9
+door L9|K9
+room R166 bathroom L10
+door L10|K10
+room R167 bedroom L11
+door L11|K11
+room R168 bathroom L12
+door L12|K12
+room R169 bedroom L13
+door L13|K13
+room R170 bathroom L14
+door L14|K14
+room R171 bedroom A14
+door A14|A15
+room R172 bathroom G14
+door G14|G15
+room R173 bedroom I14
+door I14|I15
+room R174 bathroom M14
+door M14|M15
+room R175 bathroom N14
+door N14|N15
+
+run_0126
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+[ENTRY]+-------+-------+-------+-------+-------+-------+-------+       +-------+-------+-------+-------+-------+
+  |   R2  |   R1  |   R3  |   R9  |  R11  |  R17  |  R40  |  R47  |  R23  |       |  R95  |  R102 |  R117 |  R171 |  R141 |
+A |bedroom| living|kitchen|bedroom|bedroom|  bath |  bath |  bath |bedroom|       |bedroom|bedroom|  bath |bedroom|hallway|
+  |                                       |       |       |       |       |       |               |       |               |
+  +-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+
+  |   R5  |   R4  |   R6  |  R12  |  R16  |  R22  |  R39  |  R46  |  R52  |  R53  |  R94  |  R77  |  R116 |  R110 |  R140 |
+B |bedroom|  bath |  bath |hallway|hallway|hallway|hallway|hallway|hallway|bedroom|hallway|bedroom|hallway|  bath |hallway|
+  |       |                                                                                                       |       |
+  +-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+
+  |   R7  |   R8  |  R13  |  R14  |  R18  |  R29  |  R33  |  R34  |  R48  |  R45  |  R92  |  R93  |  R114 |  R115 |  R139 |
+C |bedroom|  bath |  bath |hallway|hallway|hallway|hallway|bedroom|hallway|bedroom|hallway|  bath |hallway|bedroom|hallway|
+  |       |       |                                                                                               |       |
+  +-------+-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+
+                  |  R15  |  R20  |  R19  |  R30  |  R41  |  R10  |  R50  |  R49  |  R90  |  R91  |  R111 |  R112 |  R138 |
+D                 |bedroom|hallway|bedroom|bedroom|hallway|  bath |hallway|bedroom|hallway|bedroom|hallway|bedroom|hallway|
+                  |                       |                                                                       |       |
+                  +-------+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+
+                  |  R28  |  R24  |  R26  |  R27  |  R42  |  R57  |  R51  |  R63  |  R88  |  R89  |  R109 |  R99  |  R137 |
+E                 |  bath |hallway|hallway|bedroom|bedroom|bedroom|  bath |bedroom|hallway|  bath |hallway|bedroom|hallway|
+                  |                               |       |       |       |                                       |       |
+                  +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+
+                  |  R38  |  R37  |  R31  |  R35  |  R43  |  R56  |  R61  |  R64  |  R76  |  R98  |  R106 |  R108 |  R136 |
+F                 |bedroom|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|bedroom|hallway|
+                  |                                                                                               |       |
+  +-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+
+  |  R84  |  R60  |  R59  |  R25  |  R32  |  R36  |  R54  |  R44  |  R21  |  R65  |  R75  |  R62  |  R107 |  R172 |  R135 |
+G |bedroom|bedroom|hallway|  bath |  bath |  bath |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |                               |       |                       |       |               |       |       |               |
+  +-------+-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-------+-[   ]-+
+          |  R58  |  R78  |  R67  |  R71  |  R69  |  R66  |  R73  |  R80  |  R82  |  R96  |  R100 |  R101 |  R113 |  R134 |
+H         |  bath |hallway|bedroom|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|  bath |  bath |hallway|
+          |                                                                                                       |       |
+          +-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-------+-[   ]-+
+          |  R85  |  R86  |  R87  |  R72  |  R70  |  R68  |  R55  |  R74  |  R83  |  R81  |  R97  |       |  R173 |  R133 |
+I         |  bath |hallway|bedroom|  bath |bedroom|  bath |  bath |bedroom|  bath |bedroom|  bath |       |bedroom|hallway|
+          |                       |       |       |       |       |       |       |       |       |       |               |
+  +-------+-[   ]-+-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  |  R105 |  R104 |  R79  |  R146 |  R147 |  R148 |  R149 |  R150 |  R151 |  R152 |  R153 |  R154 |  R155 |  R156 |  R132 |
+J |bedroom|hallway|  bath |  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |hallway|
+  |                       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R145 |  R118 |  R119 |  R120 |  R121 |  R122 |  R123 |  R124 |  R125 |  R126 |  R127 |  R128 |  R129 |  R130 |  R131 |
+K |bedroom|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R157 |  R158 |  R159 |  R160 |  R161 |  R162 |  R163 |  R164 |  R165 |  R166 |  R167 |  R168 |  R169 |  R170 |  R142 |
+L |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+                                                                                                          |  R174 |  R143 |
+M                                                                                                         |  bath |hallway|
+                                                                                                          |               |
+                                                                                                          +-------+-[   ]-+
+                                                                                                          |  R175 |  R144 |
+N                                                                                                         |  bath |hallway|
+                                                                                                          |               |
+                                                                                                          +-------+-------+
+
+O
+
+
+
+corridor rooms    8
+privacy order     0.01
+walking distance  14.47
+compactness       16
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

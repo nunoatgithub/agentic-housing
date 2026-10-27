@@ -17,7 +17,8 @@ from typing import List, Optional, Sequence
 
 from .interpreter import RunResult
 from .layout_format import parse_layout
-from .model import COLS, ROW_LETTERS, ROWS, Cell, Edge, Layout, WallKind, all_edges
+from . import model
+from .model import Cell, Edge, Layout, WallKind, all_edges
 from .rules import Violation, check_rules
 from .scores import Scores, score
 
@@ -55,8 +56,8 @@ class Drawing:
 
 def render_plan(layout: Layout) -> List[str]:
     """The grid with column numbers and row letters; every line has the same width."""
-    height = ROWS * PITCH_Y + 1
-    width = COLS * PITCH_X + 1
+    height = model.ROWS * PITCH_Y + 1
+    width = model.COLS * PITCH_X + 1
     canvas = [[" "] * width for _ in range(height)]
 
     for edge in all_edges():
@@ -77,16 +78,16 @@ def render_plan(layout: Layout) -> List[str]:
             for dy in range(CELL_H):
                 canvas[y + dy][x] = mark if dy == CELL_H - 1 else "|"
 
-    for r in range(ROWS + 1):
-        for c in range(COLS + 1):
+    for r in range(model.ROWS + 1):
+        for c in range(model.COLS + 1):
             around = []
             if c > 0:
                 around.append(Edge(True, r, c - 1))
-            if c < COLS:
+            if c < model.COLS:
                 around.append(Edge(True, r, c))
             if r > 0:
                 around.append(Edge(False, r - 1, c))
-            if r < ROWS:
+            if r < model.ROWS:
                 around.append(Edge(False, r, c))
             if any(layout.wall_kind(e) is not WallKind.NONE for e in around):
                 canvas[r * PITCH_Y][c * PITCH_X] = "+"
@@ -99,11 +100,12 @@ def render_plan(layout: Layout) -> List[str]:
                 _put(canvas, y + 1, x, SHORT_TYPE[room.type])
 
     header = [" "] * width
-    for c in range(COLS):
-        header[c * PITCH_X + 1 + CELL_W // 2] = str(c + 1)
+    for c in range(model.COLS):
+        for i, digit in enumerate(str(c + 1)):
+            header[c * PITCH_X + 1 + CELL_W // 2 + i] = digit
     lines = [" " * MARGIN + "".join(header)]
     for y, row in enumerate(canvas):
-        letter = ROW_LETTERS[y // PITCH_Y] if y % PITCH_Y == 2 and y // PITCH_Y < ROWS else " "
+        letter = model.ROW_LETTERS[y // PITCH_Y] if y % PITCH_Y == 2 and y // PITCH_Y < model.ROWS else " "
         lines.append((letter + " " * (MARGIN - 1)) + "".join(row))
     return lines
 
@@ -155,7 +157,7 @@ def render_house(drawing: Drawing) -> str:
 
 def render_side_by_side(drawings: Sequence[Drawing]) -> str:
     """Two or three houses next to each other. Each is 43 characters wide (5x5 grid), so two need 89 columns."""
-    width = MARGIN + COLS * PITCH_X + 1
+    width = MARGIN + model.COLS * PITCH_X + 1
     blocks = [[_fit(line, width) for line in _block(d, details=False)] for d in drawings]
     height = max(len(b) for b in blocks)
     rows = []

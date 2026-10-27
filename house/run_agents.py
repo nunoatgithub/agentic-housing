@@ -25,21 +25,25 @@ from .prompt import build_prompt
 MODEL_IDS = {"sonnet55": "claude-sonnet-5-5", "opus55": "claude-opus-5-5", "fable51": "claude-fable-5-1",
              "haiku55": "claude-haiku-5-5"}
 SYSTEM_PROMPT = "You are a helpful assistant."
+MAX_OUTPUT_TOKENS = 128000           # the most the model allows, thinking included
+CUT_OFF = "output token maximum"     # in Claude Code's error when a reply goes over the limit
 
 
 @dataclass
 class Reply:
     text: str
     usage: Dict[str, float]     # tokens and cost of this one agent call
+    cut_off: bool = False       # the reply went over MAX_OUTPUT_TOKENS, so there is no text
 
 
 def parse_claude_output(stdout: str) -> Reply:
     """The agent's answer and what it cost, from `claude -p --output-format json`."""
     data = json.loads(stdout)
-    if data.get("is_error"):
+    cut_off = bool(data.get("is_error")) and CUT_OFF in str(data.get("result"))
+    if data.get("is_error") and not cut_off:
         raise RuntimeError("claude failed: " + str(data.get("result"))[:500])
     u = data.get("usage") or {}
-    return Reply(data["result"], {
+    return Reply("" if cut_off else data["result"], {
         "input_tokens": u.get("input_tokens", 0),
         "cache_creation_input_tokens": u.get("cache_creation_input_tokens", 0),
         "cache_read_input_tokens": u.get("cache_read_input_tokens", 0),
@@ -47,7 +51,7 @@ def parse_claude_output(stdout: str) -> Reply:
         "thinking_tokens": (u.get("output_tokens_details") or {}).get("thinking_tokens", 0),
         "cost_usd": data.get("total_cost_usd", 0),
         "duration_ms": data.get("duration_ms", 0),
-    })
+    }, cut_off)
 
 
 def ask_claude(prompt: str, model_id: str, effort: str) -> Reply:
@@ -56,12 +60,13 @@ def ask_claude(prompt: str, model_id: str, effort: str) -> Reply:
             ["claude", "-p", "--model", model_id, "--effort", effort, "--tools", "",
              "--no-session-persistence", "--disable-slash-commands", "--setting-sources", "",
              "--strict-mcp-config", "--system-prompt", SYSTEM_PROMPT, "--output-format", "json"],
-            input=prompt, capture_output=True, text=True, timeout=900, cwd=empty_folder,
-            env={**os.environ, "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1"},
+            input=prompt, capture_output=True, text=True, timeout=3600, cwd=empty_folder,
+            env={**os.environ, "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1", "CLAUDE_CODE_MAX_OUTPUT_TOKENS": str(MAX_OUTPUT_TOKENS)},
         )
-    if done.returncode != 0:
+    try:
+        return parse_claude_output(done.stdout)     # a cut-off reply exits with 1 but is still a reply
+    except ValueError:
         raise RuntimeError("claude failed: " + (done.stderr or done.stdout).strip()[:500])
-    return parse_claude_output(done.stdout)
 
 
 def run_chain(chain: int, model: str, effort: str, runs_dir: Path, server: str, max_tries: int,
