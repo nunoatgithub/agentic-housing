@@ -105,7 +105,8 @@ Two later runs ask the same question with houses of 70 rooms grown to 100 on a 1
 ([the second report](REPORT_100_rooms.md)). With hallways allowed, the houses grown one room at a time ended with more
 rooms that must be walked through, and the houses given all the rooms at once ended longer to walk; neither kind of
 agent redesigned the house. With no hallways, Claude Sonnet 5.5 hardly changed the house it was given, one room at a
-time or all at once, while GPT-6 Luna rewired and rebuilt the badly grown houses.
+time or all at once, while GPT-6 Luna rewired and rebuilt the badly grown houses, which made them shorter to walk but put more
+bedrooms and bathrooms on the way between rooms.
 
 ## Repository
 

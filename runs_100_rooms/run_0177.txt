@@ -107,7 +107,7 @@ O                                                                 |bedroom|hallw
                                                                   |               |       |       |       |
                                                                   +-------+-------+-------+-------+-------+
 
-corridor rooms    14
+corridor rooms    21
 privacy order     0.01
 walking distance  10.34
 compactness       26

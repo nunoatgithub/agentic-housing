@@ -11,7 +11,8 @@ walked through, and the houses given all the rooms at once ended longer to walk,
 wing behind the house they received. Without hallways, Claude Sonnet 5.5 hardly changed anything it was given, whether
 it saw one room or all of them, and neither kind of house came out consistently better. GPT-6 Luna, in the same world,
 rewired and rebuilt large parts of the badly grown houses, mostly when it saw all the rooms at once but also in a
-single one-room step, and left them with fewer passages than it found. At this size, whether a house was redesigned
+single one-room step; its new doors made those houses shorter to walk but put more bedrooms and bathrooms on the way
+between rooms. Redesigning was not the same as improving. At this size, whether a house was redesigned
 depended on the model more than on how the requirements arrived.
 
 ## 1. Question
@@ -41,7 +42,8 @@ The full design is in [the study design](docs/study-design.md#the-70-to-100-room
   GPT-6 Luna at medium effort, one per seed house (GitHub Copilot CLI 1.0.105). The two models are reported separately.
 
 Both runs are described, not tested. Lower is better for every score. Corridor rooms counts the kitchens, bedrooms and
-bathrooms that someone must walk through to reach another room.
+bathrooms that lie on a best route between two other rooms, a best route being one that crosses as few kitchens,
+bedrooms and bathrooms as possible.
 
 ## 3. Run 1: hallways can be built
 
@@ -49,22 +51,22 @@ bathrooms that someone must walk through to reach another room.
 
 | Seed house | Chain | Model      | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
 | ---------- | ----- | ---------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
-| 1          |       |            | seed house (70 rooms)    | 39             | 0.0037        | 9.56             | 8           |
-|            | 1     | Sonnet 5.5 | after step 30            | 56             | 0.0026        | 11.43            | 14          |
-|            | 1     | Sonnet 5.5 | all at once from step 0  | 39             | 0.0026        | 15.22            | 28          |
-|            | 1     | Sonnet 5.5 | all at once from step 15 | 45             | 0.0026        | 13.68            | 26          |
-| 2          |       |            | seed house (70 rooms)    | 39             | 0.0037        | 9.91             | 12          |
-|            | 2     | Sonnet 5.5 | after step 30            | 55             | 0.0026        | 12.66            | 20          |
-|            | 2     | Sonnet 5.5 | all at once from step 0  | 39             | 0.0026        | 14.91            | 34          |
-|            | 2     | Sonnet 5.5 | all at once from step 15 | 49             | 0.0026        | 13.23            | 22          |
-| 3          |       |            | seed house (70 rooms)    | 6              | 0.0074        | 7.96             | 16          |
-|            | 3     | Sonnet 5.5 | after step 30            | 14             | 0.0051        | 10.40            | 28          |
-|            | 3     | Sonnet 5.5 | all at once from step 0  | 7              | 0.0051        | 14.47            | 16          |
-|            | 3     | Sonnet 5.5 | all at once from step 15 | 10             | 0.0051        | 11.37            | 18          |
-| 4          |       |            | seed house (70 rooms)    | 5              | 0.0074        | 7.60             | 8           |
-|            | 4     | Sonnet 5.5 | after step 30            | 15             | 0.0051        | 9.53             | 12          |
-|            | 4     | Sonnet 5.5 | all at once from step 0  | 5              | 0.0051        | 10.60            | 32          |
-|            | 4     | Sonnet 5.5 | all at once from step 15 | 8              | 0.0051        | 10.04            | 14          |
+| 1          |       |            | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 1     | Sonnet 5.5 | after step 30            | 59             | 0.0026        | 11.43            | 14          |
+|            | 1     | Sonnet 5.5 | all at once from step 0  | 42             | 0.0026        | 15.22            | 28          |
+|            | 1     | Sonnet 5.5 | all at once from step 15 | 48             | 0.0026        | 13.68            | 26          |
+| 2          |       |            | seed house (70 rooms)    | 42             | 0.0037        | 9.91             | 12          |
+|            | 2     | Sonnet 5.5 | after step 30            | 57             | 0.0026        | 12.66            | 20          |
+|            | 2     | Sonnet 5.5 | all at once from step 0  | 42             | 0.0026        | 14.91            | 34          |
+|            | 2     | Sonnet 5.5 | all at once from step 15 | 51             | 0.0026        | 13.23            | 22          |
+| 3          |       |            | seed house (70 rooms)    | 14             | 0.0074        | 7.96             | 16          |
+|            | 3     | Sonnet 5.5 | after step 30            | 21             | 0.0051        | 10.40            | 28          |
+|            | 3     | Sonnet 5.5 | all at once from step 0  | 15             | 0.0051        | 14.47            | 16          |
+|            | 3     | Sonnet 5.5 | all at once from step 15 | 17             | 0.0051        | 11.37            | 18          |
+| 4          |       |            | seed house (70 rooms)    | 13             | 0.0074        | 7.60             | 8           |
+|            | 4     | Sonnet 5.5 | after step 30            | 23             | 0.0051        | 9.53             | 12          |
+|            | 4     | Sonnet 5.5 | all at once from step 0  | 13             | 0.0051        | 10.60            | 32          |
+|            | 4     | Sonnet 5.5 | all at once from step 15 | 16             | 0.0051        | 10.04            | 14          |
 
 Before the run we expected the house after step 30 to score no worse than the house built all at once from step 0, as
 on the small grid. That held for walking distance, which was lower after step 30 in every seed house, and for
@@ -110,68 +112,68 @@ Sonnet 5.5:
 
 | Seed house | Chain | Model      | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
 | ---------- | ----- | ---------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
-| 1          |       |            | seed house (70 rooms)    | 39             | 0.0037        | 9.56             | 8           |
-|            | 1     | Sonnet 5.5 | after step 30            | 60             | 0.0026        | 11.89            | 12          |
-|            | 1     | Sonnet 5.5 | all at once from step 0  | 61             | 0.0026        | 11.69            | 10          |
-|            | 1     | Sonnet 5.5 | all at once from step 15 | 62             | 0.0026        | 11.92            | 10          |
-|            | 9     | Sonnet 5.5 | after step 30            | 59             | 0.0026        | 12.00            | 12          |
-|            | 9     | Sonnet 5.5 | all at once from step 0  | 64             | 0.0026        | 11.69            | 10          |
-|            | 9     | Sonnet 5.5 | all at once from step 15 | 59             | 0.0026        | 12.22            | 14          |
-| 2          |       |            | seed house (70 rooms)    | 39             | 0.0037        | 9.91             | 12          |
-|            | 2     | Sonnet 5.5 | after step 30            | 62             | 0.0026        | 12.61            | 18          |
-|            | 2     | Sonnet 5.5 | all at once from step 0  | 62             | 0.0026        | 13.13            | 26          |
-|            | 2     | Sonnet 5.5 | all at once from step 15 | 53             | 0.0026        | 12.43            | 14          |
-|            | 10    | Sonnet 5.5 | after step 30            | 65             | 0.0026        | 12.51            | 14          |
-|            | 10    | Sonnet 5.5 | all at once from step 0  | 64             | 0.0026        | 12.05            | 8           |
-|            | 10    | Sonnet 5.5 | all at once from step 15 | 65             | 0.0026        | 12.15            | 8           |
-| 3          |       |            | seed house (70 rooms)    | 6              | 0.0074        | 7.96             | 16          |
-|            | 3     | Sonnet 5.5 | after step 30            | 32             | 0.0051        | 9.04             | 8           |
-|            | 3     | Sonnet 5.5 | all at once from step 0  | 24             | 0.0051        | 10.65            | 18          |
-|            | 3     | Sonnet 5.5 | all at once from step 15 | 33             | 0.0051        | 9.06             | 8           |
-|            | 11    | Sonnet 5.5 | after step 30            | 33             | 0.0051        | 8.95             | 2           |
-|            | 11    | Sonnet 5.5 | all at once from step 0  | 33             | 0.0051        | 8.99             | 18          |
-|            | 11    | Sonnet 5.5 | all at once from step 15 | 34             | 0.0051        | 8.98             | 10          |
-| 4          |       |            | seed house (70 rooms)    | 5              | 0.0074        | 7.60             | 8           |
-|            | 4     | Sonnet 5.5 | after step 30            | 30             | 0.0051        | 8.65             | 0           |
-|            | 4     | Sonnet 5.5 | all at once from step 0  | 35             | 0.0051        | 8.72             | 8           |
-|            | 4     | Sonnet 5.5 | all at once from step 15 | 31             | 0.0051        | 8.65             | 0           |
-|            | 12    | Sonnet 5.5 | after step 30            | 29             | 0.0051        | 8.84             | 4           |
-|            | 12    | Sonnet 5.5 | all at once from step 0  | 35             | 0.0051        | 8.72             | 8           |
-|            | 12    | Sonnet 5.5 | all at once from step 15 | 29             | 0.0051        | 8.73             | 2           |
+| 1          |       |            | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 1     | Sonnet 5.5 | after step 30            | 63             | 0.0026        | 11.89            | 12          |
+|            | 1     | Sonnet 5.5 | all at once from step 0  | 64             | 0.0026        | 11.69            | 10          |
+|            | 1     | Sonnet 5.5 | all at once from step 15 | 65             | 0.0026        | 11.92            | 10          |
+|            | 9     | Sonnet 5.5 | after step 30            | 62             | 0.0026        | 12.00            | 12          |
+|            | 9     | Sonnet 5.5 | all at once from step 0  | 67             | 0.0026        | 11.69            | 10          |
+|            | 9     | Sonnet 5.5 | all at once from step 15 | 64             | 0.0026        | 12.22            | 14          |
+| 2          |       |            | seed house (70 rooms)    | 42             | 0.0037        | 9.91             | 12          |
+|            | 2     | Sonnet 5.5 | after step 30            | 65             | 0.0026        | 12.61            | 18          |
+|            | 2     | Sonnet 5.5 | all at once from step 0  | 65             | 0.0026        | 13.13            | 26          |
+|            | 2     | Sonnet 5.5 | all at once from step 15 | 67             | 0.0026        | 12.43            | 14          |
+|            | 10    | Sonnet 5.5 | after step 30            | 67             | 0.0026        | 12.51            | 14          |
+|            | 10    | Sonnet 5.5 | all at once from step 0  | 66             | 0.0026        | 12.05            | 8           |
+|            | 10    | Sonnet 5.5 | all at once from step 15 | 67             | 0.0026        | 12.15            | 8           |
+| 3          |       |            | seed house (70 rooms)    | 14             | 0.0074        | 7.96             | 16          |
+|            | 3     | Sonnet 5.5 | after step 30            | 45             | 0.0051        | 9.04             | 8           |
+|            | 3     | Sonnet 5.5 | all at once from step 0  | 31             | 0.0051        | 10.65            | 18          |
+|            | 3     | Sonnet 5.5 | all at once from step 15 | 46             | 0.0051        | 9.06             | 8           |
+|            | 11    | Sonnet 5.5 | after step 30            | 37             | 0.0051        | 8.95             | 2           |
+|            | 11    | Sonnet 5.5 | all at once from step 0  | 40             | 0.0051        | 8.99             | 18          |
+|            | 11    | Sonnet 5.5 | all at once from step 15 | 40             | 0.0051        | 8.98             | 10          |
+| 4          |       |            | seed house (70 rooms)    | 13             | 0.0074        | 7.60             | 8           |
+|            | 4     | Sonnet 5.5 | after step 30            | 38             | 0.0051        | 8.65             | 0           |
+|            | 4     | Sonnet 5.5 | all at once from step 0  | 43             | 0.0051        | 8.72             | 8           |
+|            | 4     | Sonnet 5.5 | all at once from step 15 | 39             | 0.0051        | 8.65             | 0           |
+|            | 12    | Sonnet 5.5 | after step 30            | 44             | 0.0051        | 8.84             | 4           |
+|            | 12    | Sonnet 5.5 | all at once from step 0  | 43             | 0.0051        | 8.72             | 8           |
+|            | 12    | Sonnet 5.5 | all at once from step 15 | 37             | 0.0051        | 8.73             | 2           |
 
 GPT-6 Luna:
 
 | Seed house | Chain | Model      | House                    | Corridor rooms | Privacy order | Walking distance | Compactness |
 | ---------- | ----- | ---------- | ------------------------ | -------------- | ------------- | ---------------- | ----------- |
-| 1          |       |            | seed house (70 rooms)    | 39             | 0.0037        | 9.56             | 8           |
-|            | 5     | GPT-6 Luna | after step 30            | 22             | 0.0026        | 8.08             | 10          |
-|            | 5     | GPT-6 Luna | all at once from step 0  | 24             | 0.0026        | 9.82             | 8           |
-|            | 5     | GPT-6 Luna | all at once from step 15 | 22             | 0.0026        | 7.76             | 8           |
-| 2          |       |            | seed house (70 rooms)    | 39             | 0.0037        | 9.91             | 12          |
-|            | 6     | GPT-6 Luna | after step 30            | 22             | 0.0026        | 8.13             | 6           |
-|            | 6     | GPT-6 Luna | all at once from step 0  | 37             | 0.0026        | 12.31            | 24          |
-|            | 6     | GPT-6 Luna | all at once from step 15 | 8              | 0.0026        | 7.79             | 0           |
-| 3          |       |            | seed house (70 rooms)    | 6              | 0.0074        | 7.96             | 16          |
-|            | 7     | GPT-6 Luna | after step 30            | 30             | 0.0051        | 10.87            | 10          |
-|            | 7     | GPT-6 Luna | all at once from step 0  | 36             | 0.0051        | 13.84            | 18          |
-|            | 7     | GPT-6 Luna | all at once from step 15 | 28             | 0.0051        | 9.85             | 10          |
-| 4          |       |            | seed house (70 rooms)    | 5              | 0.0074        | 7.60             | 8           |
-|            | 8     | GPT-6 Luna | after step 30            | 29             | 0.0051        | 10.06            | 22          |
-|            | 8     | GPT-6 Luna | all at once from step 0  | 22             | 0.0051        | 9.78             | 14          |
-|            | 8     | GPT-6 Luna | all at once from step 15 | 30             | 0.0051        | 10.44            | 16          |
+| 1          |       |            | seed house (70 rooms)    | 42             | 0.0037        | 9.56             | 8           |
+|            | 5     | GPT-6 Luna | after step 30            | 86             | 0.0026        | 8.08             | 10          |
+|            | 5     | GPT-6 Luna | all at once from step 0  | 79             | 0.0026        | 9.82             | 8           |
+|            | 5     | GPT-6 Luna | all at once from step 15 | 83             | 0.0026        | 7.76             | 8           |
+| 2          |       |            | seed house (70 rooms)    | 42             | 0.0037        | 9.91             | 12          |
+|            | 6     | GPT-6 Luna | after step 30            | 93             | 0.0026        | 8.13             | 6           |
+|            | 6     | GPT-6 Luna | all at once from step 0  | 75             | 0.0026        | 12.31            | 24          |
+|            | 6     | GPT-6 Luna | all at once from step 15 | 91             | 0.0026        | 7.79             | 0           |
+| 3          |       |            | seed house (70 rooms)    | 14             | 0.0074        | 7.96             | 16          |
+|            | 7     | GPT-6 Luna | after step 30            | 48             | 0.0051        | 10.87            | 10          |
+|            | 7     | GPT-6 Luna | all at once from step 0  | 43             | 0.0051        | 13.84            | 18          |
+|            | 7     | GPT-6 Luna | all at once from step 15 | 45             | 0.0051        | 9.85             | 10          |
+| 4          |       |            | seed house (70 rooms)    | 13             | 0.0074        | 7.60             | 8           |
+|            | 8     | GPT-6 Luna | after step 30            | 49             | 0.0051        | 10.06            | 22          |
+|            | 8     | GPT-6 Luna | all at once from step 0  | 34             | 0.0051        | 9.78             | 14          |
+|            | 8     | GPT-6 Luna | all at once from step 15 | 50             | 0.0051        | 10.44            | 16          |
 
 One call has no valid house: the all-at-once call from step 5 in house 2, chain 6 (GPT-6 Luna), whose three tries were all rejected; the chain went on without it. The
 scores of every step are in Appendix B.
 
 Across the eight Sonnet chains, the house after step 30 had fewer corridor rooms than the house built all at
-once from step 0 in four chains and more in two; it was shorter to walk in
+once from step 0 in four chains and more in three; it was shorter to walk in
 four and longer in four. Across the four GPT-6 Luna chains, the house after
-step 30 had fewer corridor rooms in three and more in one; it was shorter to walk in
+step 30 had more corridor rooms in all four; it was shorter to walk in
 three and longer in one.
 
-The seed house mattered most for GPT-6 Luna. In the two budget houses, every Sonnet chain ended with more corridor
-rooms than the seed house had, and GPT-6 Luna ended with fewer. In the two planned houses, every chain of both models
-ended with more.
+Every chain of both models ended with more corridor rooms than its seed house had, and GPT-6 Luna ended with more than
+both Sonnet chains in every seed house. In the two budget houses GPT-6 Luna's houses were shorter to walk than
+Sonnet's; in the two planned houses they were longer.
 
 ### 4.2 What the agents changed
 
@@ -189,10 +191,11 @@ seed hallway and one a bathroom. No one-room step added more than one door beyon
 GPT-6 Luna changed the house in two ways. In 11 of its 235 calls
 (nine of them all at once) it added ten or more doors beyond those of its new rooms, opening up the
 house it received, in seven of them without removing a room; the biggest was
-step 6 of house 1, chain 5 (GPT-6 Luna), which added 57 doors and cut corridor rooms from 44 to
-2. And six calls removed a quarter of the house or more, one
+step 6 of house 1, chain 5 (GPT-6 Luna), which added 57 doors and raised corridor rooms from 47 to
+70. And six calls removed a quarter of the house or more, one
 of them a one-room step, all in the budget houses. In each budget house one one-room step, step
-6, redesigned the house, and the later steps built on that design.
+6, redesigned the house, and the later steps built on that design. Every call that rewired or
+rebuilt the house raised corridor rooms.
 
 ### 4.3 Why it happens
 
@@ -201,9 +204,11 @@ all-at-once agent no longer has a hallway wing to hang the new rooms on, so it a
 the one-room agents do, and neither kind of house comes out ahead. Sonnet did that and nothing else: it took the house as
 given and attached rooms to it. The budget houses arrived with many passages, kept them, and gained more.
 
-The way out of a passage is another way in: a second door, or a room rebuilt. GPT-6 Luna took it. It opened extra
-doors between rooms that were already there, and in the budget houses it took apart large parts of the house and laid
-them out again. It did so mostly when it saw all the rooms at once, but a single one-room step was enough to redesign a
+GPT-6 Luna did not take the house as given. It opened extra doors between neighbouring rooms, and in the budget
+houses it took apart large parts of the house and laid them out again, moving towards a house in which every room
+opens onto the rooms around it. Such a house is short to walk, because there is a direct way almost everywhere; but
+the direct way runs through bedrooms and bathrooms instead of hallways, so more of them end up on the route between
+other rooms. It did so mostly when it saw all the rooms at once, but a single one-room step was enough to redesign a
 budget house, so the order in which the rooms arrived did not decide whether the house was redesigned; the model did.
 
 ### 4.4 Failed calls and cost
@@ -231,7 +236,8 @@ walk. Neither kind of agent redesigned the house.
 
 Without hallways, redesign depended on the model. Sonnet 5.5 kept the house it was given and attached rooms to it,
 whether it saw one room or all of them. GPT-6 Luna rewired and rebuilt the badly grown houses, mostly when it saw all
-the rooms at once, but also in a single one-room step. In neither case did the order in which the rooms arrived decide whether the house got
+the rooms at once, but also in a single one-room step. Its redesigns made the budget houses shorter to walk and put
+more bedrooms and bathrooms on the way between rooms: redesigning was not the same as improving. In neither case did the order in which the rooms arrived decide whether the house got
 redesigned.
 
 ## Appendix A. Run 1, step by step
@@ -244,14 +250,14 @@ has none.
 
 | Chain | Seed house | Model      | House                     | step 0 | step 5 | step 10 | step 15 | step 20 | step 25 | step 30 |
 | ----- | ---------- | ---------- | ------------------------- | ------ | ------ | ------- | ------- | ------- | ------- | ------- |
-| 1     | 1          | Sonnet 5.5 | after the step            | 39     | 40     | 41      | 44      | 47      | 51      | 56      |
-| 1     | 1          | Sonnet 5.5 | all at once from the step | 39     | 39     | 42      | 45      | 48      | 51      | –       |
-| 2     | 2          | Sonnet 5.5 | after the step            | 39     | 42     | 46      | 49      | 52      | 55      | 55      |
-| 2     | 2          | Sonnet 5.5 | all at once from the step | 39     | 43     | 46      | 49      | 53      | 60      | –       |
-| 3     | 3          | Sonnet 5.5 | after the step            | 6      | 8      | 8       | 10      | 13      | 14      | 14      |
-| 3     | 3          | Sonnet 5.5 | all at once from the step | 7      | 8      | 8       | 10      | 13      | 14      | –       |
-| 4     | 4          | Sonnet 5.5 | after the step            | 5      | 5      | 6       | 8       | 9       | 11      | 15      |
-| 4     | 4          | Sonnet 5.5 | all at once from the step | 5      | 5      | 6       | 8       | 9       | 11      | –       |
+| 1     | 1          | Sonnet 5.5 | after the step            | 42     | 43     | 44      | 47      | 50      | 54      | 59      |
+| 1     | 1          | Sonnet 5.5 | all at once from the step | 42     | 42     | 45      | 48      | 51      | 54      | –       |
+| 2     | 2          | Sonnet 5.5 | after the step            | 42     | 44     | 48      | 51      | 54      | 57      | 57      |
+| 2     | 2          | Sonnet 5.5 | all at once from the step | 42     | 45     | 48      | 51      | 55      | 62      | –       |
+| 3     | 3          | Sonnet 5.5 | after the step            | 14     | 15     | 15      | 17      | 20      | 21      | 21      |
+| 3     | 3          | Sonnet 5.5 | all at once from the step | 15     | 15     | 15      | 17      | 20      | 21      | –       |
+| 4     | 4          | Sonnet 5.5 | after the step            | 13     | 13     | 14      | 16      | 17      | 19      | 23      |
+| 4     | 4          | Sonnet 5.5 | all at once from the step | 13     | 13     | 14      | 16      | 17      | 19      | –       |
 
 **Privacy order**
 
@@ -300,30 +306,30 @@ As in Appendix A.
 
 | Chain | Seed house | Model      | House                     | step 0 | step 5 | step 10 | step 15 | step 20 | step 25 | step 30 |
 | ----- | ---------- | ---------- | ------------------------- | ------ | ------ | ------- | ------- | ------- | ------- | ------- |
-| 1     | 1          | Sonnet 5.5 | after the step            | 39     | 43     | 47      | 51      | 55      | 57      | 60      |
-| 1     | 1          | Sonnet 5.5 | all at once from the step | 61     | 64     | 63      | 62      | 63      | 61      | –       |
-| 2     | 2          | Sonnet 5.5 | after the step            | 39     | 43     | 47      | 51      | 54      | 58      | 62      |
-| 2     | 2          | Sonnet 5.5 | all at once from the step | 62     | 65     | 63      | 53      | 61      | 63      | –       |
-| 3     | 3          | Sonnet 5.5 | after the step            | 6      | 11     | 14      | 19      | 23      | 28      | 32      |
-| 3     | 3          | Sonnet 5.5 | all at once from the step | 24     | 34     | 34      | 33      | 18      | 32      | –       |
-| 4     | 4          | Sonnet 5.5 | after the step            | 5      | 10     | 15      | 18      | 23      | 27      | 30      |
-| 4     | 4          | Sonnet 5.5 | all at once from the step | 35     | 31     | 33      | 31      | 32      | 31      | –       |
-| 9     | 1          | Sonnet 5.5 | after the step            | 39     | 43     | 48      | 51      | 54      | 56      | 59      |
-| 9     | 1          | Sonnet 5.5 | all at once from the step | 64     | 64     | 61      | 59      | 60      | 60      | –       |
-| 10    | 2          | Sonnet 5.5 | after the step            | 39     | 43     | 48      | 52      | 57      | 60      | 65      |
-| 10    | 2          | Sonnet 5.5 | all at once from the step | 64     | 61     | 65      | 65      | 63      | 64      | –       |
-| 11    | 3          | Sonnet 5.5 | after the step            | 6      | 11     | 16      | 20      | 25      | 30      | 33      |
-| 11    | 3          | Sonnet 5.5 | all at once from the step | 33     | 33     | 33      | 34      | 33      | 34      | –       |
-| 12    | 4          | Sonnet 5.5 | after the step            | 5      | 10     | 14      | 18      | 22      | 25      | 29      |
-| 12    | 4          | Sonnet 5.5 | all at once from the step | 35     | 12     | 31      | 29      | 32      | 30      | –       |
-| 5     | 1          | GPT-6 Luna | after the step            | 39     | 44     | 6       | 10      | 14      | 19      | 22      |
-| 5     | 1          | GPT-6 Luna | all at once from the step | 24     | 67     | 19      | 22      | 22      | 21      | –       |
-| 6     | 2          | GPT-6 Luna | after the step            | 39     | 44     | 4       | 9       | 14      | 17      | 22      |
-| 6     | 2          | GPT-6 Luna | all at once from the step | 37     | –      | 19      | 8       | 24      | 0       | –       |
-| 7     | 3          | GPT-6 Luna | after the step            | 6      | 13     | 14      | 19      | 23      | 26      | 30      |
-| 7     | 3          | GPT-6 Luna | all at once from the step | 36     | 18     | 16      | 28      | 31      | 31      | –       |
-| 8     | 4          | GPT-6 Luna | after the step            | 5      | 9      | 13      | 17      | 21      | 24      | 29      |
-| 8     | 4          | GPT-6 Luna | all at once from the step | 22     | 27     | 33      | 30      | 29      | 29      | –       |
+| 1     | 1          | Sonnet 5.5 | after the step            | 42     | 46     | 50      | 54      | 58      | 60      | 63      |
+| 1     | 1          | Sonnet 5.5 | all at once from the step | 64     | 67     | 66      | 65      | 66      | 64      | –       |
+| 2     | 2          | Sonnet 5.5 | after the step            | 42     | 46     | 50      | 54      | 57      | 61      | 65      |
+| 2     | 2          | Sonnet 5.5 | all at once from the step | 65     | 68     | 66      | 67      | 64      | 66      | –       |
+| 3     | 3          | Sonnet 5.5 | after the step            | 14     | 17     | 28      | 32      | 36      | 41      | 45      |
+| 3     | 3          | Sonnet 5.5 | all at once from the step | 31     | 38     | 48      | 46      | 49      | 45      | –       |
+| 4     | 4          | Sonnet 5.5 | after the step            | 13     | 18     | 23      | 26      | 31      | 35      | 38      |
+| 4     | 4          | Sonnet 5.5 | all at once from the step | 43     | 39     | 41      | 39      | 40      | 39      | –       |
+| 9     | 1          | Sonnet 5.5 | after the step            | 42     | 46     | 51      | 54      | 57      | 59      | 62      |
+| 9     | 1          | Sonnet 5.5 | all at once from the step | 67     | 67     | 64      | 64      | 63      | 63      | –       |
+| 10    | 2          | Sonnet 5.5 | after the step            | 42     | 45     | 50      | 54      | 59      | 62      | 67      |
+| 10    | 2          | Sonnet 5.5 | all at once from the step | 66     | 63     | 67      | 67      | 65      | 66      | –       |
+| 11    | 3          | Sonnet 5.5 | after the step            | 14     | 18     | 22      | 26      | 30      | 34      | 37      |
+| 11    | 3          | Sonnet 5.5 | all at once from the step | 40     | 40     | 38      | 40      | 38      | 38      | –       |
+| 12    | 4          | Sonnet 5.5 | after the step            | 13     | 18     | 22      | 26      | 30      | 40      | 44      |
+| 12    | 4          | Sonnet 5.5 | all at once from the step | 43     | 43     | 39      | 37      | 40      | 45      | –       |
+| 5     | 1          | GPT-6 Luna | after the step            | 42     | 47     | 73      | 76      | 80      | 83      | 86      |
+| 5     | 1          | GPT-6 Luna | all at once from the step | 79     | 70     | 79      | 83      | 84      | 85      | –       |
+| 6     | 2          | GPT-6 Luna | after the step            | 42     | 47     | 78      | 82      | 87      | 90      | 93      |
+| 6     | 2          | GPT-6 Luna | all at once from the step | 75     | –      | 82      | 91      | 89      | 99      | –       |
+| 7     | 3          | GPT-6 Luna | after the step            | 14     | 17     | 32      | 37      | 39      | 45      | 48      |
+| 7     | 3          | GPT-6 Luna | all at once from the step | 43     | 46     | 53      | 45      | 47      | 50      | –       |
+| 8     | 4          | GPT-6 Luna | after the step            | 13     | 28     | 33      | 37      | 41      | 44      | 49      |
+| 8     | 4          | GPT-6 Luna | all at once from the step | 34     | 46     | 53      | 50      | 49      | 49      | –       |
 
 **Privacy order**
 

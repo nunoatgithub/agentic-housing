@@ -237,7 +237,9 @@ T["r2_luna_calls"] = str(len(l2_step) + len(l2_all))
 big = max(l2_step, key=lambda c: c[3] - c[4])
 T["r2_luna_big_doors"], T["r2_luna_big_where"] = str(big[3]), "step %d of %s" % (big[6], chain_name(big[5]))
 before, after = r2.scores(big[5], "step", big[6] - 1), r2.scores(big[5], "step", big[6])
-assert big[0] == 0 and after["corridor_rooms"] < before["corridor_rooms"] / 4, "the biggest rewiring removed no room and cut corridor rooms to under a quarter"
+assert big[0] == 0 and after["corridor_rooms"] > before["corridor_rooms"], "the biggest rewiring removed no room and raised corridor rooms"
+corridor_change = lambda c: (score(r2.start(c[5], "step" if c in l2_step else "all", c[6])).corridor_rooms,
+                             r2.scores(c[5], "step" if c in l2_step else "all", c[6])["corridor_rooms"])
 T["r2_luna_big_before"], T["r2_luna_big_after"] = str(before["corridor_rooms"]), str(after["corridor_rooms"])
 rebuilt = [c for c in l2_step + l2_all if c[0] / c[1] >= 0.25]
 T["r2_luna_rebuilt"] = words(len(rebuilt))
@@ -247,12 +249,16 @@ step_redesigns = [c for c in l2_step if c in rewired or c in rebuilt]
 assert sorted(c[5][1] for c in step_redesigns) == [1, 2] and len({c[6] for c in step_redesigns}) == 1, \
     "GPT-6 Luna redesigned by a one-room step once in each budget house, at the same step"
 T["r2_luna_redesign_step"] = str(step_redesigns[0][6])
+assert all(after > before for before, after in map(corridor_change, rewired + rebuilt)), \
+    "every GPT-6 Luna call that rewired or rebuilt the house raised corridor rooms"
 s2_final = {h: [r2.scores(c, "step", 30)["corridor_rooms"] for c in S2 if c[1] == h] for h in range(1, 5)}
 l2_final = {c[1]: r2.scores(c, "step", 30)["corridor_rooms"] for c in L2}
-assert all(l2_final[h] < seed_sc[h]["corridor_rooms"] < min(s2_final[h]) for h in (1, 2)), \
-    "run 2, budget houses: GPT-6 Luna ended below the seed house's corridor rooms, every Sonnet chain above it"
-assert all(min(s2_final[h]) > seed_sc[h]["corridor_rooms"] and l2_final[h] > seed_sc[h]["corridor_rooms"] for h in (3, 4)), \
-    "run 2, planned houses: every chain ended above the seed house's corridor rooms"
+assert all(min(s2_final[h]) > seed_sc[h]["corridor_rooms"] and l2_final[h] > seed_sc[h]["corridor_rooms"] for h in range(1, 5)), \
+    "run 2: every chain ended with more corridor rooms than its seed house"
+assert all(l2_final[h] > max(s2_final[h]) for h in range(1, 5)), "run 2: GPT-6 Luna ended with more corridor rooms than both Sonnet chains, in every house"
+walk = lambda chains, h: [r2.scores(c, "step", 30)["walking_distance"] for c in chains if c[1] == h]
+assert all(max(walk(L2, h)) < min(walk(S2, h)) for h in (1, 2)) and all(min(walk(L2, h)) > max(walk(S2, h)) for h in (3, 4)), \
+    "run 2: GPT-6 Luna's houses were shorter to walk than Sonnet's in the budget houses, longer in the planned houses"
 for tag, chains in (("s", S2), ("l", L2)):          # after step 30 against all at once from step 0, chain by chain
     for name in ("corridor_rooms", "walking_distance"):
         pairs = [(r2.scores(c, "step", 30)[name], r2.scores(c, "all", 0)[name]) for c in chains]
@@ -260,6 +266,7 @@ for tag, chains in (("s", S2), ("l", L2)):          # after step 30 against all 
         T["r2_%s_%s_higher" % (tag, name[:4])] = words(sum(a > b for a, b in pairs))
 assert all(T["r2_s_%s_%s" % (n, d)] != "no" for n in ("corr", "walk") for d in ("lower", "higher")), \
     "run 2: for Sonnet, neither kind of house came out consistently better on corridor rooms or walking distance"
+assert T.pop("r2_l_corr_lower") == "no" and T["r2_l_corr_higher"] == words(len(L2)), "run 2: for GPT-6 Luna, step 30 had more corridor rooms in every chain"
 T["r2_s_chains"], T["r2_l_chains"] = words(len(S2)), words(len(L2))
 T["r2_s_versions"] = ", ".join(sorted({(r.get("agent_version") or r["claude_code"]).split()[0] for r in r2.records if r["label"].startswith("sonnet55")}))
 T["r2_l_version"] = sorted({r["agent_version"].split("\n")[0].rstrip(".") for r in r2.records if r["label"].startswith("gpt6luna")})[0]

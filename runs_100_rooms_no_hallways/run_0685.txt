@@ -84,7 +84,7 @@ O
 
 
 
-corridor rooms    34
+corridor rooms    38
 privacy order     0.01
 walking distance  8.94
 compactness       2

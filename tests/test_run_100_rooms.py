@@ -5,8 +5,8 @@ from house.interpreter import run_script
 from house.layout_format import format_layout, parse_layout
 from house.model import Cell, Layout, ModelError, set_grid_size
 from house.prompt import build_prompt
-from house.run_100_rooms import (NO_HALLWAYS_TEMPLATE_PATH, TEMPLATE_PATH, Call, calls, label, make_call, next_call,
-                                 outcome, request, rooms_added, run_next_chain, starting_house)
+from house.run_100_rooms import (NO_HALLWAYS_TEMPLATE_PATH, REFACTOR_TEMPLATE_PATH, TEMPLATE_PATH, Call, calls, label,
+                                 make_call, next_call, outcome, request, rooms_added, run_next_chain, starting_house)
 from house.run_agents import Reply
 
 SEED = """room R1 living room A1
@@ -128,6 +128,17 @@ def test_a_run_in_which_no_hallway_can_be_built_is_given_its_own_prompt(runs_dir
         prompts = []
         make_call(runs_dir, 1, Call("all", 0), lambda prompt: prompts.append(prompt) or Reply("", USAGE), "1.0", hallways)
         assert prompts == [build_prompt(seed_text, wanted, template=path.read_text().rstrip("\n"))]
+
+
+def test_a_refactor_run_asks_to_reorganise_just_before_the_request(runs_dir):
+    prompts = []
+    make_call(runs_dir, 1, Call("step", 1), lambda prompt: prompts.append(prompt) or Reply("", USAGE), "1.0", refactor=True)
+    before, request_line = prompts[0].split("\nREQUEST\n")
+    assert before.rstrip().endswith("reorganise the existing house to reduce its complexity, keeping the exact same final "
+                                    "number of rooms (excluding hallways, whose number can change).")
+    assert request_line.startswith("add: bedroom")
+    assert prompts[0] == build_prompt((runs_dir / "seeds" / "house1.txt").read_text(), "add: bedroom",
+                                      template=REFACTOR_TEMPLATE_PATH.read_text().rstrip("\n"))
 
 
 def test_a_house_can_be_chosen_to_run_before_the_ones_ahead_of_it(runs_dir):

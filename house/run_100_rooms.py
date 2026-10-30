@@ -2,6 +2,7 @@
 
     python -m house.run_100_rooms [--runs runs_100_rooms]
     python -m house.run_100_rooms --runs runs_100_rooms_no_hallways --no-hallways [--house 3 [--chain 11]]
+    python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor
 
 A run holds one or more chains per seed house; the chain number is separate from the house number and defaults to
 it. Each start runs the chain of the house given, or else the next one that is
@@ -14,6 +15,7 @@ stepK adds one room to the house left by step K-1 (the seed house for step01), b
 allK adds every room still missing, in one request, to the house left by step K (the seed house for all00).
 Every call is labelled <model>-<effort>-h<house>-c<chain>-<call>, e.g. sonnet55-medium-h2-c10-step01.
 With --no-hallways no hallway can be built (the seed houses keep theirs, and agents may remove them); the prompt says so.
+With --refactor the prompt asks every agent, just before the request, to reorganise the house before adding to it.
 
 A failed call (script rejected, house invalid, reply cut off) is tried again with a fresh agent, up to 3 tries.
 If a one-room step still fails, the chain stops there. Every call of a chain must use the same CLI version.
@@ -43,6 +45,7 @@ from .run_agents import MODEL_IDS, Reply, ask_claude
 SIZE = 15
 TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms.txt")
 NO_HALLWAYS_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms_no_hallways.txt")
+REFACTOR_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms_refactor.txt")
 HOUSES = (1, 2, 3, 4)
 STEPS = 30                                  # rooms added: 70 to 100
 MAX_TRIES = 3
@@ -127,7 +130,7 @@ def make_call(runs_dir: Path, house: int, call: Call, ask: Callable[[str], Reply
               hallways: bool = True, chain: Optional[int] = None, model: str = MODEL, effort: str = EFFORT,
               agent_cli: str = "claude-code", seed_dir: Optional[Path] = None,
               model_id: Optional[str] = None, chain_started_at: Optional[datetime] = None,
-              chain_timing_estimated: bool = False) -> dict:
+              chain_timing_estimated: bool = False, refactor: bool = False) -> dict:
     """Ask a fresh agent, build its reply on the starting house and save the record."""
     if chain_started_at is None:
         chain_started_at = datetime.now(timezone.utc)
@@ -135,7 +138,7 @@ def make_call(runs_dir: Path, house: int, call: Call, ask: Callable[[str], Reply
     seed_text = ((seed_dir or runs_dir) / "seeds" / ("house%d.txt" % house)).read_text()
     layout_text = starting_house(runs, seed_text, house, call, chain, model, effort)
     wanted = request(call, rooms_added(parse_layout(seed_text)))
-    template = (TEMPLATE_PATH if hallways else NO_HALLWAYS_TEMPLATE_PATH).read_text().rstrip("\n")
+    template = (REFACTOR_TEMPLATE_PATH if refactor else TEMPLATE_PATH if hallways else NO_HALLWAYS_TEMPLATE_PATH).read_text().rstrip("\n")
     call_started = time.monotonic()
     reply = ask(build_prompt(layout_text, wanted, template=template))
     call_duration_ms = round((time.monotonic() - call_started) * 1000)
@@ -180,7 +183,7 @@ def claude_code_version() -> str:
 def run_next_chain(runs_dir: Path, ask: Callable[[str], Reply], version: str, log: Callable[[str], None] = print,
                    hallways: bool = True, house: Optional[int] = None, chain: Optional[int] = None,
                    model: str = MODEL, effort: str = EFFORT, agent_cli: str = "claude-code",
-                   seed_dir: Optional[Path] = None, model_id: Optional[str] = None) -> bool:
+                   seed_dir: Optional[Path] = None, model_id: Optional[str] = None, refactor: bool = False) -> bool:
     """Run the chain of this house, or else the next one that is not done; False if there is none."""
     for selected_house in (house,) if house else HOUSES:
         selected_chain = chain if chain is not None else selected_house
@@ -209,7 +212,7 @@ def run_next_chain(runs_dir: Path, ask: Callable[[str], Reply], version: str, lo
             call, attempt = todo
             record = make_call(runs_dir, selected_house, call, ask, version, hallways, selected_chain,
                                model, effort, agent_cli, seed_dir, model_id, chain_started_at,
-                               chain_timing_estimated)
+                               chain_timing_estimated, refactor)
             usage = record["agent_usage"]
             output_tokens = usage.get("output_tokens")
             cost = usage.get("cost_usd")
@@ -227,6 +230,7 @@ def main(argv: Sequence[str]) -> int:
     parser.add_argument("--runs", type=Path, help="directory for run records")
     parser.add_argument("--seed-runs", type=Path, help="directory containing the four seed layouts")
     parser.add_argument("--no-hallways", action="store_true", help="a run in which no hallway can be built")
+    parser.add_argument("--refactor", action="store_true", help="a run whose prompt asks to reorganise the house before adding to it")
     parser.add_argument("--house", type=int, choices=HOUSES, help="run this house's chain (default: the next one not done)")
     parser.add_argument("--chain", type=int, help="chain number (defaults to the house number)")
     parser.add_argument("--agent", choices=("claude", "copilot"), default="claude", help="CLI harness to use")
@@ -237,6 +241,8 @@ def main(argv: Sequence[str]) -> int:
         parser.error("--chain requires --house")
     if args.chain is not None and args.chain < 1:
         parser.error("--chain must be positive")
+    if args.refactor and args.no_hallways:
+        parser.error("--refactor is a run with hallways")
     set_grid_size(SIZE)
     if args.agent == "copilot":
         model_id = args.model or "gpt-6-luna"
@@ -250,7 +256,7 @@ def main(argv: Sequence[str]) -> int:
     else:
         model_id = args.model or MODEL_IDS[MODEL]
         model_label = MODEL if args.model is None else re.sub(r"[^a-zA-Z0-9]+", "", model_id).lower()
-        runs_dir = args.runs or Path("runs_100_rooms")
+        runs_dir = args.runs or Path("runs_100_rooms_refactor" if args.refactor else "runs_100_rooms")
         seed_dir = args.seed_runs or runs_dir
         ask = lambda prompt: ask_claude(prompt, model_id, args.effort)
         version = claude_code_version()
@@ -258,7 +264,7 @@ def main(argv: Sequence[str]) -> int:
     selected_chain = args.chain if args.chain is not None else args.house
     if not run_next_chain(runs_dir, ask, version, hallways=not args.no_hallways, house=args.house,
                           chain=selected_chain, model=model_label, effort=args.effort, agent_cli=agent_cli,
-                          seed_dir=seed_dir, model_id=model_id):
+                          seed_dir=seed_dir, model_id=model_id, refactor=args.refactor):
         print("every chain is done")
     return 0
 

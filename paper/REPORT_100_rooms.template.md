@@ -11,7 +11,8 @@ walked through, and the houses given all the rooms at once ended longer to walk,
 wing behind the house they received. Without hallways, Claude Sonnet 5.5 hardly changed anything it was given, whether
 it saw one room or all of them, and neither kind of house came out consistently better. GPT-6 Luna, in the same world,
 rewired and rebuilt large parts of the badly grown houses, mostly when it saw all the rooms at once but also in a
-single one-room step, and left them with fewer passages than it found. At this size, whether a house was redesigned
+single one-room step; its new doors made those houses shorter to walk but put more bedrooms and bathrooms on the way
+between rooms. Redesigning was not the same as improving. At this size, whether a house was redesigned
 depended on the model more than on how the requirements arrived.
 
 ## 1. Question
@@ -41,7 +42,8 @@ The full design is in [the study design](docs/study-design.md#the-70-to-100-room
   GPT-6 Luna at medium effort, one per seed house ({{r2_l_version}}). The two models are reported separately.
 
 Both runs are described, not tested. Lower is better for every score. Corridor rooms counts the kitchens, bedrooms and
-bathrooms that someone must walk through to reach another room.
+bathrooms that lie on a best route between two other rooms, a best route being one that crosses as few kitchens,
+bedrooms and bathrooms as possible.
 
 ## 3. Run 1: hallways can be built
 
@@ -97,12 +99,12 @@ scores of every step are in Appendix B.
 Across the {{r2_s_chains}} Sonnet chains, the house after step 30 had fewer corridor rooms than the house built all at
 once from step 0 in {{r2_s_corr_lower}} chains and more in {{r2_s_corr_higher}}; it was shorter to walk in
 {{r2_s_walk_lower}} and longer in {{r2_s_walk_higher}}. Across the {{r2_l_chains}} GPT-6 Luna chains, the house after
-step 30 had fewer corridor rooms in {{r2_l_corr_lower}} and more in {{r2_l_corr_higher}}; it was shorter to walk in
+step 30 had more corridor rooms in all {{r2_l_corr_higher}}; it was shorter to walk in
 {{r2_l_walk_lower}} and longer in {{r2_l_walk_higher}}.
 
-The seed house mattered most for GPT-6 Luna. In the two budget houses, every Sonnet chain ended with more corridor
-rooms than the seed house had, and GPT-6 Luna ended with fewer. In the two planned houses, every chain of both models
-ended with more.
+Every chain of both models ended with more corridor rooms than its seed house had, and GPT-6 Luna ended with more than
+both Sonnet chains in every seed house. In the two budget houses GPT-6 Luna's houses were shorter to walk than
+Sonnet's; in the two planned houses they were longer.
 
 ### 4.2 What the agents changed
 
@@ -115,10 +117,11 @@ seed hallway and one a bathroom. No one-room step added more than one door beyon
 GPT-6 Luna changed the house in two ways. In {{r2_luna_rewired}} of its {{r2_luna_calls}} calls
 ({{r2_luna_rewired_all}} of them all at once) it added ten or more doors beyond those of its new rooms, opening up the
 house it received, in {{r2_luna_rewired_kept}} of them without removing a room; the biggest was
-{{r2_luna_big_where}}, which added {{r2_luna_big_doors}} doors and cut corridor rooms from {{r2_luna_big_before}} to
+{{r2_luna_big_where}}, which added {{r2_luna_big_doors}} doors and raised corridor rooms from {{r2_luna_big_before}} to
 {{r2_luna_big_after}}. And {{r2_luna_rebuilt}} calls removed a quarter of the house or more, {{r2_luna_rebuilt_steps}}
 of them a one-room step, all in the budget houses. In each budget house one one-room step, step
-{{r2_luna_redesign_step}}, redesigned the house, and the later steps built on that design.
+{{r2_luna_redesign_step}}, redesigned the house, and the later steps built on that design. Every call that rewired or
+rebuilt the house raised corridor rooms.
 
 ### 4.3 Why it happens
 
@@ -127,9 +130,11 @@ all-at-once agent no longer has a hallway wing to hang the new rooms on, so it a
 the one-room agents do, and neither kind of house comes out ahead. Sonnet did that and nothing else: it took the house as
 given and attached rooms to it. The budget houses arrived with many passages, kept them, and gained more.
 
-The way out of a passage is another way in: a second door, or a room rebuilt. GPT-6 Luna took it. It opened extra
-doors between rooms that were already there, and in the budget houses it took apart large parts of the house and laid
-them out again. It did so mostly when it saw all the rooms at once, but a single one-room step was enough to redesign a
+GPT-6 Luna did not take the house as given. It opened extra doors between neighbouring rooms, and in the budget
+houses it took apart large parts of the house and laid them out again, moving towards a house in which every room
+opens onto the rooms around it. Such a house is short to walk, because there is a direct way almost everywhere; but
+the direct way runs through bedrooms and bathrooms instead of hallways, so more of them end up on the route between
+other rooms. It did so mostly when it saw all the rooms at once, but a single one-room step was enough to redesign a
 budget house, so the order in which the rooms arrived did not decide whether the house was redesigned; the model did.
 
 ### 4.4 Failed calls and cost
@@ -152,7 +157,8 @@ walk. Neither kind of agent redesigned the house.
 
 Without hallways, redesign depended on the model. Sonnet 5.5 kept the house it was given and attached rooms to it,
 whether it saw one room or all of them. GPT-6 Luna rewired and rebuilt the badly grown houses, mostly when it saw all
-the rooms at once, but also in a single one-room step. In neither case did the order in which the rooms arrived decide whether the house got
+the rooms at once, but also in a single one-room step. Its redesigns made the budget houses shorter to walk and put
+more bedrooms and bathrooms on the way between rooms: redesigning was not the same as improving. In neither case did the order in which the rooms arrived decide whether the house got
 redesigned.
 
 ## Appendix A. Run 1, step by step

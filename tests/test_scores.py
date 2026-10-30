@@ -8,8 +8,8 @@ from house.scores import Scores, score
 from tests.test_interpreter import CHAIN_SCRIPT, EXAMPLE_SCRIPT
 
 
-def scores_of(script, start=None):
-    result = run_script(script, start)
+def scores_of(script, start=None, hallways=False):
+    result = run_script(script, start, hallways=hallways)
     assert result.accepted
     return result.scores
 
@@ -22,10 +22,24 @@ def test_chain_house_scores_badly():
     assert scores_of(CHAIN_SCRIPT) == Scores(corridor_rooms=3, privacy_order=0.0, walking_distance=2.0, compactness=2)
 
 
-def test_corridor_counts_only_forced_passages():
-    # R4 can be reached through the kitchen R3 or through bedroom R2, so neither is a forced passage.
+def test_two_equally_good_passages_both_count():
+    # from the living room R1, R4 is one crossing away through the kitchen R3 or through bedroom R2: both count.
     assert scores_of("room R1 living room A1\nroom R2 bedroom A2\nroom R3 kitchen B1\nroom R4 bedroom B2\n"
-                     "door A1|north\ndoor A1|A2\ndoor A1|B1\ndoor B1|B2\ndoor A2|B2\n").corridor_rooms == 0
+                     "door A1|north\ndoor A1|A2\ndoor A1|B1\ndoor B1|B2\ndoor A2|B2\n").corridor_rooms == 2
+
+
+def test_a_detour_through_more_rooms_does_not_excuse_a_passage():
+    # R1 to the hallway R3: one crossing through bedroom R2, or two round through R4 and R5, so R2 counts although
+    # it is avoidable; R1 to R5 and R3 to R4 each have two routes of one crossing, so R4 and R5 count too.
+    assert scores_of("room R1 living room A1\nroom R2 bedroom A2\nroom R3 hallway A3\nroom R4 bathroom B1\n"
+                     "room R5 bedroom B2\nroom R6 hallway B3\n"
+                     "door A1|north\ndoor A1|A2\ndoor A2|A3\ndoor A1|B1\ndoor B1|B2\ndoor B2|B3\ndoor B3|A3\n",
+                     hallways=True).corridor_rooms == 3
+
+
+def test_rooms_joined_by_hallways_alone_make_no_corridor_room():
+    assert scores_of("room R1 living room A1\nroom R2 hallway A2\nroom R3 bedroom A3\nroom R4 bathroom B2\n"
+                     "door A1|north\ndoor A1|A2\ndoor A2|A3\ndoor A2|B2\n", hallways=True).corridor_rooms == 0
 
 
 def test_bathroom_only_through_a_bedroom():

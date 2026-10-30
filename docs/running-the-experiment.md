@@ -94,6 +94,12 @@ model before analysing:
 Houses 2–4 take chains 10–12 (Sonnet 5.5) and 6–8 (GPT-6 Luna). Report the two models separately. Copilot billing is reported by the CLI in AI credits or
 premium requests, depending on the account, and is not converted into Claude-style dollar costs.
 
+The reorganising run has one Sonnet 5.5 chain per seed house:
+
+```
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor [--house 1]
+```
+
 ## Running by hand
 
 The same chain can be run with any agent, one step at a time, in the order A to J:

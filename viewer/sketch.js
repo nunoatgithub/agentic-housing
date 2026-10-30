@@ -486,14 +486,14 @@ let railObj = null;
 const NEW = '#ff8a00';
 const ringGeo = new THREE.TorusGeometry(0.22, 0.05, 8, 24).rotateX(Math.PI / 2);
 const ringPool = [];
-let gridOnly = false, gv = 0; // only the connecting grid: blades and walls sink away, rings grow, hallways lose theirs; gv runs 0..1 between the views
+let gridOnly = false, gv = 0; // only the connecting grid: blades and walls sink away and rings grow; gv runs 0..1 between the views
 const glowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'); const gr = g.createRadialGradient(64, 64, 0, 64, 64, 60);
   gr.addColorStop(0, 'rgba(255,255,255,0.95)'); gr.addColorStop(0.3, 'rgba(255,255,255,0.6)'); gr.addColorStop(0.65, 'rgba(255,255,255,0.15)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.clearRect(0, 0, 128, 128); g.fillRect(0, 0, 128, 128);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
 
 const GRID_DUR = 0.6, GRID_RING = 1.7; // seconds the change of view takes; how much bigger the rings get in the grid view
 function ringScale(m) {
-  const e = easeInOut(gv), sc = m.userData.base * (m.userData.hall ? 1 - e : 1 + (GRID_RING - 1) * e);
+  const e = easeInOut(gv), sc = m.userData.hall ? 0 : m.userData.base * (1 + (GRID_RING - 1) * e); // hallways never get a ring
   m.visible = m.userData.on && sc > 0.01; m.scale.setScalar(Math.max(0.01, sc));
 }
 function applyGridView() { // the blades (with their outlines and labels) and the walls sink and fade as gv goes to 1

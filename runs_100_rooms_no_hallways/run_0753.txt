@@ -71,7 +71,7 @@ O                         |  bath |  bath |bedroom|
                           |       |       |       |
                           +-------+-------+--###--+
 
-corridor rooms    26
+corridor rooms    41
 privacy order     0.01
 walking distance  8.72
 compactness       4

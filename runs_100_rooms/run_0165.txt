@@ -128,7 +128,7 @@ O |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallw
   |                                                                                                                       |
   +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
 
-corridor rooms    11
+corridor rooms    18
 privacy order     0.01
 walking distance  12.15
 compactness       42

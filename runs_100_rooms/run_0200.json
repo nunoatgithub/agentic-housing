@@ -13,7 +13,7 @@
   "valid": true,
   "violations": [],
   "scores": {
-    "corridor_rooms": 5,
+    "corridor_rooms": 13,
     "privacy_order": 0.0069,
     "walking_distance": 7.9732,
     "compactness": 4

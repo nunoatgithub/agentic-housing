@@ -66,7 +66,7 @@ Among valid houses, quality is measured by four fitness functions. They are used
 
 | Fitness function | What it measures | Typical patch symptom |
 | --- | --- | --- |
-| Corridor rooms | How many bedrooms, bathrooms and kitchens someone must walk through to reach another room | Bathroom reachable only through a bedroom |
+| Corridor rooms | How many bedrooms, bathrooms and kitchens lie on a best route between two other rooms (one crossing as few of them as possible) | Bathroom reachable only through a bedroom |
 | Privacy order | Public rooms (living room, kitchen) near the entrance, private rooms (bedrooms, bathrooms) further in | Bathroom off the living room, bedroom as a passage |
 | Walking distance | Average number of doors between every pair of rooms | New room added at the far end of a chain |
 | Compactness | How close the outline is to a compact shape (perimeter against area) | Bathroom sticking out as an add-on |
@@ -105,15 +105,17 @@ Procedure:
 
 ## The 70-to-100-room runs
 
-The same question, with houses big enough that redesigning is no longer casual: houses of 70 rooms grown to 100 on a 15×15 grid (225 cells, rows A to O), building and demolishing free, with the hard rules and four scores above. There are two runs, alike in everything except one rule: in the hallway run (data in `runs_100_rooms/`) hallways can be built; in the no-hallways run (data in `runs_100_rooms_no_hallways/`) they cannot.
+The same question, with houses big enough that redesigning is no longer casual: houses of 70 rooms grown to 100 on a 15×15 grid (225 cells, rows A to O), building and demolishing free, with the hard rules and four scores above. There are three runs, alike in everything except one thing: in the hallway run (data in `runs_100_rooms/`) hallways can be built; in the no-hallways run (data in `runs_100_rooms_no_hallways/`) they cannot; the reorganising run (data in `runs_100_rooms_refactor/`) is the hallway run with one sentence added to the prompt, asking every agent to reorganise the house before adding to it.
 
 **Question.** On the 5×5 grid, with building and demolishing free, adding rooms one at a time never ended worse than planning, and the agents showed no built-in preference for local changes. Does adding the rooms one at a time end worse than adding all the remaining rooms at once to the same house? And does the answer depend on the house the agents start from: one that grew under a tight budget, or one that grew without cost constraints?
 
 **Why no hallways.** On the 5×5 grid, taking hallways away made agents either attach each new room to the house or tear the house down and rebuild it when attaching got hard. Does that make agents redesign 70-room houses too, or does the size of the house keep them from redesigning at all?
 
-**Expectation.** Written before the hallway run: as in the free 5×5 runs, the house after step 30 scores no worse than the house built all at once from step 0. Both runs are described, not tested.
+**Why ask to reorganise.** In the hallway run neither kind of agent redesigned the house: the one-room agents attached rooms and the all-at-once agents hung a hallway wing behind the house they received. Asked outright to reorganise first, do the agents redesign, and does adding the rooms one at a time still end worse than adding them all at once?
 
-**Prompt.** `house/prompt_template_100_rooms.txt` is the prompt of the priced runs with hallways (`house/prompt_template_hallways.txt` at commit `25e3cef`) with the cost section taken out, the grid size set to 15, and one line added after the room types: "Room ids: R followed by a number, as in R1, R2, R3." The no-hallways run uses `house/prompt_template_100_rooms_no_hallways.txt`, the same prompt with two changes: rule 6 says hallways may be removed but not added, and the language section says "No hallway can be built; the ones already in the layout may be removed." There, a script that builds a hallway is rejected ("there are no hallways in this house") and tried again with a fresh agent, like any other rejected script.
+**Expectation.** Written before the hallway run: as in the free 5×5 runs, the house after step 30 scores no worse than the house built all at once from step 0. All three runs are described, not tested.
+
+**Prompt.** `house/prompt_template_100_rooms.txt` is the prompt of the priced runs with hallways (`house/prompt_template_hallways.txt` at commit `25e3cef`) with the cost section taken out, the grid size set to 15, and one line added after the room types: "Room ids: R followed by a number, as in R1, R2, R3." The no-hallways run uses `house/prompt_template_100_rooms_no_hallways.txt`, the same prompt with two changes: rule 6 says hallways may be removed but not added, and the language section says "No hallway can be built; the ones already in the layout may be removed." The reorganising run uses `house/prompt_template_100_rooms_refactor.txt`, the hallway run's prompt with one sentence placed just before the request, in every call: "Before you add anything, reorganise the existing house to reduce its complexity, keeping the exact same final number of rooms (excluding hallways, whose number can change)." In the no-hallways run, a script that builds a hallway is rejected ("there are no hallways in this house") and tried again with a fresh agent, like any other rejected script.
 
 **Seed houses.** Four seed houses of 70 rooms (living room, kitchen, 34 bedrooms, 34 bathrooms), made in code, not by agents. Each starts from the 11-room house that ended one chain of the priced runs and grew one room at a time on the 15×15 grid:
 
@@ -121,7 +123,7 @@ The same question, with houses big enough that redesigning is no longer casual: 
 * Houses 3 and 4 grew without cost constraints: of every five rooms, in a random order, three were added by the change that gave the best scores over the whole house, one by the change that gave the best scores over the rooms within two cells of it, and one by a change chosen at random. Scores were ranked corridor rooms first, then privacy order, walking distance and compactness. Houses 3 and 4 start from chains 3 and 5 of the priced run.
 * Of each kind, 12 candidates were grown, one from each priced-run chain. Each candidate was finished to 100 rooms 10 times by each of four simulated builders (the three above, and one copying the agents of the first 5×5 run). The two chosen of each kind are those whose finished houses varied most in corridor rooms: the houses whose outcome depends most on how they are extended.
 
-The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. Both runs use them unchanged, so the no-hallways run is not a house without hallways but a world in which none can be built: the hallways a seed house has can be used (a door onto one) or removed. The seed houses and the code that made them are in `runs_100_rooms/seeds/`, with a copy in `runs_100_rooms_no_hallways/seeds/`.
+The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. All three runs use them unchanged, so the no-hallways run is not a house without hallways but a world in which none can be built: the hallways a seed house has can be used (a door onto one) or removed. The seed houses and the code that made them are in `runs_100_rooms/seeds/`, with copies in `runs_100_rooms_no_hallways/seeds/` and `runs_100_rooms_refactor/seeds/`.
 
 **Chains.** Each chain starts from one seed house and has two kinds of agent:
 
@@ -138,6 +140,7 @@ A chain has 59 calls, made in this order: all at once from step 0, step 1, all a
 | No hallways  | 1–4    | 1–4         | Sonnet 5.5 | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
 | No hallways  | 5–8    | 1–4         | GPT-6 Luna | GitHub Copilot CLI 1.0.105                                     |
 | No hallways  | 9–12   | 1–4         | Sonnet 5.5 | Claude Code 2.1.314                                            |
+| Reorganising | 1–4    | 1–4         | Sonnet 5.5 | not run yet                                                    |
 
 The two models are reported separately, never pooled.
 

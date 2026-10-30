@@ -337,7 +337,7 @@ def patch_steps(houses):
 nh = final_houses(load_runs(ROOT / "runs_no_hallways"), EFFORT)
 nh_values = lambda step, score: [nh[(c, step)][1][score] for c in range(1, 7)]
 assert all(x >= 3 for s in "HIJ" for x in nh_values(s, "corridor_rooms")), "every final house has a corridor score of 3 or more"
-assert st.mean(nh_values("I", "corridor_rooms")) >= st.mean(nh_values("H", "corridor_rooms")), "planning found no fewer forced passages"
+assert st.mean(nh_values("I", "corridor_rooms")) >= st.mean(nh_values("H", "corridor_rooms")), "planning found no fewer corridor rooms"
 assert len({x for s in "HIJ" for x in nh_values(s, "privacy_order")}) == 1, "privacy order is the same in every final house"
 assert min(perm_p(nh_values(p, s), nh_values("I", s)) for s in SCORES for p in "HJ") > 0.05, "no planned test comes near a difference"
 corridor_path = [st.mean(nh_values(s, "corridor_rooms")) for s in "ABCDEFGH"]
@@ -359,7 +359,7 @@ rebuild_chains = sorted({s[0] for s in rebuilds})
 attach_chains = [c for c in range(1, 7) if c not in rebuild_chains]
 T["nh_rebuild_chains"], T["nh_attach_chains"] = str(len(rebuild_chains)), str(len(attach_chains))
 assert st.mean(nh[(c, "H")][1]["corridor_rooms"] for c in rebuild_chains) < st.mean(nh[(c, "H")][1]["corridor_rooms"] for c in attach_chains), \
-    "chains that rebuilt ended with slightly fewer forced passages than chains that only attached"
+    "chains that rebuilt ended with slightly fewer corridor rooms than chains that only attached"
 a_kept = [same(nh[(c, "A")][2], nh[(c, "H")][2]) for c in range(1, 7)]
 T["nh_a_intact"] = str(sum(x == 1 for x in a_kept))
 T["nh_a_quarter"] = str(sum(x <= 0.25 for x in a_kept))
@@ -370,9 +370,12 @@ lo_runs = load_runs(ROOT / "runs_no_hallways_low")
 lo = final_houses(lo_runs, "low")
 lo_values = lambda step, score: [lo[(c, step)][1][score] for c in range(1, 7)]
 assert all(ok(r) for r in lo_runs if parse_label(r["label"]).step in PATCHES), "no patch step failed"
-assert st.mean(lo_values("H", "corridor_rooms")) > st.mean(lo_values("I", "corridor_rooms")), "patched houses had somewhat more forced passages"
+assert st.mean(lo_values("H", "corridor_rooms")) > st.mean(lo_values("I", "corridor_rooms")), "patched houses had somewhat more corridor rooms"
 assert len({x for s in "HIJ" for x in lo_values(s, "privacy_order")}) == 1, "privacy order is the same in every final house"
-assert min(perm_p(lo_values(p, s), lo_values("I", s)) for s in SCORES for p in "HJ") > 0.05, "no planned test comes near a difference"
+lo_p = {(s, p): perm_p(lo_values(p, s), lo_values("I", s)) for s in SCORES for p in "HJ"}
+assert min(lo_p.values()) > 0.05 / 8 and min(lo_p, key=lo_p.get) == ("corridor_rooms", "H"), \
+    "no planned test passes the threshold; the closest is corridor rooms, stepwise against planned"
+T["lo_corridor_p"] = "%.3f" % lo_p[("corridor_rooms", "H")]
 lo_steps = patch_steps(lo)
 lo_attached, lo_rebuilt = sum(1 for s in lo_steps if s[2] == 0), sum(1 for s in lo_steps if s[2] == s[3])
 assert lo_attached > int(T["nh_attached"]) and lo_rebuilt < int(T["nh_rebuilt"]), "the weaker agents patched more and rebuilt less"
@@ -385,8 +388,8 @@ not_trees = [(run, c, s) for run, c, s in both if loops(run[(c, s)][2]) > 0]
 assert len(not_trees) == 1 and not_trees[0][0] is lo and not_trees[0][2] == "H", "one stepwise-patched low-effort house is not a tree"
 run, c, s = not_trees[0]
 assert loops(run[(c, s)][2]) == 1, "the house that is not a tree has one extra door"
-assert run[(c, s)][1]["corridor_rooms"] <= min(r[(k, t)][1]["corridor_rooms"] for r, k, t in both if (r, k, t) != not_trees[0]), \
-    "no house has fewer forced passages than the one that is not a tree"
+assert run[(c, s)][1]["corridor_rooms"] > st.median(r[(k, t)][1]["corridor_rooms"] for r, k, t in both if (r, k, t) != not_trees[0]), \
+    "the house that is not a tree has more corridor rooms than most"
 T["nh_lo_final"] = str(len(both))
 
 # ---- building and demolishing cost: a run without hallways (one sentence of the text), and two runs with hallways
@@ -448,7 +451,7 @@ for s, sname in zip(SCORES, NAMES):
         rows.append((sname, pname) + tuple(cells))
 T["ch_tests"] = md(rows)
 for n in names:
-    assert ch_p[(n, "corridor_rooms", "H")] < 0.05 / 8, "in each cost run, stepwise patching has more forced passages than planning"
+    assert ch_p[(n, "corridor_rooms", "H")] < 0.05 / 8, "in each cost run, stepwise patching has more corridor rooms than planning"
     assert all(p > 0.05 / 8 for (m, s, h), p in ch_p.items() if m == n and (s, h) != ("corridor_rooms", "H")), "no other planned test passes"
 T["ch_p_corridor"] = both_runs(*("%.3f" % ch_p[(n, "corridor_rooms", "H")] for n in names))
 
@@ -459,7 +462,7 @@ for n in names:
         ka, kb = sum(x >= 3 for x in a), sum(x >= 3 for x in b)
         rows.append((n, pname, "%d of 6" % ka, "%d of 6" % kb, "%.3f" % fisher(ka, 6 - ka, kb, 6 - kb), "%.3f" % ranksum_p(a, b)))
     assert all(x >= 1 for x in vals(n, "H", "corridor_rooms")) and not any(any(vals(n, s, "corridor_rooms")) for s in "IJ"), \
-        "every stepwise-patched house has a forced passage, no planned or one-shot house has any"
+        "every stepwise-patched house has a corridor room, no planned or one-shot house has any"
 T["ch_corridor_tests"] = md(rows)
 
 rows = [("Score", "House", "First run (no cost)") + tuple("%s, p against the first run" % n for n in names)]

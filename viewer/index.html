@@ -39,6 +39,9 @@
   #trend text { font:600 10px system-ui, sans-serif; fill:rgba(27,30,39,.85); paint-order:stroke; stroke:rgba(255,255,255,.75); stroke-width:3px; stroke-linejoin:round; }
   #trend g[id^=tr_] { transition:transform .4s ease; }
   #trend text.big { font-size:12px; font-weight:700; }
+  #trend path.hit { fill:none; stroke:transparent; stroke-width:10; pointer-events:stroke; }
+  #ttip { position:fixed; z-index:6; display:none; pointer-events:none; padding:4px 8px; border-radius:6px; font-size:11px; white-space:nowrap;
+    background:rgba(255,255,255,.94); box-shadow:0 2px 8px rgba(30,50,100,.2); font-variant-numeric:tabular-nums; }
   #tab { position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:5; writing-mode:vertical-rl; padding:12px 5px; font-size:12px;
     border-radius:12px 0 0 12px; border-right:none; background:rgba(255,255,255,.3); backdrop-filter:blur(6px); }
   #tab.on { background:rgba(255,255,255,.55); color:var(--ink); border-color:rgba(0,0,0,.18); }
@@ -70,6 +73,7 @@
 </div>
 <button id="tab" title="Show / hide the evolution of the scores">Score evolution</button>
 <div id="trend" class="closed"><input id="veil" type="range" min="0" max="1" step="0.01" value="0.5" title="Transparency of the score panel"><div id="charts"></div></div>
+<div id="ttip"></div>
 <div id="panes">
   <div class="pane"><div class="cap panel" id="capL"></div><iframe id="L" title="House"></iframe></div>
 </div>
@@ -166,7 +170,8 @@ function buildTrend() { // the four score charts in a 2x2 matrix: each cell has 
       const col = colour(ci, ki), vals = c[KIND[kind]].map(f => { const v = sc(f, m); return v == null || base == null ? 0 : v - base; });
       const pts = vals.map((d, i) => [sx(i), py(d)]), dpath = 'M' + pts.map(p => p.join(' ')).join(' L'), cum = pts.map(() => 0);
       for (let i = 1; i < pts.length; i++) cum[i] = cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-      const o = { mi, id: `${mi}_${ci}_${kind}`, kind, col, pts, vals, cum, len: cum[cum.length - 1], dpath, dp, left: X0, right: X0 + PW, playing: c.key === chain };
+      const o = { mi, id: `${mi}_${ci}_${kind}`, kind, col, pts, vals, cum, len: cum[cum.length - 1], dpath, dp, left: X0, right: X0 + PW, playing: c.key === chain,
+        steps: ymax };
       lines.push(o);
       svg += `<path d="${dpath}" fill="none" stroke="${col}" stroke-opacity="${o.playing ? .5 : .6}" stroke-width="1.5"/>`
         + (o.playing ? '' : `<circle cx="${pts[pts.length - 1][0]}" cy="${pts[pts.length - 1][1]}" r="3.5" fill="${col}"/>`);
@@ -189,6 +194,7 @@ function buildTrend() { // the four score charts in a 2x2 matrix: each cell has 
   }));
   for (const o of lines) if (o.playing) svg += `<path id="tp_${o.id}" d="${o.dpath}" fill="none" stroke="${o.col}" stroke-width="3" stroke-linejoin="round" stroke-dasharray="${o.len} ${o.len + 10}" stroke-dashoffset="${o.len}"/>`
     + `<circle id="tm_${o.id}" r="4.5" fill="${o.col}" stroke="#fff" stroke-width="1.5"/><text class="big" id="tl_${o.id}" x="0" y="4"></text>`;
+  lines.forEach((o, i) => { svg += `<path class="hit" data-i="${i}" d="${o.dpath}" clip-path="url(#cp${o.mi})"/>`; }); // wide invisible strokes to hover
   chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => { // one legend for all four charts
     const lx = L + (ci * 2 + ki) * (w - L - R) / (chains.length * 2);
     svg += `<line x1="${lx}" x2="${lx + 14}" y1="${h - 17}" y2="${h - 17}" stroke="${colour(ci, ki)}" stroke-width="3" stroke-linecap="round"/><text x="${lx + 19}" y="${h - 14}">${c.name} · ${kind === 'inc' ? 'incremental' : 'all-at-once'}</text>`;
@@ -198,6 +204,26 @@ function buildTrend() { // the four score charts in a 2x2 matrix: each cell has 
   for (const o of lines) { o.row = $('tr_' + o.id); o.val = $('tv_' + o.id); if (o.playing) { o.path = $('tp_' + o.id); o.marker = $('tm_' + o.id); o.label = $('tl_' + o.id); } }
   for (const b of bars) { b.rect = $('bb_' + b.id); b.val = $('bv_' + b.id); }
   trend = { lines, bars, fresh: true, rowTop, rowH: ROW };
+}
+function pointAt(o, len) { // the point at this length along the line
+  let k = 1; while (k < o.cum.length - 1 && o.cum[k] < len) k++;
+  const a = o.pts[k - 1], b = o.pts[k] || a, seg = (o.cum[k] ?? len) - o.cum[k - 1], f = seg > 0 ? Math.min(1, Math.max(0, (len - o.cum[k - 1]) / seg)) : 1;
+  return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+}
+function moveHeads(now) { // each frame: the drawn part of a playing line and its dot and label follow the line, never a shortcut
+  if (!trend) return;
+  let busy = false;
+  for (const o of trend.lines) {
+    if (!o.playing || o.to === undefined) continue;
+    const f = o.ms > 0 ? Math.min(1, (now - o.t0) / o.ms) : 1;
+    o.at = o.from + (o.to - o.from) * f; busy = busy || f < 1;
+    const [px, py] = pointAt(o, o.at), anchor = px > o.right - 45 ? 'end' : px < o.left + 45 ? 'start' : 'middle';
+    o.path.style.strokeDashoffset = o.len - o.at;
+    o.marker.style.transform = `translate(${px}px, ${py}px)`;
+    o.label.style.transform = `translate(${px + (anchor === 'end' ? 6 : anchor === 'start' ? -6 : 0)}px, ${py + (o.kind === 'inc' ? -9 : 16)}px)`;
+    o.label.setAttribute('text-anchor', anchor);
+  }
+  trend.raf = busy ? requestAnimationFrame(moveHeads) : 0;
 }
 function updateTrend() {
   if (!trend) return;
@@ -214,13 +240,12 @@ function updateTrend() {
     }
     o.val.textContent = fmt(o.vals[vi], o.dp); o.val.style.fill = o.col;
     if (!o.playing) continue;
-    o.path.style.transition = `stroke-dashoffset ${t}s linear, opacity .3s`; o.path.style.strokeDashoffset = o.len - o.cum[i]; o.path.style.opacity = moving ? 1 : 0;
-    const [px, py] = o.pts[i], anchor = px > o.right - 45 ? 'end' : px < o.left + 45 ? 'start' : 'middle';
-    o.marker.style.transition = o.label.style.transition = `transform ${t}s linear, opacity .3s`;
-    o.marker.style.transform = `translate(${px}px, ${py}px)`; o.marker.style.opacity = moving ? 1 : 0;
-    o.label.style.transform = `translate(${px + (anchor === 'end' ? 6 : anchor === 'start' ? -6 : 0)}px, ${py + (o.kind === 'inc' ? -9 : 16)}px)`; o.label.style.opacity = moving ? 1 : 0;
-    o.label.setAttribute('text-anchor', anchor); o.label.style.fill = o.col; o.label.textContent = text;
+    o.path.style.transition = o.marker.style.transition = o.label.style.transition = 'opacity .3s';
+    o.path.style.opacity = o.marker.style.opacity = o.label.style.opacity = moving ? 1 : 0;
+    o.label.style.fill = o.col; o.label.textContent = text;
+    o.from = o.at ?? o.cum[i]; o.to = o.cum[i]; o.t0 = performance.now(); o.ms = t * 1000; // the head travels along the line
   }
+  if (!trend.raf) trend.raf = requestAnimationFrame(moveHeads);
   for (let mi = 0; mi < METRICS.length; mi++) { // each lane lists its agents from the best score (the lowest) to the worst
     trend.lines.filter(o => o.mi === mi).sort((a, b) => a.now - b.now).forEach((o, r) => { o.row.style.transform = `translateY(${trend.rowTop[mi] + r * trend.rowH}px)`; });
   }
@@ -233,6 +258,15 @@ const veil = p => { // how see-through the score panel is: none at the left end,
 try { const p = localStorage.getItem('veilPos'); if (p !== null) $('veil').value = p; } catch (e) {}
 veil($('veil').value);
 $('veil').oninput = e => veil(e.target.value);
+$('charts').addEventListener('mousemove', e => { // the value of the hovered line at the step under the pointer
+  const tip = $('ttip'), i = e.target.dataset && e.target.dataset.i;
+  if (i === undefined || !trend) { tip.style.display = 'none'; return; }
+  const o = trend.lines[+i], x = e.clientX - e.target.ownerSVGElement.getBoundingClientRect().left;
+  const k = Math.max(0, Math.min(o.vals.length - 1, Math.round((x - o.left) / (o.right - o.left) * o.steps)));
+  tip.innerHTML = `<b style="color:${o.col}">${fmt(o.vals[k], o.dp)}</b>`; // the change against the seed house, as the values beside the chart
+  tip.style.display = 'block'; tip.style.left = e.clientX + 14 + 'px'; tip.style.top = e.clientY + 14 + 'px';
+});
+$('charts').addEventListener('mouseleave', () => { $('ttip').style.display = 'none'; });
 $('tab').onclick = () => { const closed = $('trend').classList.toggle('closed'); $('tab').classList.toggle('on', !closed); };
 const fill = el => el.style.setProperty('--p', `${(el.value - el.min) / (el.max - el.min) * 100}%`);
 function label() { $('scrub').value = n; fill($('scrub')); $('pos').textContent = `${n} / ${MAX}`; gi = n; if (phase === 'LEFT' && (mode === 'all' || !playing)) ga = n; updateTrend(); }
