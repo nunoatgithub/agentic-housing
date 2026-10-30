@@ -109,7 +109,7 @@ def test_every_post_is_saved(served):
     files = sorted(p.name for p in runs.iterdir())
     assert files == ["run_0001.json", "run_0001.txt", "run_0002.json", "run_0002.txt"]
     text = (runs / "run_0001.txt").read_text()
-    assert "\nSCRIPT\nroom R1 living room A1" in text and "corridor rooms    6" in text
+    assert "\nSCRIPT\nroom R1 living room A1" in text and "corridor rooms    3" in text
     assert "SCRIPT REJECTED" in (runs / "run_0002.txt").read_text()
 
 

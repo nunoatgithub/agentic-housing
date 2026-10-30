@@ -5,7 +5,7 @@
 A controlled experiment with AI coding agents, in a small world where design quality can be measured exactly:
 houses on a grid.
 
-**[Read the report](REPORT.md)** · [Study design](docs/study-design.md) · [Running the experiment](docs/running-the-experiment.md)
+**[Read the report](REPORT.md)** · **[Bigger houses](REPORT_100_rooms.md)** · [Study design](docs/study-design.md) · [Running the experiment](docs/running-the-experiment.md)
 
 ## The question
 
@@ -53,41 +53,42 @@ through another bedroom or bathroom.
 `[ENTRY]` is the entrance and `-[   ]-` a door; a gap on a cell's bottom line in a vertical wall is a door.
 
 ```
-H (chain 2)                                   I (chain 2)
+H (chain 1)                                   I (chain 1)
 VALID                                         VALID
 
       1       2       3       4       5             1       2       3       4       5
   +-------+[ENTRY]+-------+-------+                     +-------+[ENTRY]+-------+
   |   R2  |   R1  |   R3  |  R13  |                     |   R2  |   R1  |   R3  |
-A |kitchen| living|bedroom|bedroom|           A         |kitchen| living|bedroom|
+A |kitchen| living|bedroom|bedroom|           A         |kitchen| living|  bath |
   |                               |                     |                       |
   +-------+-[   ]-+-------+-------+                     +-------+-[   ]-+-------+
-  |   R8  |   R5  |   R7  |  R11  |                     |   R8  |   R4  |   R9  |
+  |   R6  |   R5  |   R7  |  R11  |                     |   R8  |   R4  |   R9  |
 B |  bath |hallway|bedroom|bedroom|           B         |bedroom|hallway|bedroom|
   |                               |                     |                       |
-  +-------+-[   ]-+-------+-------+                     +-------+-[   ]-+-------+
-  |  R10  |   R6  |   R9  |                             |  R10  |   R5  |  R11  |
-C |  bath |  bath |bedroom|                   C         |bedroom|hallway|bedroom|
-  |                       |                             |                       |
-  +-------+-------+-[   ]-+                             +-------+-[   ]-+-------+
-                  |  R12  |                             |  R12  |   R6  |  R13  |
-D                 |  bath |                   D         |  bath |hallway|  bath |
-                  |       |                             |                       |
-                  +-------+                             +-------+-[   ]-+-------+
+  +-[   ]-+-[   ]-+-[   ]-+-------+                     +-------+-[   ]-+-------+
+  |  R10  |   R8  |   R9  |                             |  R10  |   R5  |  R11  |
+C |  bath |  bath |bedroom|                   C         |bedroom|hallway|  bath |
+  |       |       |       |                             |                       |
+  +-------+-[   ]-+-------+                             +-------+-[   ]-+-------+
+          |  R12  |                                     |  R12  |   R6  |  R13  |
+D         |  bath |                           D         |bedroom|hallway|  bath |
+          |       |                                     |                       |
+          +-------+                                     +-------+-[   ]-+-------+
                                                         |  R14  |   R7  |  R15  |
-E                                             E         |  bath |hallway|  bath |
+E                                             E         |bedroom|hallway|  bath |
                                                         |                       |
                                                         +-------+-------+-------+
 
-corridor rooms    6                           corridor rooms    0
+corridor rooms    4                           corridor rooms    0
 privacy order     0.03                        privacy order     0.03
-walking distance  2.88                        walking distance  3.05
+walking distance  2.80                        walking distance  3.05
 compactness       2                           compactness       0
 ```
 
 ## The runs
 
-Every run used Claude Sonnet 5.5 in six chains, and each had its analysis plan written before its first agent call.
+Every run on the 5×5 grid used Claude Sonnet 5.5 in six chains, and each had its analysis plan written before its first
+agent call.
 
 | Run | What changed | Did patching end worse? | Report |
 |---|---|---|---|
@@ -100,14 +101,21 @@ Every run used Claude Sonnet 5.5 in six chains, and each had its analysis plan w
 The code, analysis plan and data folder of each run are listed in
 [running the experiment](docs/running-the-experiment.md#the-runs-in-the-report).
 
+Two later runs ask the same question with houses of 70 rooms grown to 100 on a 15×15 grid, from four seed houses
+([the second report](REPORT_100_rooms.md)). With hallways allowed, the houses grown one room at a time ended with more
+rooms that must be walked through, and the houses given all the rooms at once ended longer to walk; neither kind of
+agent redesigned the house. With no hallways, Claude Sonnet 5.5 hardly changed the house it was given, one room at a
+time or all at once, while GPT-6 Luna rewired and rebuilt the badly grown houses.
+
 ## Repository
 
 ```
 REPORT.md                        the report, generated from the data by paper/build_report.py
+REPORT_100_rooms.md              the report on houses of 70 to 100 rooms, generated by paper/build_report_100_rooms.py
 docs/study-design.md             the house world (language, rules, scores) and the experiment design
 docs/running-the-experiment.md   setup, running the agents, the code, plan and data of each run
 house/                           the house language: interpreter, rules, scores, drawings, server, agent runner
-paper/                           the report template and generator, and the analysis plans
+paper/                           the report templates and generators, and the analysis plans
 runs*/                           the data: one record per script sent, and the agents' raw replies
 examples/                        example layouts
 tests/                           the test suite
@@ -122,6 +130,7 @@ python3 -m venv .venv && .venv/bin/pip install pytest
 .venv/bin/python -m pytest -q                                                          # tests
 .venv/bin/python -m house.render examples/example_house.txt examples/chain_house.txt   # draw two houses
 .venv/bin/python paper/build_report.py                                                 # rebuild REPORT.md
+.venv/bin/python paper/build_report_100_rooms.py                                       # rebuild REPORT_100_rooms.md
 ```
 
 ## Authors

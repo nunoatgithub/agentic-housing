@@ -4,8 +4,9 @@ from house.experiment import load_runs
 from house.interpreter import run_script
 from house.layout_format import format_layout, parse_layout
 from house.model import Cell, Layout, ModelError, set_grid_size
-from house.run_100_rooms import (Call, calls, label, make_call, next_call, outcome, request, rooms_added,
-                                 run_next_chain, starting_house)
+from house.prompt import build_prompt
+from house.run_100_rooms import (NO_HALLWAYS_TEMPLATE_PATH, TEMPLATE_PATH, Call, calls, label, make_call, next_call,
+                                 outcome, request, rooms_added, run_next_chain, starting_house)
 from house.run_agents import Reply
 
 SEED = """room R1 living room A1
@@ -64,32 +65,87 @@ def test_a_chain_alternates_one_room_steps_with_requests_for_every_room_still_mi
 
 
 def test_the_next_call_skips_valid_calls_and_failed_requests_for_all_rooms_but_stops_at_a_failed_step():
-    all00, step01, all01 = (label(1, 1, c) for c in calls()[:3])
-    assert next_call([], 1, 1) == (Call("all", 0), 1)
-    assert next_call([record(all00, valid=False)], 1, 1) == (Call("all", 0), 2)
-    assert next_call([record(all00, valid=False)] * 3, 1, 1) == (Call("step", 1), 1)
-    assert next_call([record(all00), record(step01), *[record(all01, valid=False)] * 3], 1, 1) == (Call("step", 2), 1)
-    assert next_call([record(all00), *[record(step01, valid=False)] * 3], 1, 1) is None
+    all00, step01, all01 = (label(1, c) for c in calls()[:3])
+    assert next_call([], 1) == (Call("all", 0), 1)
+    assert next_call([record(all00, valid=False)], 1) == (Call("all", 0), 2)
+    assert next_call([record(all00, valid=False)] * 3, 1) == (Call("step", 1), 1)
+    assert next_call([record(all00), record(step01), *[record(all01, valid=False)] * 3], 1) == (Call("step", 2), 1)
+    assert next_call([record(all00), *[record(step01, valid=False)] * 3], 1) is None
 
 
 def test_a_reply_is_built_on_the_house_and_the_next_calls_start_from_the_house_it_left(runs_dir):
     reply = Reply("room R5 bedroom B2\ndoor B1|B2", USAGE)
-    saved = make_call(runs_dir, 1, 1, Call("step", 1), lambda prompt: reply, "1.0")
+    saved = make_call(runs_dir, 1, Call("step", 1), lambda prompt: reply, "1.0")
     assert outcome(saved) == "valid"
     runs = load_runs(runs_dir)
     seed_text = (runs_dir / "seeds" / "house1.txt").read_text()
-    assert starting_house(runs, seed_text, 1, 1, Call("all", 0)) == seed_text
-    assert starting_house(runs, seed_text, 1, 1, Call("all", 1)) == saved["layout"]
-    assert starting_house(runs, seed_text, 1, 1, Call("step", 2)) == saved["layout"]
+    assert starting_house(runs, seed_text, 1, Call("all", 0)) == seed_text
+    assert starting_house(runs, seed_text, 1, Call("all", 1)) == saved["layout"]
+    assert starting_house(runs, seed_text, 1, Call("step", 2)) == saved["layout"]
+
+
+def test_call_and_chain_elapsed_times_are_saved(runs_dir):
+    log = []
+    assert run_next_chain(runs_dir, lambda prompt: Reply("", USAGE, cut_off=True), "1.0",
+                          log=log.append, house=1)
+    records = load_runs(runs_dir)
+    assert records
+    for saved in records:
+        assert saved["call_duration_ms"] >= 0
+        assert saved["chain_elapsed_ms"] >= saved["call_duration_ms"]
+        assert saved["chain_started_at"] == records[0]["chain_started_at"]
+        assert saved["chain_timing_estimated"] is False
 
 
 def test_a_reply_cut_off_by_the_output_limit_is_recorded_as_cut_off_not_as_an_invalid_house(runs_dir):
-    saved = make_call(runs_dir, 1, 1, Call("all", 0), lambda prompt: Reply("", USAGE, cut_off=True), "1.0")
+    saved = make_call(runs_dir, 1, Call("all", 0), lambda prompt: Reply("", USAGE, cut_off=True), "1.0")
     assert (saved["cut_off"], saved["accepted"], saved["valid"]) == (True, False, None)
     assert outcome(saved) == "reply CUT OFF"
 
 
-def test_every_call_of_the_run_uses_the_same_claude_code_version(runs_dir):
-    make_call(runs_dir, 1, 1, Call("all", 0), lambda prompt: Reply("", USAGE, cut_off=True), "1.0")
+def test_every_call_of_a_chain_uses_the_same_claude_code_version(runs_dir):
+    make_call(runs_dir, 1, Call("all", 0), lambda prompt: Reply("", USAGE, cut_off=True), "1.0")
     with pytest.raises(SystemExit):
-        run_next_chain(runs_dir, lambda prompt: Reply("", USAGE, cut_off=True), "2.0", log=lambda line: None)
+        run_next_chain(runs_dir, lambda prompt: Reply("", USAGE, cut_off=True), "2.0", log=lambda line: None, house=1)
+
+
+def test_when_no_hallway_can_be_built_a_script_that_builds_one_is_rejected_and_the_seed_houses_own_stay(runs_dir):
+    seed = run_script(SEED + "\nroom R5 hallway B2\ndoor B1|B2", Layout(), hallways=True).layout
+    (runs_dir / "seeds" / "house1.txt").write_text(format_layout(seed) + "\n")
+    build_hallway = Reply("room R6 hallway C2\ndoor C1|C2", USAGE)
+    build_bedroom = Reply("room R6 bedroom C2\ndoor C1|C2", USAGE)
+    assert make_call(runs_dir, 1, Call("step", 1), lambda prompt: build_hallway, "1.0")["accepted"]
+    assert not make_call(runs_dir, 1, Call("step", 1), lambda prompt: build_hallway, "1.0", hallways=False)["accepted"]
+    saved = make_call(runs_dir, 1, Call("step", 1), lambda prompt: build_bedroom, "1.0", hallways=False)
+    assert outcome(saved) == "valid"
+    assert "R5  hallway" in saved["layout"]
+
+
+def test_a_run_in_which_no_hallway_can_be_built_is_given_its_own_prompt(runs_dir):
+    seed_text = (runs_dir / "seeds" / "house1.txt").read_text()
+    wanted = "add: bedroom x15, bathroom x15"
+    for hallways, path in ((True, TEMPLATE_PATH), (False, NO_HALLWAYS_TEMPLATE_PATH)):
+        prompts = []
+        make_call(runs_dir, 1, Call("all", 0), lambda prompt: prompts.append(prompt) or Reply("", USAGE), "1.0", hallways)
+        assert prompts == [build_prompt(seed_text, wanted, template=path.read_text().rstrip("\n"))]
+
+
+def test_a_house_can_be_chosen_to_run_before_the_ones_ahead_of_it(runs_dir):
+    for house in (2, 3):
+        (runs_dir / "seeds" / ("house%d.txt" % house)).write_text((runs_dir / "seeds" / "house1.txt").read_text())
+    log = []
+    assert run_next_chain(runs_dir, lambda prompt: Reply("", USAGE, cut_off=True), "1.0", log=log.append, house=3)
+    assert {r["label"].split("-")[2] for r in load_runs(runs_dir)} == {"h3"}
+
+
+def test_an_additional_model_chain_keeps_its_seed_and_label_separate(runs_dir):
+    reply = Reply("room R5 bedroom B2\ndoor B1|B2", USAGE)
+    saved = make_call(runs_dir, 1, Call("step", 1), lambda prompt: reply, "Copilot CLI 1.0",
+                      hallways=False, chain=5, model="gpt6luna", effort="medium",
+                      agent_cli="github-copilot-cli", seed_dir=runs_dir, model_id="gpt-6-luna")
+    assert saved["label"] == "gpt6luna-medium-h1-c5-step01"
+    assert saved["model"] == "gpt-6-luna"
+    assert saved["model_label"] == "gpt6luna"
+    assert saved["agent_cli"] == "github-copilot-cli"
+    assert saved["agent_version"] == "Copilot CLI 1.0"
+    assert next_call(load_runs(runs_dir), 1, chain=5, model="gpt6luna") == (Call("all", 0), 1)

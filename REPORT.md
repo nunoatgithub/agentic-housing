@@ -218,9 +218,9 @@ Everything as in Section 2, with these changes. The language no longer has hallw
 
 All six chains produced a valid house at every step.
 
-Without hallways, no final house met the corridor principle: every one, patched or planned, had a corridor score of 3 or more. The hallways were what met it in the first run. Along the patch sequence the score rose with every room added, and the planned houses ended with no fewer forced passages than the stepwise-patched ones. Privacy order was the same in every final house, and none of the eight planned tests came near a difference. Taking the hallways away removed the ceiling of the first run but did not separate patching from planning: what limited the houses was not the order in which the rooms were asked for.
+Without hallways, no final house met the corridor principle: every one, patched or planned, had a corridor score of 3 or more. The hallways were what met it in the first run. Along the patch sequence the score rose with all but one of the rooms added, and the planned houses ended with no fewer forced passages than the stepwise-patched ones. Privacy order was the same in every final house, and none of the eight planned tests came near a difference. Taking the hallways away removed the ceiling of the first run but did not separate patching from planning: what limited the houses was not the order in which the rooms were asked for.
 
-What the patch agents did changed. With hallways, they usually moved one room to make way for a hallway. Without them, they did one of two things: in 32 of 42 patch steps they attached the new room and kept every existing room where it was, and in 7 they removed every room and built the house again. Only three removed a single room. Of the rebuilds, three came at step F, when the house had eight rooms, and two put at least half of the old house back where it was. In two chains the first house was still fully in place after step H; in three at most a quarter of it survived. When attaching got hard, these agents stopped patching and planned again, which supports the reading that at this size the agents are too strong for patching to show its cost: a patch agent that finds attaching hard simply becomes a planner. The three chains whose agents rebuilt ended no better than the three whose agents never rebuilt; this comparison was not in the analysis plan.
+What the patch agents did changed. With hallways, they usually moved one room to make way for a hallway. Without them, they did one of two things: in 32 of 42 patch steps they attached the new room and kept every existing room where it was, and in 7 they removed every room and built the house again. Only three removed a single room. Of the rebuilds, three came at step F, when the house had eight rooms, and two put at least half of the old house back where it was. In two chains the first house was still fully in place after step H; in three at most a quarter of it survived. When attaching got hard, these agents stopped patching and planned again, which supports the reading that at this size the agents are too strong for patching to show its cost: a patch agent that finds attaching hard simply becomes a planner. The three chains whose agents rebuilt ended with slightly fewer forced passages than the three whose agents never rebuilt; this comparison was not in the analysis plan.
 
 ## 6. A third run: a weaker agent
 
@@ -238,9 +238,9 @@ All six chains produced a valid house at every step, and no patch step failed.
 
 The weaker agents did patch more. In 37 of 42 patch steps they attached the new room and kept every existing room where it was, against 32 at medium effort, and they removed every room in 4 steps, against 7. In three chains the first house was still fully in place after step H.
 
-Patching still did not end worse than planning. The stepwise-patched houses had no more forced passages than the planned ones, privacy order was again the same in every final house, and none of the eight planned tests came near a difference.
+Patching still did not end measurably worse than planning. The stepwise-patched houses had somewhat more forced passages than the planned ones, but privacy order was again the same in every final house, and none of the eight planned tests came near a difference.
 
-How the rooms are joined explains why; this was not in the analysis plan. All but one of the 36 final houses of the second and third runs are trees: every room can be reached from the entrance by exactly one route, so every bedroom, bathroom or kitchen with rooms beyond it is a forced passage. Planning agents built trees just as patch agents did. The one exception, a stepwise-patched house of the third run, has one extra door that closes a loop, and it has the fewest forced passages of all of them. The scores are set by how the agents join the rooms, and planning from scratch did not join them differently. With nothing better to be compared against, patching cannot show a cost, whether the patch agent rebuilds or not.
+How the rooms are joined explains why; this was not in the analysis plan. All but one of the 36 final houses of the second and third runs are trees: every room can be reached from the entrance by exactly one route, so every bedroom, bathroom or kitchen with rooms beyond it is a forced passage. Planning agents built trees just as patch agents did. The one exception, a stepwise-patched house of the third run, has one extra door that closes a loop, and none of them has fewer forced passages. The scores are set by how the agents join the rooms, and planning from scratch did not join them differently. With nothing better to be compared against, patching cannot show a cost, whether the patch agent rebuilds or not.
 
 ## 7. Building and demolishing cost
 
@@ -276,10 +276,10 @@ Final houses, with the first run for comparison (mean ± standard deviation over
 | First run (no cost) | H (patched step by step) | 0.00 ± 0.00 | 0.03 ± 0.00 | 3.09 ± 0.06 | 1.00 ± 1.10 | 4–5 |
 | First run (no cost) | I (planned from scratch) | 0.00 ± 0.00 | 0.03 ± 0.03 | 3.21 ± 0.19 | 0.33 ± 0.82 | 4–7 |
 | First run (no cost) | J (patched in one go) | 0.00 ± 0.00 | 0.02 ± 0.01 | 3.12 ± 0.15 | 0.33 ± 0.82 | 4–7 |
-| Cost run | H (patched step by step) | 6.83 ± 2.79 | 0.04 ± 0.01 | 2.94 ± 0.12 | 1.67 ± 0.82 | 0–2 |
+| Cost run | H (patched step by step) | 4.33 ± 0.82 | 0.04 ± 0.01 | 2.94 ± 0.12 | 1.67 ± 0.82 | 0–2 |
 | Cost run | I (planned from scratch) | 0.00 ± 0.00 | 0.03 ± 0.00 | 3.05 ± 0.00 | 0.00 ± 0.00 | 4–4 |
 | Cost run | J (patched in one go) | 0.00 ± 0.00 | 0.03 ± 0.00 | 3.08 ± 0.09 | 0.33 ± 0.82 | 4–5 |
-| Repeat | H (patched step by step) | 5.67 ± 2.66 | 0.03 ± 0.01 | 2.86 ± 0.11 | 0.67 ± 1.03 | 0–2 |
+| Repeat | H (patched step by step) | 3.17 ± 1.72 | 0.03 ± 0.01 | 2.86 ± 0.11 | 0.67 ± 1.03 | 0–2 |
 | Repeat | I (planned from scratch) | 0.00 ± 0.00 | 0.02 ± 0.01 | 3.12 ± 0.17 | 0.00 ± 0.00 | 4–7 |
 | Repeat | J (patched in one go) | 0.00 ± 0.00 | 0.03 ± 0.00 | 3.08 ± 0.09 | 0.33 ± 0.82 | 4–5 |
 
@@ -287,7 +287,7 @@ Planned tests, patched against planned (exact permutation tests; Bonferroni thre
 
 | Score | Patched house | Cost run: mean patched / planned, p | Repeat: mean patched / planned, p |
 |---|---|---|---|
-| Corridor rooms | H step by step | 6.83 / 0.00, 0.002 | 5.67 / 0.00, 0.002 |
+| Corridor rooms | H step by step | 4.33 / 0.00, 0.002 | 3.17 / 0.00, 0.002 |
 | Corridor rooms | J in one go | 0.00 / 0.00, 1.000 (all equal) | 0.00 / 0.00, 1.000 (all equal) |
 | Privacy order | H step by step | 0.04 / 0.03, 0.455 | 0.03 / 0.02, 0.545 |
 | Privacy order | J in one go | 0.03 / 0.03, 1.000 (all equal) | 0.03 / 0.02, 1.000 |
@@ -300,16 +300,16 @@ Planned tests, patched against planned (exact permutation tests; Bonferroni thre
 |---|---|---|---|---|---|
 | Cost run | H step by step | 6 of 6 | 0 of 6 | 0.002 | 0.002 |
 | Cost run | J in one go | 0 of 6 | 0 of 6 | 1.000 | 1.000 |
-| Repeat | H step by step | 6 of 6 | 0 of 6 | 0.002 | 0.002 |
+| Repeat | H step by step | 4 of 6 | 0 of 6 | 0.061 | 0.002 |
 | Repeat | J in one go | 0 of 6 | 0 of 6 | 1.000 | 1.000 |
 
-In both runs every stepwise-patched house had a corridor score of 3 or more and no planned house did (p = 0.002 in each run); the houses patched in one go scored 0, like the planned ones. No other planned test passed the threshold.
+In both runs every stepwise-patched house had at least one forced passage and no planned house had any (p = 0.002 in each run); the houses patched in one go had none either, like the planned ones. No other planned test passed the threshold.
 
 Against the first run (exact permutation tests; Bonferroni threshold 0.004):
 
 | Score | House | First run (no cost) | Cost run, p against the first run | Repeat, p against the first run |
 |---|---|---|---|---|
-| Corridor rooms | H | 0.00 | 6.83, 0.002 | 5.67, 0.002 |
+| Corridor rooms | H | 0.00 | 4.33, 0.002 | 3.17, 0.002 |
 | Corridor rooms | I | 0.00 | 0.00, 1.000 | 0.00, 1.000 |
 | Corridor rooms | J | 0.00 | 0.00, 1.000 | 0.00, 1.000 |
 | Privacy order | H | 0.03 | 0.04, 0.455 | 0.03, 1.000 |
@@ -330,9 +330,9 @@ Along the patch sequence (means over chains):
 |---|---|---|---|---|---|---|---|---|---|
 | First run (no cost) | corridor rooms | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 |  | hallways | 0.0 | 1.0 | 1.0 | 2.0 | 2.0 | 3.0 | 3.2 | 4.2 |
-| Cost run | corridor rooms | 0.00 | 0.33 | 0.83 | 1.83 | 2.83 | 3.83 | 5.50 | 6.83 |
+| Cost run | corridor rooms | 0.00 | 0.33 | 0.83 | 1.50 | 2.00 | 2.83 | 3.67 | 4.33 |
 |  | hallways | 0.0 | 0.7 | 0.7 | 0.8 | 0.8 | 0.8 | 0.8 | 0.8 |
-| Repeat | corridor rooms | 0.00 | 0.17 | 0.50 | 1.17 | 2.00 | 3.00 | 4.50 | 5.67 |
+| Repeat | corridor rooms | 0.00 | 0.17 | 0.50 | 1.00 | 1.33 | 2.17 | 2.83 | 3.17 |
 |  | hallways | 0.0 | 0.8 | 0.8 | 1.2 | 1.2 | 1.2 | 1.2 | 1.2 |
 
 What the patch agents did:
@@ -365,9 +365,9 @@ Each run has six houses per condition from one model (Claude Sonnet 5.5), at med
 
 On a 5×5 grid, with free redesign and explicit principles, step-by-step patching by Claude Sonnet 5.5 produced houses that scored no worse than houses planned from scratch for the same requirements: every final house met the corridor principle, and no score differed between patching and planning (smallest p = 0.227). The patch agents often moved an existing room to make way for a hallway while adding the new one.
 
-Without hallways, patched and planned houses were equally far from the corridor principle. The patch agents either attached the new room or planned the whole house again: a patch agent that found attaching hard became a planner.
+Without hallways, every patched and every planned house missed the corridor principle. The patch agents either attached the new room or planned the whole house again: a patch agent that found attaching hard became a planner.
 
-At low effort the agents patched more and rebuilt less, but patching still did not end worse than planning. Planning and patching agents alike joined the rooms as a tree, and that, not the order of the requests, set the scores.
+At low effort the agents patched more and rebuilt less, but patching still did not end measurably worse than planning. Planning and patching agents alike joined the rooms as a tree, and that, not the order of the requests, set the scores.
 
 The agents showed no intrinsic bias toward locality. When building and demolishing had a price, in the world with hallways, step-by-step patching did end worse than planning, in both runs: the patch agents mostly bought the cheapest attachment and built no hallway after the first few steps, while agents that saw all the rooms at once, planning or patching in one go, built the hallways. Locality came from the price of change, combined with requirements that arrive one at a time. Other models and higher effort levels were not tested.
 
@@ -597,77 +597,77 @@ compactness       0                           compactness       0
 
 | Run | Chain | House | Corridor rooms | Privacy order | Walking distance | Compactness | Hallways | Cost of the script |
 |---|---|---|---|---|---|---|---|---|
-| Cost run | 1 | H | 5 | 0.03 | 2.80 | 2 | 1 | 5 |
+| Cost run | 1 | H | 4 | 0.03 | 2.80 | 2 | 1 | 5 |
 | Cost run | 1 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Cost run | 1 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Cost run | 2 | H | 6 | 0.03 | 2.88 | 2 | 1 | 5 |
+| Cost run | 2 | H | 4 | 0.03 | 2.88 | 2 | 1 | 5 |
 | Cost run | 2 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Cost run | 2 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Cost run | 3 | H | 10 | 0.06 | 3.05 | 2 | 0 | 5 |
+| Cost run | 3 | H | 5 | 0.06 | 3.05 | 2 | 0 | 5 |
 | Cost run | 3 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Cost run | 3 | J | 0 | 0.03 | 3.26 | 2 | 5 | 69 |
-| Cost run | 4 | H | 7 | 0.03 | 3.11 | 2 | 1 | 5 |
+| Cost run | 4 | H | 5 | 0.03 | 3.11 | 2 | 1 | 5 |
 | Cost run | 4 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Cost run | 4 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Cost run | 5 | H | 10 | 0.06 | 2.87 | 2 | 0 | 5 |
+| Cost run | 5 | H | 5 | 0.06 | 2.87 | 2 | 0 | 5 |
 | Cost run | 5 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Cost run | 5 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
 | Cost run | 6 | H | 3 | 0.03 | 2.90 | 0 | 2 | 5 |
 | Cost run | 6 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Cost run | 6 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Repeat | 1 | H | 10 | 0.06 | 2.91 | 0 | 0 | 5 |
+| Repeat | 1 | H | 4 | 0.06 | 2.91 | 0 | 0 | 5 |
 | Repeat | 1 | I | 0 | 0.00 | 3.46 | 0 | 7 | 90 |
 | Repeat | 1 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Repeat | 2 | H | 3 | 0.03 | 2.77 | 0 | 2 | 5 |
+| Repeat | 2 | H | 1 | 0.03 | 2.77 | 0 | 2 | 5 |
 | Repeat | 2 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Repeat | 2 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Repeat | 3 | H | 3 | 0.03 | 2.77 | 0 | 2 | 5 |
+| Repeat | 3 | H | 1 | 0.03 | 2.77 | 0 | 2 | 5 |
 | Repeat | 3 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Repeat | 3 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Repeat | 4 | H | 7 | 0.03 | 3.06 | 2 | 1 | 5 |
+| Repeat | 4 | H | 5 | 0.03 | 3.06 | 2 | 1 | 5 |
 | Repeat | 4 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Repeat | 4 | J | 0 | 0.03 | 3.26 | 2 | 5 | 69 |
-| Repeat | 5 | H | 5 | 0.03 | 2.80 | 2 | 1 | 5 |
+| Repeat | 5 | H | 4 | 0.03 | 2.80 | 2 | 1 | 5 |
 | Repeat | 5 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Repeat | 5 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
-| Repeat | 6 | H | 6 | 0.03 | 2.88 | 0 | 1 | 5 |
+| Repeat | 6 | H | 4 | 0.03 | 2.88 | 0 | 1 | 5 |
 | Repeat | 6 | I | 0 | 0.03 | 3.05 | 0 | 4 | 75 |
 | Repeat | 6 | J | 0 | 0.03 | 3.05 | 0 | 4 | 64 |
 
-## Appendix E. Example houses (cost run, chain 2)
+## Appendix E. Example houses (cost run, chain 1)
 
 The stepwise-patched house (H) and the planned house (I) of the chain whose corridor score is nearest the run's median. `[ENTRY]` is the entrance, `-[   ]-` a door; a gap on a cell's bottom line in a vertical wall is a door.
 
 ```
-H (chain 2)                                   I (chain 2)
+H (chain 1)                                   I (chain 1)
 VALID                                         VALID
 
       1       2       3       4       5             1       2       3       4       5
   +-------+[ENTRY]+-------+-------+                     +-------+[ENTRY]+-------+
   |   R2  |   R1  |   R3  |  R13  |                     |   R2  |   R1  |   R3  |
-A |kitchen| living|bedroom|bedroom|           A         |kitchen| living|bedroom|
+A |kitchen| living|bedroom|bedroom|           A         |kitchen| living|  bath |
   |                               |                     |                       |
   +-------+-[   ]-+-------+-------+                     +-------+-[   ]-+-------+
-  |   R8  |   R5  |   R7  |  R11  |                     |   R8  |   R4  |   R9  |
+  |   R6  |   R5  |   R7  |  R11  |                     |   R8  |   R4  |   R9  |
 B |  bath |hallway|bedroom|bedroom|           B         |bedroom|hallway|bedroom|
   |                               |                     |                       |
-  +-------+-[   ]-+-------+-------+                     +-------+-[   ]-+-------+
-  |  R10  |   R6  |   R9  |                             |  R10  |   R5  |  R11  |
-C |  bath |  bath |bedroom|                   C         |bedroom|hallway|bedroom|
-  |                       |                             |                       |
-  +-------+-------+-[   ]-+                             +-------+-[   ]-+-------+
-                  |  R12  |                             |  R12  |   R6  |  R13  |
-D                 |  bath |                   D         |  bath |hallway|  bath |
-                  |       |                             |                       |
-                  +-------+                             +-------+-[   ]-+-------+
+  +-[   ]-+-[   ]-+-[   ]-+-------+                     +-------+-[   ]-+-------+
+  |  R10  |   R8  |   R9  |                             |  R10  |   R5  |  R11  |
+C |  bath |  bath |bedroom|                   C         |bedroom|hallway|  bath |
+  |       |       |       |                             |                       |
+  +-------+-[   ]-+-------+                             +-------+-[   ]-+-------+
+          |  R12  |                                     |  R12  |   R6  |  R13  |
+D         |  bath |                           D         |bedroom|hallway|  bath |
+          |       |                                     |                       |
+          +-------+                                     +-------+-[   ]-+-------+
                                                         |  R14  |   R7  |  R15  |
-E                                             E         |  bath |hallway|  bath |
+E                                             E         |bedroom|hallway|  bath |
                                                         |                       |
                                                         +-------+-------+-------+
 
-corridor rooms    6                           corridor rooms    0
+corridor rooms    4                           corridor rooms    0
 privacy order     0.03                        privacy order     0.03
-walking distance  2.88                        walking distance  3.05
+walking distance  2.80                        walking distance  3.05
 compactness       2                           compactness       0
 ```
 

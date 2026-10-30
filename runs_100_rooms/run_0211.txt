@@ -1,4 +1,4 @@
-label: sonnet55-medium-h4-c1-all09   at 2026-10-26T21:18:19+00:00   commands: 71
+label: sonnet55-medium-h4-c4-all09   at 2026-10-26T21:18:19+00:00   commands: 71
 
 SCRIPT
 remove room R300
@@ -139,7 +139,7 @@ O |  bath |hallway|bedroom|               |bedroom|
   |                       |               |       |
   +-------+-------+-------+               +-------+
 
-corridor rooms    11
+corridor rooms    5
 privacy order     0.01
 walking distance  10.07
 compactness       8

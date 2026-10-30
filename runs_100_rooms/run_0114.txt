@@ -1,4 +1,4 @@
-label: sonnet55-medium-h2-c1-all24   at 2026-10-25T19:26:15+00:00   commands: 26
+label: sonnet55-medium-h2-c2-all24   at 2026-10-25T19:26:15+00:00   commands: 26
 
 SCRIPT
 remove room R88

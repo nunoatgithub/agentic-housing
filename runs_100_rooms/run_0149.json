@@ -1,7 +1,7 @@
 {
   "run_id": "run_0149",
   "timestamp": "2026-10-25T19:39:06+00:00",
-  "label": "sonnet55-medium-h3-c1-step11",
+  "label": "sonnet55-medium-h3-c3-step11",
   "request": "add: bedroom",
   "hallways": true,
   "command_count": 2,
@@ -13,7 +13,7 @@
   "valid": true,
   "violations": [],
   "scores": {
-    "corridor_rooms": 9,
+    "corridor_rooms": 8,
     "privacy_order": 0.0063,
     "walking_distance": 8.8681,
     "compactness": 22

@@ -1,4 +1,4 @@
-label: sonnet55-medium-h2-c1-all08   at 2026-10-25T19:18:52+00:00   commands: 68
+label: sonnet55-medium-h2-c2-all08   at 2026-10-25T19:18:52+00:00   commands: 68
 
 SCRIPT
 room R84 hallway A12
@@ -136,7 +136,7 @@ O
 
 
 
-corridor rooms    601
+corridor rooms    46
 privacy order     0.00
 walking distance  14.51
 compactness       24

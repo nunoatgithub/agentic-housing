@@ -19,7 +19,7 @@ def test_example_house(example_text):
 
 
 def test_chain_house_scores_badly():
-    assert scores_of(CHAIN_SCRIPT) == Scores(corridor_rooms=6, privacy_order=0.0, walking_distance=2.0, compactness=2)
+    assert scores_of(CHAIN_SCRIPT) == Scores(corridor_rooms=3, privacy_order=0.0, walking_distance=2.0, compactness=2)
 
 
 def test_corridor_counts_only_forced_passages():

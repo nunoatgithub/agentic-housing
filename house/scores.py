@@ -1,6 +1,6 @@
 """The four quality scores. Reported separately, never combined; only defined for valid houses.
 
-corridor_rooms    pairs (kitchen/bedroom/bathroom X, room D) where every route from the entrance to D passes X. 0 is best.
+corridor_rooms    kitchens, bedrooms and bathrooms that every route from the entrance to some other room passes. 0 is best.
 privacy_order     share of (public, private) room pairs in the wrong order; a tie counts half. 0 is best.
 walking_distance  mean number of doors between every pair of rooms (shortest way). Lower is better.
 compactness       outer-wall edges beyond the minimum possible for that many cells. 0 is best.
@@ -73,7 +73,7 @@ def _corridor_rooms(layout: Layout, graph: Dict[str, Set[str]], starts: List[str
     for rid, room in layout.rooms.items():
         if room.type in DESTINATIONS:
             without = _depths(graph, starts, banned=rid)
-            total += sum(1 for other in depth if other != rid and other not in without)
+            total += any(other != rid and other not in without for other in depth)
     return total
 
 

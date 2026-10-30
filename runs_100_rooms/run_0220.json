@@ -1,7 +1,7 @@
 {
   "run_id": "run_0220",
   "timestamp": "2026-10-26T21:21:40+00:00",
-  "label": "sonnet55-medium-h4-c1-step14",
+  "label": "sonnet55-medium-h4-c4-step14",
   "request": "add: bathroom",
   "hallways": true,
   "command_count": 2,

@@ -1,4 +1,4 @@
-label: sonnet55-medium-h4-c1-all03   at 2026-10-26T21:13:54+00:00   commands: 102
+label: sonnet55-medium-h4-c4-all03   at 2026-10-26T21:13:54+00:00   commands: 102
 
 SCRIPT
 remove room R93

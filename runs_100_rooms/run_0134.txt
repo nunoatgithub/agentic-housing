@@ -1,4 +1,4 @@
-label: sonnet55-medium-h3-c1-all03   at 2026-10-25T19:34:50+00:00   commands: 92
+label: sonnet55-medium-h3-c3-all03   at 2026-10-25T19:34:50+00:00   commands: 92
 
 SCRIPT
 room R125 hallway J11
@@ -160,7 +160,7 @@ O                         |  bath |bedroom|  bath |bedroom|  bath |
                           |       |       |       |       |       |
                           +-------+-------+-------+-------+-------+
 
-corridor rooms    8
+corridor rooms    7
 privacy order     0.01
 walking distance  11.93
 compactness       14

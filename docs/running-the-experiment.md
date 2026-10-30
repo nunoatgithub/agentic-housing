@@ -69,6 +69,31 @@ editor (`run_0001.txt`: the script and the drawing). The agents' raw replies are
 the token usage and dollar cost of the agent call that wrote it (`agent_usage`); failed tries count, because they cost
 tokens too.
 
+## 70-to-100-room chains
+
+`house.run_100_rooms` runs the separate 15×15 experiment ([The 70-to-100-room runs](study-design.md#the-70-to-100-room-runs)). Its records
+use the same JSON shape as other runs: script, request, layout, validity, scores and agent metadata. Claude records
+include token usage and dollar cost. Copilot CLI records use `agent_cli`, `agent_version`, `model`, `model_label`,
+and `effort`; raw Copilot usage events are kept under `agent_metadata.copilot_usage_events`. When Copilot does not
+report token counts or a dollar cost, those `agent_usage` values are null rather than estimated.
+Each record also saves the time spent waiting for that call as `call_duration_ms` and the chain's elapsed wall time
+as `chain_elapsed_ms`, with `chain_started_at` identifying its start. If a chain resumes from older records without
+timing metadata, its elapsed time is marked estimated.
+
+The no-hallways run has twelve chains, three per seed house, all in one folder: chains 1–4 and 9–12 use Sonnet 5.5,
+chains 5–8 use GPT-6 Luna. Chain number and seed-house number are separate: chain 5 and chain 9 both start from seed
+house 1. Records are told apart by the label prefix (`sonnet55`, `gpt6luna`) and the `model` field, so filter by
+model before analysing:
+
+```
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_no_hallways --no-hallways --house 1 --chain 9
+.venv/bin/python -m house.run_100_rooms --agent copilot --model gpt-6-luna --effort medium \
+  --no-hallways --house 1 --chain 5
+```
+
+Houses 2–4 take chains 10–12 (Sonnet 5.5) and 6–8 (GPT-6 Luna). Report the two models separately. Copilot billing is reported by the CLI in AI credits or
+premium requests, depending on the account, and is not converted into Claude-style dollar costs.
+
 ## Running by hand
 
 The same chain can be run with any agent, one step at a time, in the order A to J:

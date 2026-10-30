@@ -170,9 +170,9 @@ Everything as in Section 2, with these changes. The language no longer has hallw
 
 All six chains produced a valid house at every step.
 
-Without hallways, no final house met the corridor principle: every one, patched or planned, had a corridor score of 3 or more. The hallways were what met it in the first run. Along the patch sequence the score rose with every room added, and the planned houses ended with no fewer forced passages than the stepwise-patched ones. Privacy order was the same in every final house, and none of the eight planned tests came near a difference. Taking the hallways away removed the ceiling of the first run but did not separate patching from planning: what limited the houses was not the order in which the rooms were asked for.
+Without hallways, no final house met the corridor principle: every one, patched or planned, had a corridor score of 3 or more. The hallways were what met it in the first run. Along the patch sequence the score rose with all but one of the rooms added, and the planned houses ended with no fewer forced passages than the stepwise-patched ones. Privacy order was the same in every final house, and none of the eight planned tests came near a difference. Taking the hallways away removed the ceiling of the first run but did not separate patching from planning: what limited the houses was not the order in which the rooms were asked for.
 
-What the patch agents did changed. With hallways, they usually moved one room to make way for a hallway. Without them, they did one of two things: in {{nh_attached}} of {{nh_patch_steps}} patch steps they attached the new room and kept every existing room where it was, and in {{nh_rebuilt}} they removed every room and built the house again. Only {{nh_one_room}} removed a single room. Of the rebuilds, {{nh_rebuild_step_n}} came at step {{nh_rebuild_step}}, when the house had {{nh_rebuild_step_rooms}} rooms, and {{nh_rebuilt_same}} put at least half of the old house back where it was. In {{nh_a_intact}} chains the first house was still fully in place after step H; in {{nh_a_quarter}} at most a quarter of it survived. When attaching got hard, these agents stopped patching and planned again, which supports the reading that at this size the agents are too strong for patching to show its cost: a patch agent that finds attaching hard simply becomes a planner. The {{nh_rebuild_chains}} chains whose agents rebuilt ended no better than the {{nh_attach_chains}} whose agents never rebuilt; this comparison was not in the analysis plan.
+What the patch agents did changed. With hallways, they usually moved one room to make way for a hallway. Without them, they did one of two things: in {{nh_attached}} of {{nh_patch_steps}} patch steps they attached the new room and kept every existing room where it was, and in {{nh_rebuilt}} they removed every room and built the house again. Only {{nh_one_room}} removed a single room. Of the rebuilds, {{nh_rebuild_step_n}} came at step {{nh_rebuild_step}}, when the house had {{nh_rebuild_step_rooms}} rooms, and {{nh_rebuilt_same}} put at least half of the old house back where it was. In {{nh_a_intact}} chains the first house was still fully in place after step H; in {{nh_a_quarter}} at most a quarter of it survived. When attaching got hard, these agents stopped patching and planned again, which supports the reading that at this size the agents are too strong for patching to show its cost: a patch agent that finds attaching hard simply becomes a planner. The {{nh_rebuild_chains}} chains whose agents rebuilt ended with slightly fewer forced passages than the {{nh_attach_chains}} whose agents never rebuilt; this comparison was not in the analysis plan.
 
 ## 6. A third run: a weaker agent
 
@@ -190,9 +190,9 @@ All six chains produced a valid house at every step, and no patch step failed.
 
 The weaker agents did patch more. In {{lo_attached}} of {{nh_patch_steps}} patch steps they attached the new room and kept every existing room where it was, against {{nh_attached}} at medium effort, and they removed every room in {{lo_rebuilt}} steps, against {{nh_rebuilt}}. In {{lo_a_intact}} chains the first house was still fully in place after step H.
 
-Patching still did not end worse than planning. The stepwise-patched houses had no more forced passages than the planned ones, privacy order was again the same in every final house, and none of the eight planned tests came near a difference.
+Patching still did not end measurably worse than planning. The stepwise-patched houses had somewhat more forced passages than the planned ones, but privacy order was again the same in every final house, and none of the eight planned tests came near a difference.
 
-How the rooms are joined explains why; this was not in the analysis plan. All but one of the {{nh_lo_final}} final houses of the second and third runs are trees: every room can be reached from the entrance by exactly one route, so every bedroom, bathroom or kitchen with rooms beyond it is a forced passage. Planning agents built trees just as patch agents did. The one exception, a stepwise-patched house of the third run, has one extra door that closes a loop, and it has the fewest forced passages of all of them. The scores are set by how the agents join the rooms, and planning from scratch did not join them differently. With nothing better to be compared against, patching cannot show a cost, whether the patch agent rebuilds or not.
+How the rooms are joined explains why; this was not in the analysis plan. All but one of the {{nh_lo_final}} final houses of the second and third runs are trees: every room can be reached from the entrance by exactly one route, so every bedroom, bathroom or kitchen with rooms beyond it is a forced passage. Planning agents built trees just as patch agents did. The one exception, a stepwise-patched house of the third run, has one extra door that closes a loop, and none of them has fewer forced passages. The scores are set by how the agents join the rooms, and planning from scratch did not join them differently. With nothing better to be compared against, patching cannot show a cost, whether the patch agent rebuilds or not.
 
 ## 7. Building and demolishing cost
 
@@ -228,7 +228,7 @@ Planned tests, patched against planned (exact permutation tests; Bonferroni thre
 
 {{ch_corridor_tests}}
 
-In both runs every stepwise-patched house had a corridor score of 3 or more and no planned house did (p = {{ch_p_corridor}}); the houses patched in one go scored 0, like the planned ones. No other planned test passed the threshold.
+In both runs every stepwise-patched house had at least one forced passage and no planned house had any (p = {{ch_p_corridor}}); the houses patched in one go had none either, like the planned ones. No other planned test passed the threshold.
 
 Against the first run (exact permutation tests; Bonferroni threshold 0.004):
 
@@ -262,9 +262,9 @@ Each run has six houses per condition from one model (Claude Sonnet 5.5), at med
 
 On a 5×5 grid, with free redesign and explicit principles, step-by-step patching by Claude Sonnet 5.5 produced houses that scored no worse than houses planned from scratch for the same requirements: every final house met the corridor principle, and no score differed between patching and planning (smallest p = {{smallest_p}}). The patch agents often moved an existing room to make way for a hallway while adding the new one.
 
-Without hallways, patched and planned houses were equally far from the corridor principle. The patch agents either attached the new room or planned the whole house again: a patch agent that found attaching hard became a planner.
+Without hallways, every patched and every planned house missed the corridor principle. The patch agents either attached the new room or planned the whole house again: a patch agent that found attaching hard became a planner.
 
-At low effort the agents patched more and rebuilt less, but patching still did not end worse than planning. Planning and patching agents alike joined the rooms as a tree, and that, not the order of the requests, set the scores.
+At low effort the agents patched more and rebuilt less, but patching still did not end measurably worse than planning. Planning and patching agents alike joined the rooms as a tree, and that, not the order of the requests, set the scores.
 
 The agents showed no intrinsic bias toward locality. When building and demolishing had a price, in the world with hallways, step-by-step patching did end worse than planning, in both runs: the patch agents mostly bought the cheapest attachment and built no hallway after the first few steps, while agents that saw all the rooms at once, planning or patching in one go, built the hallways. Locality came from the price of change, combined with requirements that arrive one at a time. Other models and higher effort levels were not tested.
 

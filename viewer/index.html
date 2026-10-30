@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>House growth – incremental vs all-at-once</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --ink:#1b1e27; --mut:rgba(27,30,39,.6); --accent:#3b6cff; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#e8e8e8; color:var(--ink); font:13px system-ui, sans-serif; }
+  .panel { background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.6)); border:1px solid rgba(0,0,0,.12); border-radius:18px;
+    box-shadow:0 10px 34px rgba(30,50,100,.16); backdrop-filter:blur(14px); }
+  button, select { font:inherit; color:var(--ink); cursor:pointer; padding:6px 13px; border-radius:999px; background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.18); }
+  button { white-space:nowrap; }
+  #bar > * { flex:none; white-space:nowrap; }
+  button:hover { background:rgba(0,0,0,.12); }
+  button.on, button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linejoin:round; stroke-linecap:round; vertical-align:-4px; margin-right:5px; }
+  #top { position:fixed; left:50%; top:12px; transform:translateX(-50%); z-index:5; display:flex; flex-direction:row; align-items:center; gap:8px; max-width:none; }
+  #top .row { display:flex; flex-wrap:nowrap; justify-content:center; gap:6px; padding:5px 8px; }
+  #top .row button { padding:4px 12px; }
+  #panes { position:fixed; inset:0; display:flex; }
+  .pane { position:relative; flex:1; min-width:0; }
+  .pane + .pane { border-left:1px solid rgba(0,0,0,.15); }
+  .pane iframe { width:100%; height:100%; border:0; display:block; }
+  .cap { position:absolute; left:50%; top:76px; transform:translateX(-50%); padding:6px 14px; border-radius:999px; font-size:12px; white-space:nowrap; z-index:4; }
+  .cap b { margin-right:8px; }
+  #trend { position:fixed; left:0; right:0; top:0; bottom:0; z-index:3; background:rgba(226,228,233,var(--veil,.25)); backdrop-filter:blur(var(--blur,8px)); pointer-events:none; transition:opacity .25s ease; }
+  #trend.closed { opacity:0; }
+  #trend.closed #veil { pointer-events:none; }
+  #veil { position:absolute; top:112px; left:50%; transform:translateX(-50%); width:110px; height:12px; pointer-events:auto; }
+  #veil::-webkit-slider-runnable-track { height:2px; border-radius:1px; background:rgba(27,30,39,.3); }
+  #veil::-moz-range-track { height:2px; border-radius:1px; background:rgba(27,30,39,.3); }
+  #veil::-moz-range-progress { height:2px; background:rgba(27,30,39,.3); }
+  #veil::-webkit-slider-thumb { width:10px; height:10px; margin-top:-4px; border:none; background:#5f6573; box-shadow:none; }
+  #veil::-moz-range-thumb { width:10px; height:10px; border:none; background:#5f6573; box-shadow:none; }
+  #veil:hover::-webkit-slider-thumb, #veil:active::-webkit-slider-thumb { transform:none; box-shadow:none; }
+  #veil:hover::-moz-range-thumb, #veil:active::-moz-range-thumb { transform:none; box-shadow:none; }
+  #trend svg { display:block; margin-top:128px; overflow:visible; } /* the charts start below the controls; the panel itself reaches the top */
+  #trend text { font:600 10px system-ui, sans-serif; fill:rgba(27,30,39,.85); paint-order:stroke; stroke:rgba(255,255,255,.75); stroke-width:3px; stroke-linejoin:round; }
+  #trend g[id^=tr_] { transition:transform .4s ease; }
+  #trend text.big { font-size:12px; font-weight:700; }
+  #tab { position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:5; writing-mode:vertical-rl; padding:12px 5px; font-size:12px;
+    border-radius:12px 0 0 12px; border-right:none; background:rgba(255,255,255,.3); backdrop-filter:blur(6px); }
+  #tab.on { background:rgba(255,255,255,.55); color:var(--ink); border-color:rgba(0,0,0,.18); }
+  #bar { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:5; display:flex; align-items:center; gap:14px; padding:8px 14px; }
+  input[type=range] { --p:0%; -webkit-appearance:none; appearance:none; height:22px; margin:0; background:transparent; cursor:pointer; }
+  input[type=range]:focus { outline:none; }
+  input[type=range]::-webkit-slider-runnable-track { height:5px; border-radius:3px; background:linear-gradient(to right, var(--accent) var(--p), rgba(27,30,39,.2) var(--p)); }
+  input[type=range]::-moz-range-track { height:5px; border-radius:3px; background:rgba(27,30,39,.2); }
+  input[type=range]::-moz-range-progress { height:5px; border-radius:3px; background:var(--accent); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; margin-top:-6.5px; box-sizing:border-box; border:3px solid #fff; border-radius:50%; background:var(--accent);
+    box-shadow:0 1px 5px rgba(30,50,100,.45); transition:transform .12s ease, box-shadow .12s ease; }
+  input[type=range]::-moz-range-thumb { width:18px; height:18px; box-sizing:border-box; border:3px solid #fff; border-radius:50%; background:var(--accent);
+    box-shadow:0 1px 5px rgba(30,50,100,.45); transition:transform .12s ease, box-shadow .12s ease; }
+  input[type=range]:hover::-webkit-slider-thumb { transform:scale(1.15); }
+  input[type=range]:hover::-moz-range-thumb { transform:scale(1.15); }
+  input[type=range]:active::-webkit-slider-thumb, input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow:0 0 0 5px rgba(59,108,255,.22), 0 1px 5px rgba(30,50,100,.45); }
+  input[type=range]:active::-moz-range-thumb, input[type=range]:focus-visible::-moz-range-thumb { box-shadow:0 0 0 5px rgba(59,108,255,.22), 0 1px 5px rgba(30,50,100,.45); }
+  #scrub { width:240px; }
+  #speed { width:90px; }
+  .muted { color:var(--mut); }
+</style>
+</head>
+<body>
+<div id="top">
+  <div id="runs" class="row panel"></div>
+  <div id="houses" class="row panel"></div>
+  <div id="chains" class="row panel"></div>
+  <div id="mode" class="row panel"></div>
+</div>
+<button id="tab" title="Show / hide the evolution of the scores">Score evolution</button>
+<div id="trend" class="closed"><input id="veil" type="range" min="0" max="1" step="0.01" value="0.5" title="Transparency of the score panel"><div id="charts"></div></div>
+<div id="panes">
+  <div class="pane"><div class="cap panel" id="capL"></div><iframe id="L" title="House"></iframe></div>
+</div>
+<div id="bar" class="panel">
+  <button id="first" title="Back to seed">⏮</button>
+  <button id="back" title="Previous (←)">◀</button>
+  <button id="play" class="primary" title="Play / pause (space)">▶ Play</button>
+  <button id="fwd" title="Next (→)">▶</button>
+  <button id="last" title="Jump to end">⏭</button>
+  <span class="muted">Step</span>
+  <input id="scrub" type="range" min="0" max="30" step="1" value="0">
+  <span id="pos" style="min-width:64px">0 / 30</span>
+  <span class="muted">Speed</span>
+  <input id="speed" type="range" min="-2" max="5" step="0.1" value="2">
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const TAG = /^(.+?-\w+)-h(\d+)-c(\d+)-(\w+)$/;
+const LAST_ALL = 28, pad = k => String(k).padStart(2, '0');
+// One drawing. It grows one incremental step at a time (orange = rooms added since the seed). After each step the
+// all-at-once agent's answer for that house plays in the same drawing: removals (DESTROY), then new rooms ringed in red (BUILD).
+let data, house, chain, MAX = 0, steps = {}, alls = {}, n = 0, phase = 'LEFT', playing = false, busy = false, token = 0, ready = false, who = 'Incremental', mode = 'both';
+const speed = () => Math.pow(2, +$('speed').value);
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const dur = () => 4500 / speed() + 60;
+let gridOnly = false; // the grid-only view, switched by the icon on the drawing
+const post = (id, m) => ready && $(id).contentWindow.postMessage({ speed: speed(), gridOnly, ...m }, '*');
+const seed = () => data.houses[house][0];
+const stepAt = k => k === 0 ? seed() : steps['step' + pad(k)];
+const allAt = k => alls['all' + pad(k)];
+const rkey = r => `${r.r},${r.c}:${r.type}`;
+
+function chainsOf(k) {
+  const by = new Map();
+  for (const f of data.houses[k].slice(1)) {
+    const m = TAG.exec(f.tag || ''); if (!m) continue;
+    const key = `${m[1]}-c${m[3]}`;
+    if (!by.has(key)) by.set(key, `${m[1].split('-')[0]} · c${m[3]}`);
+  }
+  return [...by.entries()].sort((a, b) => a[0].localeCompare(b[0], undefined, { numeric: true }));
+}
+function index() {
+  steps = {}; alls = {};
+  for (const f of data.houses[house].slice(1)) { const m = TAG.exec(f.tag || ''); if (!m || `${m[1]}-c${m[3]}` !== chain) continue; (m[4].startsWith('all') ? alls : steps)[m[4]] = f; }
+  MAX = 0; while (steps['step' + pad(MAX + 1)]) MAX++;
+  $('scrub').max = MAX; fill($('scrub'));
+}
+const METRICS = [['corridor_rooms', 'Corridor rooms', 0], ['privacy_order', 'Privacy order', 4], ['walking_distance', 'Walking distance', 2], ['compactness', 'Compactness', 0]];
+let gi = 0, ga = 0;
+const sc = (f, k) => (f && f.scores ? f.scores[k] : null);
+
+// The evolution of the scores: one small chart per score, the steps running from top to bottom, the change against the
+// seed house across (left = worse, right = better, as in the meters). Every chain of the house has a thin line for each
+// agent; the chain playing is drawn over them, growing as the steps play.
+let trend = null;
+function seriesOf(key) { // the houses of one chain, step by step, for each agent (the all-at-once one as allFrame gives it)
+  const st = {}, al = {};
+  for (const f of data.houses[house].slice(1)) { const m = TAG.exec(f.tag || ''); if (!m || `${m[1]}-c${m[3]}` !== key) continue; (m[4].startsWith('all') ? al : st)[m[4]] = f; }
+  let max = 0; while (st['step' + pad(max + 1)]) max++;
+  const incS = [seed()], allS = [seed()], allIn = [seed()]; // allIn: the house each all-at-once call started from
+  for (let k = 1; k <= max; k++) {
+    incS.push(st['step' + pad(k)]);
+    let j = Math.min(k - 1, LAST_ALL); while (j >= 0 && !al['all' + pad(j)]) j--;
+    allS.push(j < 0 ? seed() : al['all' + pad(j)]); allIn.push(j < 0 ? seed() : incS[j]);
+  }
+  return { incS, allS, allIn, max };
+}
+const fmt = (d, dp) => (d > 0 ? '+' : '') + d.toFixed(dp);
+function buildTrend() { // the four score charts in a 2x2 matrix: each cell has its agents' values at the left and the chart (steps left to right) at the right
+  const box = $('trend'); trend = null; $('charts').innerHTML = '';
+  if (!data || !house) return;
+  const w = box.clientWidth; if (w < 500) return;
+  const chains = chainsOf(house).map(([key, name]) => ({ key, name, ...seriesOf(key) }));
+  const ymax = Math.max(...chains.map(c => c.max), 1);
+  const KIND = { inc: 'incS', all: 'allS' }, PALETTE = ['#e8590c', '#1c7ed6', '#2f9e44', '#ae3ec9', '#e03131', '#0c8599', '#d6a100', '#e64980']; // a colour per agent
+  const colour = (ci, ki) => chains[ci].key.startsWith('gpt6luna') && ki === 0 ? '#e0a800' : PALETTE[(ci * 2 + ki) % PALETTE.length]; // GPT-6 Luna's incremental agent is yellow, not orange
+  const L = 24, R = 44, G = 28, GV = 34, LW = 58, ROW = 14, TT = 26, BW = 140, cw = (w - L - R - BW - G * 2) / 2; // the bar chart takes BW at the right of the matrix
+  const cellH = (Math.max(320, innerHeight - 128 - 92 - 34) - GV) / 2, h = 2 * cellH + GV + 34;
+  let svg = '', lines = [], rowTop = [];
+  METRICS.forEach(([m, name, dp], mi) => {
+    const x0 = L + (mi % 2) * (cw + G), ct = Math.floor(mi / 2) * (cellH + GV), T = ct + TT, PH = cellH - TT - 4, X0 = x0 + LW + 12, PW = cw - LW - 12, base = sc(seed(), m);
+    const sx = k => X0 + PW * k / ymax; // the steps run left to right
+    let lo = 0, hi = 0; // the scale fits the chain playing (and the seed's zero); other lines may run off it
+    for (const c of chains) if (c.key === chain) for (const f of [...c.incS, ...c.allS]) { const v = sc(f, m); if (v != null && base != null) { lo = Math.min(lo, v - base); hi = Math.max(hi, v - base); } }
+    if (hi - lo < 1e-9) hi = lo + 1;
+    const pad = .08, py = d => T + PH * pad + PH * (1 - 2 * pad) * (d - lo) / (hi - lo); // up = better (the lowest score is on top)
+    rowTop[mi] = T + 12;
+    svg += `<text class="big" x="${x0 + cw / 2}" y="${ct + 14}" text-anchor="middle">${name}</text><clipPath id="cp${mi}"><rect x="${X0}" y="${T - 4}" width="${PW}" height="${PH + 8}"/></clipPath>`
+      + `<rect x="${X0}" y="${T}" width="${PW}" height="${PH}" fill="none" stroke="rgba(27,30,39,.15)"/>`;
+    for (let k = 10; k < ymax; k += 10) svg += `<line x1="${sx(k)}" x2="${sx(k)}" y1="${T}" y2="${T + PH}" stroke="rgba(27,30,39,.1)"/><text x="${sx(k) + 3}" y="${T + PH - 4}">${k}</text>`;
+    svg += `<text x="${X0 + 3}" y="${T + PH - 4}">0</text><text x="${X0 + PW - 3}" y="${T + PH - 4}" text-anchor="end">${ymax}</text>`
+      + `<line x1="${X0}" x2="${X0 + PW}" y1="${py(0)}" y2="${py(0)}" stroke="rgba(27,30,39,.4)" stroke-dasharray="4 3"/><g clip-path="url(#cp${mi})">`;
+    chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => {
+      const col = colour(ci, ki), vals = c[KIND[kind]].map(f => { const v = sc(f, m); return v == null || base == null ? 0 : v - base; });
+      const pts = vals.map((d, i) => [sx(i), py(d)]), dpath = 'M' + pts.map(p => p.join(' ')).join(' L'), cum = pts.map(() => 0);
+      for (let i = 1; i < pts.length; i++) cum[i] = cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
+      const o = { mi, id: `${mi}_${ci}_${kind}`, kind, col, pts, vals, cum, len: cum[cum.length - 1], dpath, dp, left: X0, right: X0 + PW, playing: c.key === chain };
+      lines.push(o);
+      svg += `<path d="${dpath}" fill="none" stroke="${col}" stroke-opacity="${o.playing ? .5 : .6}" stroke-width="1.5"/>`
+        + (o.playing ? '' : `<circle cx="${pts[pts.length - 1][0]}" cy="${pts[pts.length - 1][1]}" r="3.5" fill="${col}"/>`);
+    }));
+    svg += '</g>';
+    chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => { // the value of every agent, in its colour: where it is now if it is playing, else where it ended
+      svg += `<g id="tr_${mi}_${ci}_${kind}" style="transform:translateY(${rowTop[mi] + (ci * 2 + ki) * ROW}px)"><text class="big" id="tv_${mi}_${ci}_${kind}" x="${x0 + LW - 6}" y="0" text-anchor="end"></text></g>`;
+    }));
+  });
+  const changed = (from, to) => { const k = new Set(to.rooms.map(rkey)); return 100 * from.rooms.filter(r => !k.has(rkey(r))).length / from.rooms.length; }; // % of the rooms a call started from that its house no longer has (same cell and type)
+  const perCall = (c, kind) => (kind === 'inc' ? c.incS.map((f, i) => i ? changed(c.incS[i - 1], f) : 0) : c.allS.map((f, i) => changed(c.allIn[i], f))).map((v, i, a) => Math.max(...a.slice(0, i + 1))); // the bar never shrinks
+  const bars = [], bx0 = w - R - BW, nb = chains.length * 2, rowH = (2 * cellH + GV - 44) / nb, bmax = Math.max(1, ...chains.flatMap(c => [...perCall(c, 'inc'), ...perCall(c, 'all')])), BL = BW - 48, BT = Math.min(16, rowH - 10);
+  svg += `<text class="big" x="${bx0 + BW / 2}" y="14" text-anchor="middle">Max rooms removed</text><text x="${bx0 + BW / 2}" y="26" text-anchor="middle">in one step, as % of</text><text x="${bx0 + BW / 2}" y="37" text-anchor="middle">the house before it</text>`
+    + `<line x1="${bx0}" x2="${bx0}" y1="44" y2="${2 * cellH + GV}" stroke="rgba(27,30,39,.3)"/>`;
+  chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => {
+    const ry = 44 + (ci * 2 + ki) * rowH + (rowH - BT) / 2, col = colour(ci, ki), vals = perCall(c, kind);
+    svg += `<rect id="bb_${ci}_${kind}" x="${bx0}" y="${ry}" width="${BL}" height="${BT}" rx="3" fill="${col}" fill-opacity=".85" style="transform-origin:${bx0}px ${ry}px; transform:scaleX(0)"/>`
+      + `<text class="big" id="bv_${ci}_${kind}" x="${bx0 + 6}" y="${ry + BT / 2 + 4}"></text>`;
+    bars.push({ id: `${ci}_${kind}`, vals, BL, bmax, col });
+  }));
+  for (const o of lines) if (o.playing) svg += `<path id="tp_${o.id}" d="${o.dpath}" fill="none" stroke="${o.col}" stroke-width="3" stroke-linejoin="round" stroke-dasharray="${o.len} ${o.len + 10}" stroke-dashoffset="${o.len}"/>`
+    + `<circle id="tm_${o.id}" r="4.5" fill="${o.col}" stroke="#fff" stroke-width="1.5"/><text class="big" id="tl_${o.id}" x="0" y="4"></text>`;
+  chains.forEach((c, ci) => ['inc', 'all'].forEach((kind, ki) => { // one legend for all four charts
+    const lx = L + (ci * 2 + ki) * (w - L - R) / (chains.length * 2);
+    svg += `<line x1="${lx}" x2="${lx + 14}" y1="${h - 17}" y2="${h - 17}" stroke="${colour(ci, ki)}" stroke-width="3" stroke-linecap="round"/><text x="${lx + 19}" y="${h - 14}">${c.name} · ${kind === 'inc' ? 'incremental' : 'all-at-once'}</text>`;
+  }));
+  svg += `<text x="${L}" y="-8">steps run left to right · up = better · the dashed line is the seed house</text>`;
+  $('charts').innerHTML = `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">${svg}</svg>`;
+  for (const o of lines) { o.row = $('tr_' + o.id); o.val = $('tv_' + o.id); if (o.playing) { o.path = $('tp_' + o.id); o.marker = $('tm_' + o.id); o.label = $('tl_' + o.id); } }
+  for (const b of bars) { b.rect = $('bb_' + b.id); b.val = $('bv_' + b.id); }
+  trend = { lines, bars, fresh: true, rowTop, rowH: ROW };
+}
+function updateTrend() {
+  if (!trend) return;
+  const t = trend.fresh ? 0 : dur() * .9 / 1000, rest = !playing && gi === 0 && ga === 0; trend.fresh = false;
+  for (const o of trend.lines) {
+    const moving = o.playing && (mode === 'both' || (mode === 'all') === (o.kind === 'all'));
+    const i = moving ? Math.max(0, Math.min(o.pts.length - 1, o.kind === 'inc' ? gi : ga)) : o.pts.length - 1;
+    const vi = rest ? o.pts.length - 1 : i; // at rest, before step 1 starts, the values and bars show where every agent ended
+    const text = fmt(o.vals[i], o.dp); o.now = o.vals[vi];
+    if (o.mi === 0) { // the seed-house bar of this agent follows it
+      const b = trend.bars.find(b => b.id === o.id.slice(2)), v = b.vals[vi], f = v / b.bmax;
+      b.rect.style.transition = `transform ${t}s linear`; b.rect.style.transform = `scaleX(${f})`;
+      b.val.style.transition = `transform ${t}s linear`; b.val.style.transform = `translateX(${f * b.BL}px)`; b.val.style.fill = b.col; b.val.textContent = v.toFixed(1) + '%';
+    }
+    o.val.textContent = fmt(o.vals[vi], o.dp); o.val.style.fill = o.col;
+    if (!o.playing) continue;
+    o.path.style.transition = `stroke-dashoffset ${t}s linear, opacity .3s`; o.path.style.strokeDashoffset = o.len - o.cum[i]; o.path.style.opacity = moving ? 1 : 0;
+    const [px, py] = o.pts[i], anchor = px > o.right - 45 ? 'end' : px < o.left + 45 ? 'start' : 'middle';
+    o.marker.style.transition = o.label.style.transition = `transform ${t}s linear, opacity .3s`;
+    o.marker.style.transform = `translate(${px}px, ${py}px)`; o.marker.style.opacity = moving ? 1 : 0;
+    o.label.style.transform = `translate(${px + (anchor === 'end' ? 6 : anchor === 'start' ? -6 : 0)}px, ${py + (o.kind === 'inc' ? -9 : 16)}px)`; o.label.style.opacity = moving ? 1 : 0;
+    o.label.setAttribute('text-anchor', anchor); o.label.style.fill = o.col; o.label.textContent = text;
+  }
+  for (let mi = 0; mi < METRICS.length; mi++) { // each lane lists its agents from the best score (the lowest) to the worst
+    trend.lines.filter(o => o.mi === mi).sort((a, b) => a.now - b.now).forEach((o, r) => { o.row.style.transform = `translateY(${trend.rowTop[mi] + r * trend.rowH}px)`; });
+  }
+}
+addEventListener('resize', () => { buildTrend(); updateTrend(); });
+const veil = p => { // how see-through the score panel is: none at the left end, the old 25% tint and 8px blur in the middle, solid at the right
+  const a = p <= 0.5 ? 0.25 * p / 0.5 : 0.25 + 0.75 * (p - 0.5) / 0.5;
+  $('trend').style.setProperty('--veil', a); $('trend').style.setProperty('--blur', 8 * Math.min(1, p / 0.5) + 'px');
+  try { localStorage.setItem('veilPos', p); } catch (e) {} }; // remembered per viewer
+try { const p = localStorage.getItem('veilPos'); if (p !== null) $('veil').value = p; } catch (e) {}
+veil($('veil').value);
+$('veil').oninput = e => veil(e.target.value);
+$('tab').onclick = () => { const closed = $('trend').classList.toggle('closed'); $('tab').classList.toggle('on', !closed); };
+const fill = el => el.style.setProperty('--p', `${(el.value - el.min) / (el.max - el.min) * 100}%`);
+function label() { $('scrub').value = n; fill($('scrub')); $('pos').textContent = `${n} / ${MAX}`; gi = n; if (phase === 'LEFT' && (mode === 'all' || !playing)) ga = n; updateTrend(); }
+
+function load() {
+  token++; busy = false; stop(); index(); buildTrend(); ready = false; n = 0; phase = 'LEFT'; label();
+  $('capL').innerHTML = '';
+  $('L').src = `house.html?embed=1&house=${house}&chain=${encodeURIComponent(chain + '-step')}&data=${RUNS[runNo]}&t=${Date.now()}`;
+}
+// the viewer tells rooms apart by id, but each agent call renumbers them: give a room the id it had in the frame it grows from
+const keepIds = (f, from) => { const id = new Map(from.rooms.map(r => [rkey(r), r.id])); return { ...f, rooms: f.rooms.map(r => id.has(rkey(r)) ? { ...r, id: id.get(rkey(r)) } : r), _info: undefined }; };
+const seedK = () => new Set(stepAt(0).rooms.map(rkey));
+const inc = k => { const s = seedK(), f = stepAt(k); return { ...f, rooms: f.rooms.map(r => ({ ...r, fresh: !s.has(rkey(r)) })), _info: undefined }; };
+function allFrame(k) { // the all-at-once answer to the house after step k-1 (the seed before it has one)
+  let j = Math.min(k - 1, LAST_ALL); while (j >= 0 && !allAt(j)) j--;
+  if (j < 0) return inc(0);
+  const res = allAt(j), base = new Set(stepAt(j).rooms.map(rkey)), s = seedK();
+  return { ...res, rooms: res.rooms.map(r => ({ ...r, fresh: !base.has(rkey(r)) ? 'all' : !s.has(rkey(r)) })), _info: undefined };
+}
+const shown = k => mode === 'all' ? allFrame(k) : inc(k);
+function setStatic(k, intro) { // jump, no animation (the seed house grows in when asked)
+  token++; busy = false; n = Math.max(0, Math.min(MAX, k)); phase = 'LEFT'; who = mode === 'all' ? 'All-at-once' : 'Incremental';
+  post('L', { frames: [shown(n)], intro: !!intro && n === 0 }); label();
+}
+function stop() { playing = false; $('play').textContent = '▶ Play'; }
+
+let branch = 0; // frames of the all-at-once branch: [copy, (destroyed), result]
+async function beat() { // run one phase; returns false when there is nothing left to show
+  const my = token;
+  if (phase === 'LEFT') {
+    if (n >= MAX) return false;
+    n++; who = mode === 'all' ? 'All-at-once' : 'Incremental';
+    post('L', { frames: [shown(n - 1), keepIds(shown(n), shown(n - 1))] }); await wait(150); post('L', { goto: 1, animate: true }); label(); await wait(dur()); if (my !== token) return false;
+    if (mode === 'both') phase = 'COPY'; return true;
+  }
+  if (phase === 'COPY') {
+    const res = n <= LAST_ALL && allAt(n), rep = stepAt(n);
+    if (!res || !rep) { phase = 'LEFT'; return beat(); }
+    const keep = new Set(res.rooms.map(rkey)), had = new Set(rep.rooms.map(rkey)), s = seedK();
+    const real = r => r.type !== 'hallway', gone = rep.rooms.filter(r => real(r) && !keep.has(rkey(r))).length, built = res.rooms.filter(r => real(r) && !had.has(rkey(r))).length;
+    const marked = inc(n).rooms;
+    const copy = { ...rep, rooms: marked, _info: undefined };
+    const mid = { ...rep, call: `${gone} removed`, rooms: marked.filter(r => keep.has(rkey(r))), _info: undefined };
+    const fin = keepIds({ ...res, call: `${res.call} (+${built} built)`, rooms: res.rooms.map(r => ({ ...r, fresh: !had.has(rkey(r)) ? 'all' : !s.has(rkey(r)) })) }, rep);
+    branch = gone ? 2 : 1; who = 'All-at-once';
+    post('L', { frames: gone ? [copy, mid, fin] : [copy, fin] });
+    await wait(dur() / 2); if (my !== token) return false;
+    phase = gone ? 'DESTROY' : 'BUILD'; return true;
+  }
+  if (phase === 'DESTROY') { post('L', { goto: 1, animate: true }); await wait(dur()); if (my !== token) return false; phase = 'BUILD'; return true; }
+  post('L', { goto: branch, animate: true }); ga = Math.min(n + 1, MAX); updateTrend(); await wait(dur() * 1.3); if (my !== token) return false; phase = 'LEFT'; return true;
+}
+async function run() { // play: keep going until paused or finished
+  while (playing) { const my = token; busy = true; const ok = await beat(); if (my !== token) return; busy = false; if (!ok) { stop(); return; } }
+}
+function play() {
+  if (playing) { stop(); return; }
+  if (busy) return;
+  if (n >= MAX && phase === 'LEFT') setStatic(0);
+  playing = true; $('play').textContent = '⏸ Pause'; run();
+}
+async function forward() { if (busy) return; stop(); busy = true; const my = token; await beat(); if (my === token) busy = false; }
+$('first').onclick = () => { stop(); setStatic(0, true); };
+$('last').onclick = () => { stop(); setStatic(MAX); };
+$('back').onclick = () => { stop(); setStatic(n - 1); };
+$('fwd').onclick = forward;
+$('play').onclick = play;
+$('scrub').oninput = e => { stop(); setStatic(+e.target.value); };
+$('speed').oninput = () => { fill($('speed')); post('L', {}); };
+fill($('speed'));
+addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); play(); }
+  else if (e.code === 'ArrowRight') forward(); else if (e.code === 'ArrowLeft') $('back').click();
+});
+addEventListener('message', e => {
+  if (e.source !== $('L').contentWindow) return;
+  const m = e.data || {};
+  if (m.ready) { ready = true; setStatic(0, true); }
+  if ('gridOnly' in m) gridOnly = m.gridOnly; // the drawing's own switch, so later frames keep the view
+  if (m.info) $('capL').innerHTML = `<b>${who}</b>${m.info.call === 'seed' ? 'seed house' : m.info.call} · ${m.info.rooms} rooms`
+    + (m.info.scores ? METRICS.map(([k, name, dp]) => ` · <span class="muted">${name.toLowerCase()}</span> ${(+m.info.scores[k]).toFixed(dp)}`).join('') : ''); // the four scores of the house shown
+});
+const RUNS = { 1: 'data_run1.json', 2: 'data.json' };
+let runNo = 2;
+async function loadRun(r) {
+  runNo = r; data = await (await fetch(RUNS[runNo], { cache: 'no-cache' })).json();
+  house = Object.keys(data.houses)[0]; chain = chainsOf(house)[0][0];
+  drawRuns(); drawHouses(); drawChains(); load();
+}
+function drawRuns() {
+  $('runs').innerHTML = '';
+  for (const r of [1, 2]) {
+    const b = document.createElement('button'); b.textContent = 'Run ' + r; b.title = r === 1 ? 'hallways allowed' : 'no hallways'; b.classList.toggle('on', r === runNo);
+    b.onclick = () => { if (r !== runNo) loadRun(r); }; $('runs').appendChild(b);
+  }
+}
+function drawMode() {
+  $('mode').innerHTML = '';
+  for (const [k, name] of [['inc', 'Incremental'], ['all', 'All-at-once'], ['both', 'Both']]) {
+    const b = document.createElement('button'); b.textContent = name; b.classList.toggle('on', k === mode || (k === 'inc' && mode === 'incremental'));
+    b.onclick = () => { mode = k === 'inc' ? 'incremental' : k; stop(); drawMode(); setStatic(n); ga = n; }; $('mode').appendChild(b);
+  }
+}
+function drawChains() {
+  $('chains').innerHTML = '';
+  for (const [key, name] of chainsOf(house)) {
+    const b = document.createElement('button'); b.textContent = name; b.title = key; b.classList.toggle('on', key === chain);
+    b.onclick = () => { chain = key; drawChains(); load(); }; $('chains').appendChild(b);
+  }
+}
+function drawHouses() {
+  $('houses').innerHTML = '';
+  for (const k of Object.keys(data.houses)) {
+    const b = document.createElement('button'); b.title = `House ${k}`; b.classList.toggle('on', k === house);
+    b.innerHTML = `<svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V20h14V9.5M10 20v-6h4v6"/></svg>${k}`;
+    b.onclick = () => { house = k; chain = chainsOf(k)[0][0]; drawHouses(); drawChains(); load(); }; $('houses').appendChild(b);
+  }
+}
+(async () => { drawMode(); await loadRun(runNo); })();
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-label: sonnet55-medium-h3-c1-all01   at 2026-10-25T19:32:52+00:00   commands: 108
+label: sonnet55-medium-h3-c3-all01   at 2026-10-25T19:32:52+00:00   commands: 108
 
 SCRIPT
 remove room R79

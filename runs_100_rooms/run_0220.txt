@@ -1,4 +1,4 @@
-label: sonnet55-medium-h4-c1-step14   at 2026-10-26T21:21:40+00:00   commands: 2
+label: sonnet55-medium-h4-c4-step14   at 2026-10-26T21:21:40+00:00   commands: 2
 
 SCRIPT
 room R900a bathroom M11

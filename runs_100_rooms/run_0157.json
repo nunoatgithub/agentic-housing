@@ -1,7 +1,7 @@
 {
   "run_id": "run_0157",
   "timestamp": "2026-10-25T19:41:20+00:00",
-  "label": "sonnet55-medium-h3-c1-step15",
+  "label": "sonnet55-medium-h3-c3-step15",
   "request": "add: bedroom",
   "hallways": true,
   "command_count": 7,

@@ -1,4 +1,4 @@
-label: sonnet55-medium-h2-c1-step13   at 2026-10-25T19:20:42+00:00   commands: 2
+label: sonnet55-medium-h2-c2-step13   at 2026-10-25T19:20:42+00:00   commands: 2
 
 SCRIPT
 room R91 bedroom M2
@@ -70,7 +70,7 @@ O
 
 
 
-corridor rooms    373
+corridor rooms    48
 privacy order     0.00
 walking distance  11.23
 compactness       16

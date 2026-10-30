@@ -1,0 +1,388 @@
+{
+  "run_id": "run_0259",
+  "timestamp": "2026-10-29T10:31:15+00:00",
+  "label": "gpt6luna-medium-h1-c5-all07",
+  "request": "add: bedroom x11, bathroom x12",
+  "hallways": false,
+  "command_count": 282,
+  "accepted": true,
+  "errors": [],
+  "script": "remove room R1\nremove room R2\nremove room R3\nremove room R6\nremove room R7\nremove room R8\nremove room R9\nremove room R10\nremove room R11\nremove room R12\nremove room R13\nremove room R14\nremove room R15\nremove room R16\nremove room R17\nremove room R18\nremove room R19\nremove room R20\nremove room R21\nremove room R22\nremove room R23\nremove room R24\nremove room R25\nremove room R26\nremove room R27\nremove room R28\nremove room R30\nremove room R31\nremove room R32\nremove room R33\nremove room R34\nremove room R35\nremove room R36\nremove room R37\nremove room R38\nremove room R39\nremove room R40\nremove room R41\nremove room R43\nremove room R44\nremove room R45\nremove room R46\nremove room R47\nremove room R48\nremove room R49\nremove room R50\nremove room R51\nremove room R52\nremove room R53\nremove room R54\nremove room R55\nremove room R56\nremove room R57\nremove room R58\nremove room R59\nremove room R60\nremove room R61\nremove room R62\nremove room R63\nremove room R64\nremove room R66\nremove room R67\nremove room R68\nremove room R69\nremove room R70\nremove room R71\nremove room R72\nremove room R73\nremove room R75\nremove room R76\nremove room R77\nremove room R78\nremove room R79\nremove room R80\nremove room R81\nremove room R82\nremove room R83\nroom R182 kitchen A1\nroom R183 living room A2\nroom R84 bedroom A3\nroom R85 bedroom A4\nroom R86 bedroom A5\nroom R87 bedroom A6\nroom R88 bedroom A7\nroom R89 bedroom A9\nroom R90 bedroom A10\nroom R91 bedroom A11\nroom R92 bedroom B1\nroom R93 bedroom B3\nroom R94 bedroom B4\nroom R95 bedroom B5\nroom R96 bedroom B6\nroom R97 bedroom B7\nroom R98 bedroom B8\nroom R99 bedroom B9\nroom R100 bedroom B10\nroom R101 bedroom C1\nroom R102 bedroom C2\nroom R103 bedroom C3\nroom R104 bedroom C4\nroom R105 bedroom C5\nroom R106 bedroom C6\nroom R107 bedroom C7\nroom R108 bedroom C8\nroom R109 bedroom C9\nroom R110 bedroom C10\nroom R111 bedroom C11\nroom R112 bedroom D1\nroom R113 bedroom D2\nroom R114 bedroom D3\nroom R115 bedroom D4\nroom R116 bedroom D5\nroom R117 bedroom D6\nroom R118 bedroom D7\nroom R119 bedroom D8\nroom R120 bedroom D9\nroom R121 bedroom D10\nroom R122 bedroom D11\nroom R123 bedroom E1\nroom R124 bedroom E2\nroom R125 bedroom E4\nroom R126 bedroom E5\nroom R127 bedroom E6\nroom R128 bedroom E7\nroom R129 bedroom E8\nroom R130 bedroom E9\nroom R131 bedroom E10\nroom R132 bedroom E11\nroom R133 bathroom F1\nroom R134 bathroom F2\nroom R135 bathroom F3\nroom R136 bathroom F4\nroom R137 bathroom F5\nroom R138 bathroom F6\nroom R139 bathroom F7\nroom R140 bathroom F8\nroom R141 bathroom F9\nroom R142 bathroom F10\nroom R143 bathroom F11\nroom R144 bathroom G1\nroom R145 bathroom G2\nroom R146 bathroom G3\nroom R147 bathroom G4\nroom R148 bathroom G5\nroom R149 bathroom G6\nroom R150 bathroom G7\nroom R151 bathroom G8\nroom R152 bathroom G9\nroom R153 bathroom G10\nroom R154 bathroom G11\nroom R155 bathroom H1\nroom R156 bathroom H2\nroom R157 bathroom H3\nroom R158 bathroom H4\nroom R159 bathroom H5\nroom R160 bathroom H6\nroom R161 bathroom H7\nroom R162 bathroom H8\nroom R163 bathroom H9\nroom R164 bathroom H10\nroom R165 bathroom H11\nroom R166 bathroom I1\nroom R167 bathroom I2\nroom R168 bathroom I4\nroom R169 bathroom I5\nroom R170 bathroom I6\nroom R171 bathroom I7\nroom R172 bathroom I8\nroom R173 bathroom I9\nroom R174 bathroom I10\nroom R175 bathroom I11\nroom R176 bathroom J1\nroom R177 bathroom J2\nroom R178 bathroom J3\nroom R179 bathroom J4\nroom R180 bathroom J5\nroom R181 bathroom J6\ndoor A2|north\ndoor A1|A2\ndoor A2|A3\ndoor A3|A4\ndoor A4|A5\ndoor A5|A6\ndoor A6|A7\ndoor A7|A8\ndoor A8|A9\ndoor A9|A10\ndoor A10|A11\ndoor A11|B11\ndoor B11|B10\ndoor B10|B9\ndoor B9|B8\ndoor B8|B7\ndoor B7|B6\ndoor B6|B5\ndoor B5|B4\ndoor B4|B3\ndoor B3|B2\ndoor B2|B1\ndoor B1|C1\ndoor C1|C2\ndoor C2|C3\ndoor C3|C4\ndoor C4|C5\ndoor C5|C6\ndoor C6|C7\ndoor C7|C8\ndoor C8|C9\ndoor C9|C10\ndoor C10|C11\ndoor C11|D11\ndoor D11|D10\ndoor D10|D9\ndoor D9|D8\ndoor D8|D7\ndoor D7|D6\ndoor D6|D5\ndoor D5|D4\ndoor D4|D3\ndoor D3|D2\ndoor D2|D1\ndoor D1|E1\ndoor E1|E2\ndoor E2|E3\ndoor E3|E4\ndoor E4|E5\ndoor E5|E6\ndoor E6|E7\ndoor E7|E8\ndoor E8|E9\ndoor E9|E10\ndoor E10|E11\ndoor E11|F11\ndoor F11|F10\ndoor F10|F9\ndoor F9|F8\ndoor F8|F7\ndoor F7|F6\ndoor F6|F5\ndoor F5|F4\ndoor F4|F3\ndoor F3|F2\ndoor F2|F1\ndoor F1|G1\ndoor G1|G2\ndoor G2|G3\ndoor G3|G4\ndoor G4|G5\ndoor G5|G6\ndoor G6|G7\ndoor G7|G8\ndoor G8|G9\ndoor G9|G10\ndoor G10|G11\ndoor G11|H11\ndoor H11|H10\ndoor H10|H9\ndoor H9|H8\ndoor H8|H7\ndoor H7|H6\ndoor H6|H5\ndoor H5|H4\ndoor H4|H3\ndoor H3|H2\ndoor H2|H1\ndoor H1|I1\ndoor I1|I2\ndoor I2|I3\ndoor I3|I4\ndoor I4|I5\ndoor I5|I6\ndoor I6|I7\ndoor I7|I8\ndoor I8|I9\ndoor I9|I10\ndoor I10|I11\ndoor I6|J6\ndoor J6|J5\ndoor J5|J4\ndoor J4|J3\ndoor J3|J2\ndoor J2|J1",
+  "layout": "grid 15x15\n     1    2    3    4    5    6    7    8    9    10   11   12   13   14   15\nA    R182 R183 R84  R85  R86  R87  R88  R42  R89  R90  R91  .    .    .    .\nB    R92  R5   R93  R94  R95  R96  R97  R98  R99  R100 R74  .    .    .    .\nC    R101 R102 R103 R104 R105 R106 R107 R108 R109 R110 R111 .    .    .    .\nD    R112 R113 R114 R115 R116 R117 R118 R119 R120 R121 R122 .    .    .    .\nE    R123 R124 R29  R125 R126 R127 R128 R129 R130 R131 R132 .    .    .    .\nF    R133 R134 R135 R136 R137 R138 R139 R140 R141 R142 R143 .    .    .    .\nG    R144 R145 R146 R147 R148 R149 R150 R151 R152 R153 R154 .    .    .    .\nH    R155 R156 R157 R158 R159 R160 R161 R162 R163 R164 R165 .    .    .    .\nI    R166 R167 R65  R168 R169 R170 R171 R172 R173 R174 R175 .    .    .    .\nJ    R176 R177 R178 R179 R180 R181 .    .    .    .    .    .    .    .    .\nK    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\nL    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\nM    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\nN    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\nO    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\n\nrooms\nR5   hallway       B2\nR29  hallway       E3\nR42  hallway       A8\nR65  hallway       I3\nR74  hallway       B11\nR84  bedroom       A3\nR85  bedroom       A4\nR86  bedroom       A5\nR87  bedroom       A6\nR88  bedroom       A7\nR89  bedroom       A9\nR90  bedroom       A10\nR91  bedroom       A11\nR92  bedroom       B1\nR93  bedroom       B3\nR94  bedroom       B4\nR95  bedroom       B5\nR96  bedroom       B6\nR97  bedroom       B7\nR98  bedroom       B8\nR99  bedroom       B9\nR100 bedroom       B10\nR101 bedroom       C1\nR102 bedroom       C2\nR103 bedroom       C3\nR104 bedroom       C4\nR105 bedroom       C5\nR106 bedroom       C6\nR107 bedroom       C7\nR108 bedroom       C8\nR109 bedroom       C9\nR110 bedroom       C10\nR111 bedroom       C11\nR112 bedroom       D1\nR113 bedroom       D2\nR114 bedroom       D3\nR115 bedroom       D4\nR116 bedroom       D5\nR117 bedroom       D6\nR118 bedroom       D7\nR119 bedroom       D8\nR120 bedroom       D9\nR121 bedroom       D10\nR122 bedroom       D11\nR123 bedroom       E1\nR124 bedroom       E2\nR125 bedroom       E4\nR126 bedroom       E5\nR127 bedroom       E6\nR128 bedroom       E7\nR129 bedroom       E8\nR130 bedroom       E9\nR131 bedroom       E10\nR132 bedroom       E11\nR133 bathroom      F1\nR134 bathroom      F2\nR135 bathroom      F3\nR136 bathroom      F4\nR137 bathroom      F5\nR138 bathroom      F6\nR139 bathroom      F7\nR140 bathroom      F8\nR141 bathroom      F9\nR142 bathroom      F10\nR143 bathroom      F11\nR144 bathroom      G1\nR145 bathroom      G2\nR146 bathroom      G3\nR147 bathroom      G4\nR148 bathroom      G5\nR149 bathroom      G6\nR150 bathroom      G7\nR151 bathroom      G8\nR152 bathroom      G9\nR153 bathroom      G10\nR154 bathroom      G11\nR155 bathroom      H1\nR156 bathroom      H2\nR157 bathroom      H3\nR158 bathroom      H4\nR159 bathroom      H5\nR160 bathroom      H6\nR161 bathroom      H7\nR162 bathroom      H8\nR163 bathroom      H9\nR164 bathroom      H10\nR165 bathroom      H11\nR166 bathroom      I1\nR167 bathroom      I2\nR168 bathroom      I4\nR169 bathroom      I5\nR170 bathroom      I6\nR171 bathroom      I7\nR172 bathroom      I8\nR173 bathroom      I9\nR174 bathroom      I10\nR175 bathroom      I11\nR176 bathroom      J1\nR177 bathroom      J2\nR178 bathroom      J3\nR179 bathroom      J4\nR180 bathroom      J5\nR181 bathroom      J6\nR182 kitchen       A1\nR183 living room   A2\n\ndoors\nA1|A2\nA2|north           entrance\nA2|A3\nA3|A4\nA4|A5\nA5|A6\nA6|A7\nA7|A8\nA8|A9\nA9|A10\nA10|A11\nA11|B11\nB1|B2\nB1|C1\nB2|B3\nB3|B4\nB4|B5\nB5|B6\nB6|B7\nB7|B8\nB8|B9\nB9|B10\nB10|B11\nC1|C2\nC2|C3\nC3|C4\nC4|C5\nC5|C6\nC6|C7\nC7|C8\nC8|C9\nC9|C10\nC10|C11\nC11|D11\nD1|D2\nD1|E1\nD2|D3\nD3|D4\nD4|D5\nD5|D6\nD6|D7\nD7|D8\nD8|D9\nD9|D10\nD10|D11\nE1|E2\nE2|E3\nE3|E4\nE4|E5\nE5|E6\nE6|E7\nE7|E8\nE8|E9\nE9|E10\nE10|E11\nE11|F11\nF1|F2\nF1|G1\nF2|F3\nF3|F4\nF4|F5\nF5|F6\nF6|F7\nF7|F8\nF8|F9\nF9|F10\nF10|F11\nG1|G2\nG2|G3\nG3|G4\nG4|G5\nG5|G6\nG6|G7\nG7|G8\nG8|G9\nG9|G10\nG10|G11\nG11|H11\nH1|H2\nH1|I1\nH2|H3\nH3|H4\nH4|H5\nH5|H6\nH6|H7\nH7|H8\nH8|H9\nH9|H10\nH10|H11\nI1|I2\nI2|I3\nI3|I4\nI4|I5\nI5|I6\nI6|I7\nI6|J6\nI7|I8\nI8|I9\nI9|I10\nI10|I11\nJ1|J2\nJ2|J3\nJ3|J4\nJ4|J5\nJ5|J6\n\nwindows",
+  "drawing": "run_0259\nVALID\n\n      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15\n  +-------+[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R182 |  R183 |  R84  |  R85  |  R86  |  R87  |  R88  |  R42  |  R89  |  R90  |  R91  |\nA |kitchen| living|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|bedroom|bedroom|bedroom|\n  |                                                                                       |\n  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+\n  |  R92  |   R5  |  R93  |  R94  |  R95  |  R96  |  R97  |  R98  |  R99  |  R100 |  R74  |\nB |bedroom|hallway|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|\n  |                                                                                       |\n  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R101 |  R102 |  R103 |  R104 |  R105 |  R106 |  R107 |  R108 |  R109 |  R110 |  R111 |\nC |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|\n  |                                                                                       |\n  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+\n  |  R112 |  R113 |  R114 |  R115 |  R116 |  R117 |  R118 |  R119 |  R120 |  R121 |  R122 |\nD |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|\n  |                                                                                       |\n  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R123 |  R124 |  R29  |  R125 |  R126 |  R127 |  R128 |  R129 |  R130 |  R131 |  R132 |\nE |bedroom|bedroom|hallway|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|\n  |                                                                                       |\n  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+\n  |  R133 |  R134 |  R135 |  R136 |  R137 |  R138 |  R139 |  R140 |  R141 |  R142 |  R143 |\nF |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |\n  |                                                                                       |\n  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R144 |  R145 |  R146 |  R147 |  R148 |  R149 |  R150 |  R151 |  R152 |  R153 |  R154 |\nG |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |\n  |                                                                                       |\n  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+\n  |  R155 |  R156 |  R157 |  R158 |  R159 |  R160 |  R161 |  R162 |  R163 |  R164 |  R165 |\nH |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |\n  |                                                                                       |\n  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R166 |  R167 |  R65  |  R168 |  R169 |  R170 |  R171 |  R172 |  R173 |  R174 |  R175 |\nI |  bath |  bath |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |\n  |                                                                                       |\n  +-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+\n  |  R176 |  R177 |  R178 |  R179 |  R180 |  R181 |\nJ |  bath |  bath |  bath |  bath |  bath |  bath |\n  |                                               |\n  +-------+-------+-------+-------+-------+-------+\n\nK\n\n\n\nL\n\n\n\nM\n\n\n\nN\n\n\n\nO\n\n\n\ncorridor rooms    4877\nprivacy order     0.00\nwalking distance  34.82\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": true,
+  "violations": [],
+  "scores": {
+    "corridor_rooms": 96,
+    "privacy_order": 0.0026,
+    "walking_distance": 34.8223,
+    "compactness": 0
+  },
+  "cost": 813,
+  "cut_off": false,
+  "agent_usage": {
+    "input_tokens": null,
+    "cache_creation_input_tokens": null,
+    "cache_read_input_tokens": null,
+    "output_tokens": null,
+    "thinking_tokens": null,
+    "cost_usd": null,
+    "duration_ms": null
+  },
+  "agent_cli": "github-copilot-cli",
+  "agent_version": "GitHub Copilot CLI 1.0.105.\nRun 'copilot update' to check for updates.",
+  "model": "gpt-6-luna",
+  "model_label": "gpt6luna",
+  "effort": "medium",
+  "agent_metadata": {
+    "copilot_usage_events": [
+      {
+        "type": "session.usage_checkpoint",
+        "data": {
+          "totalNanoAiu": 522359500,
+          "totalPremiumRequests": 1,
+          "modelCacheState": [
+            {
+              "modelId": "gpt-6-luna",
+              "cacheExpiresAt": "2026-10-29T10:59:50.199Z",
+              "cacheTtlSeconds": 1800
+            }
+          ],
+          "promptCacheBreakState": [
+            {
+              "conversation": "main",
+              "models": {
+                "gpt-6-luna": {
+                  "model": "gpt-6-luna",
+                  "vendor": "openai",
+                  "model_call_id": "LhKZ2roP/MD4iZpnlAla2fO5rBp8gvubwMfNjOFx11lEu7dopyr+kmNpyV5kiBUunBQsWJ++wK7TmeQo+yVhzIs29jVoWgvXXquwZW+JvWoKOAvrCaEFV+J7iEOzfr8hXPJNrTJoabimEfxQBFQ8M63GhQlx1R1yj1apg23WhWG/j6lVdcHkDScELG6HT9dQt0OmZj8Mbe6d2hR8Quf8K+izjCHs424bfJ0IFw05lghmwcrOfe7LqQ4OKs/SXQLZgwF4CQJSXBpwN3+LraCdjBKXbK1nFMYsJ7/PS+qMjV8TMPwCVfUGVlC3NzgPRjAiasXSvdNSHm+skI52PNbt1sQZt1bWai71KjCyxC7GEaA+zPTHu+RIKkXD22Ny46ZmbkMP0bXpIleckdICFTbZkd1M+raRvytBCdEp8kyi",
+                  "request_id": "EF70:3FA69:1BE34BA:1D576EC:6AE3201D",
+                  "github_request_id": "47d94739-2446-498d-9fee-42ac2a6fb259",
+                  "api_endpoint": "/responses",
+                  "transport": "http",
+                  "session_mode": "interactive",
+                  "reasoning_effort": "medium",
+                  "initiator": "user",
+                  "tool_count": 0,
+                  "tool_tokens": 0,
+                  "tools": [],
+                  "tools_truncated": 0,
+                  "system_segments": [
+                    {
+                      "segment": "customized_identity_preamble",
+                      "hash": "6770ae0b8f3f",
+                      "tokens": 17
+                    },
+                    {
+                      "segment": "interaction_mode",
+                      "hash": "4e74ea09c005",
+                      "tokens": 54
+                    },
+                    {
+                      "segment": "tone_and_style",
+                      "hash": "866a6130c416",
+                      "tokens": 227
+                    },
+                    {
+                      "segment": "search_and_delegation",
+                      "hash": "0b5fcf95abcd",
+                      "tokens": 62
+                    },
+                    {
+                      "segment": "tool_efficiency",
+                      "hash": "d104da1d3cfc",
+                      "tokens": 132
+                    },
+                    {
+                      "segment": "version_information",
+                      "hash": "9082bee48598",
+                      "tokens": 17
+                    },
+                    {
+                      "segment": "model_information",
+                      "hash": "c04a8aa6c7c6",
+                      "tokens": 82
+                    },
+                    {
+                      "segment": "environment_context",
+                      "hash": "da01f6dfffd7",
+                      "tokens": 67
+                    },
+                    {
+                      "segment": "identity_task_instructions",
+                      "hash": "adb5ce208724",
+                      "tokens": 11
+                    },
+                    {
+                      "segment": "code_change_instructions",
+                      "hash": "37b5524859ba",
+                      "tokens": 461
+                    },
+                    {
+                      "segment": "dynamic_guidelines",
+                      "hash": "b41ed4d2e2eb",
+                      "tokens": 82
+                    },
+                    {
+                      "segment": "environment_limitations",
+                      "hash": "8cf9cbce1516",
+                      "tokens": 244
+                    },
+                    {
+                      "segment": "tool_intro",
+                      "hash": "2c07d9f78963",
+                      "tokens": 20
+                    },
+                    {
+                      "segment": "tool_instructions",
+                      "hash": "7789371f54e8",
+                      "tokens": 94
+                    },
+                    {
+                      "segment": "system_notifications",
+                      "hash": "06e72cdc5231",
+                      "tokens": 86
+                    },
+                    {
+                      "segment": "host_additional_instructions",
+                      "hash": "f22cacb5f16b",
+                      "tokens": 930
+                    },
+                    {
+                      "segment": "workspace_context",
+                      "hash": "3f7a0feb0563",
+                      "tokens": 82
+                    },
+                    {
+                      "segment": "git_commit_trailer",
+                      "hash": "1d737bc1da62",
+                      "tokens": 67
+                    },
+                    {
+                      "segment": "final_instructions",
+                      "hash": "e975ea69835e",
+                      "tokens": 148
+                    }
+                  ],
+                  "conversation": {
+                    "message_count": 1,
+                    "points": [
+                      {
+                        "index": 0,
+                        "hash": "8b2728aac2ac"
+                      }
+                    ]
+                  },
+                  "cache_config": {
+                    "arm": "hybrid",
+                    "marks_system_prompt": true,
+                    "marks_conversation": false,
+                    "advisor_tool": false,
+                    "incremental_input": false,
+                    "system_prompt_layout": "legacy"
+                  },
+                  "prompt_tokens": 5710,
+                  "cache_read": 1292,
+                  "cache_write": 4415,
+                  "cache_details_reported": true,
+                  "frontier_tokens": 5707,
+                  "frontier_source": "reported_writes",
+                  "ttl_seconds": 1800,
+                  "cache_expires_at": "2026-10-29T10:59:50.199Z",
+                  "completed_at": "2026-10-29T10:31:14.231Z"
+                }
+              },
+              "lastActiveModel": "gpt-6-luna",
+              "pendingRewriteSources": []
+            }
+          ],
+          "accountingSnapshot": {
+            "totalPremiumRequestCost": 1,
+            "totalUserRequests": 1,
+            "totalNanoAiu": 522359500,
+            "aiCreditsStatus": "complete",
+            "tokenDetails": {
+              "input": {
+                "tokenCount": 3
+              },
+              "cache_read": {
+                "tokenCount": 1292
+              },
+              "cache_write": {
+                "tokenCount": 4415
+              },
+              "output": {
+                "tokenCount": 9317
+              }
+            },
+            "totalApiDurationMs": 84032,
+            "sessionStartTime": "2026-10-29T10:29:49.217Z",
+            "codeChanges": {
+              "linesAdded": 0,
+              "linesRemoved": 0,
+              "filesModifiedCount": 0,
+              "filesModified": []
+            },
+            "modelMetrics": {
+              "gpt-6-luna": {
+                "requests": {
+                  "count": 1,
+                  "cost": 1
+                },
+                "usage": {
+                  "inputTokens": 5710,
+                  "outputTokens": 9317,
+                  "cacheReadTokens": 1292,
+                  "cacheWriteTokens": 4415,
+                  "reasoningTokens": 7492
+                },
+                "cacheExpiresAt": "2026-10-29T10:59:50.199Z",
+                "totalNanoAiu": 522359500,
+                "aiCreditsStatus": "complete",
+                "tokenDetails": {
+                  "input": {
+                    "tokenCount": 3
+                  },
+                  "cache_read": {
+                    "tokenCount": 1292
+                  },
+                  "cache_write": {
+                    "tokenCount": 4415
+                  },
+                  "output": {
+                    "tokenCount": 9317
+                  }
+                }
+              }
+            },
+            "agentMetrics": {
+              "main": {
+                "totalApiDurationMs": 84032,
+                "totalNanoAiu": 522359500,
+                "modelMetrics": {
+                  "gpt-6-luna": {
+                    "requests": {
+                      "count": 1,
+                      "cost": 1
+                    },
+                    "usage": {
+                      "inputTokens": 5710,
+                      "outputTokens": 9317,
+                      "cacheReadTokens": 1292,
+                      "cacheWriteTokens": 4415,
+                      "reasoningTokens": 7492
+                    },
+                    "totalNanoAiu": 522359500,
+                    "tokenDetails": {
+                      "input": {
+                        "tokenCount": 3
+                      },
+                      "cache_read": {
+                        "tokenCount": 1292
+                      },
+                      "cache_write": {
+                        "tokenCount": 4415
+                      },
+                      "output": {
+                        "tokenCount": 9317
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "providerModelMetrics": [
+              {
+                "provider": {
+                  "id": "copilot",
+                  "label": "GitHub Copilot",
+                  "kind": "copilot"
+                },
+                "modelId": "gpt-6-luna",
+                "metrics": {
+                  "requests": {
+                    "count": 1,
+                    "cost": 1
+                  },
+                  "usage": {
+                    "inputTokens": 5710,
+                    "outputTokens": 9317,
+                    "cacheReadTokens": 1292,
+                    "cacheWriteTokens": 4415,
+                    "reasoningTokens": 7492
+                  },
+                  "totalNanoAiu": 522359500,
+                  "aiCreditsStatus": "complete",
+                  "tokenDetails": {
+                    "input": {
+                      "tokenCount": 3
+                    },
+                    "cache_read": {
+                      "tokenCount": 1292
+                    },
+                    "cache_write": {
+                      "tokenCount": 4415
+                    },
+                    "output": {
+                      "tokenCount": 9317
+                    }
+                  }
+                },
+                "modelDisplayName": "GPT-6 Luna"
+              }
+            ],
+            "currentModel": "gpt-6-luna",
+            "lastCallInputTokens": 5710,
+            "lastCallOutputTokens": 9317
+          },
+          "providerModelMetrics": [
+            {
+              "provider": {
+                "id": "copilot",
+                "label": "GitHub Copilot",
+                "kind": "copilot"
+              },
+              "modelId": "gpt-6-luna",
+              "metrics": {
+                "requests": {
+                  "count": 1,
+                  "cost": 1
+                },
+                "usage": {
+                  "inputTokens": 5710,
+                  "outputTokens": 9317,
+                  "cacheReadTokens": 1292,
+                  "cacheWriteTokens": 4415,
+                  "reasoningTokens": 7492
+                },
+                "totalNanoAiu": 522359500,
+                "aiCreditsStatus": "complete",
+                "tokenDetails": {
+                  "input": {
+                    "tokenCount": 3
+                  },
+                  "cache_read": {
+                    "tokenCount": 1292
+                  },
+                  "cache_write": {
+                    "tokenCount": 4415
+                  },
+                  "output": {
+                    "tokenCount": 9317
+                  }
+                }
+              },
+              "modelDisplayName": "GPT-6 Luna"
+            }
+          ],
+          "usageAccountingWatermarks": {
+            "da30cecd-163d-44f2-b9d7-79fd83a33ca3": 1
+          }
+        },
+        "id": "127bbf42-bc4f-4010-85b1-67a1b67e9254",
+        "timestamp": "2026-10-29T10:31:14.344Z",
+        "parentId": "e6530e93-038f-4f24-bf71-8af68ecf4d87"
+      }
+    ]
+  }
+}

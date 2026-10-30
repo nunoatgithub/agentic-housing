@@ -16,7 +16,7 @@ import sys
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Dict, Optional, Sequence, Union
+from typing import Any, Callable, Dict, Optional, Sequence, Union
 
 from . import experiment
 from .experiment import EFFORT, MODEL, Label, attach_usage, load_runs, request_for, send
@@ -32,8 +32,9 @@ CUT_OFF = "output token maximum"     # in Claude Code's error when a reply goes 
 @dataclass
 class Reply:
     text: str
-    usage: Dict[str, float]     # tokens and cost of this one agent call
+    usage: Dict[str, Any]       # tokens and cost, when the agent reports them
     cut_off: bool = False       # the reply went over MAX_OUTPUT_TOKENS, so there is no text
+    metadata: Optional[Dict[str, Any]] = None
 
 
 def parse_claude_output(stdout: str) -> Reply:

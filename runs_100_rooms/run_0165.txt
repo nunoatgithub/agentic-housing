@@ -1,4 +1,4 @@
-label: sonnet55-medium-h3-c1-all17   at 2026-10-25T20:03:49+00:00   commands: 60
+label: sonnet55-medium-h3-c3-all17   at 2026-10-25T20:03:49+00:00   commands: 60
 
 SCRIPT
 room R701 hallway O1
@@ -128,7 +128,7 @@ O |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallw
   |                                                                                                                       |
   +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
 
-corridor rooms    13
+corridor rooms    11
 privacy order     0.01
 walking distance  12.15
 compactness       42

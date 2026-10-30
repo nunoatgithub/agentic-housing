@@ -1,4 +1,4 @@
-label: sonnet55-medium-h3-c1-step21   at 2026-10-25T20:06:55+00:00   commands: 5
+label: sonnet55-medium-h3-c3-step21   at 2026-10-25T20:06:55+00:00   commands: 5
 
 SCRIPT
 remove room R120

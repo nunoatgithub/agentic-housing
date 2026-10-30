@@ -75,7 +75,7 @@ def test_side_by_side_aligns_and_fits_89_columns_for_two():
     lines = text.splitlines()
     assert lines[0].split() == ["example", "chain"]
     row = next(l for l in lines if l.startswith("corridor"))
-    assert row.startswith("corridor rooms    0") and row.count("corridor rooms") == 2 and row.rstrip().endswith("6")
+    assert row.startswith("corridor rooms    0") and row.count("corridor rooms") == 2 and row.rstrip().endswith("3")
 
 
 def test_three_side_by_side():

@@ -1,4 +1,4 @@
-label: sonnet55-medium-h3-c1-step19   at 2026-10-25T20:04:36+00:00   commands: 2
+label: sonnet55-medium-h3-c3-step19   at 2026-10-25T20:04:36+00:00   commands: 2
 
 SCRIPT
 room R701 bedroom O11
@@ -70,7 +70,7 @@ O                                                                               
                                                                                   |       |       |
                                                                                   +-------+-------+
 
-corridor rooms    14
+corridor rooms    12
 privacy order     0.01
 walking distance  9.50
 compactness       26

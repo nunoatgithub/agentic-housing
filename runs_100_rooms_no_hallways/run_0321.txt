@@ -1,0 +1,356 @@
+label: gpt6luna-medium-h2-c6-all05   at 2026-10-29T13:09:08+00:00   commands: 280
+
+SCRIPT
+remove room R1
+remove room R2
+remove room R3
+remove room R4
+remove room R5
+remove room R6
+remove room R7
+remove room R8
+remove room R9
+remove room R10
+remove room R11
+remove room R12
+remove room R13
+remove room R14
+remove room R15
+remove room R16
+remove room R17
+remove room R18
+remove room R19
+remove room R20
+remove room R21
+remove room R22
+remove room R23
+remove room R24
+remove room R25
+remove room R26
+remove room R27
+remove room R28
+remove room R29
+remove room R30
+remove room R31
+remove room R32
+remove room R33
+remove room R34
+remove room R35
+remove room R36
+remove room R37
+remove room R38
+remove room R39
+remove room R40
+remove room R41
+remove room R42
+remove room R43
+remove room R44
+remove room R45
+remove room R46
+remove room R47
+remove room R48
+remove room R49
+remove room R50
+remove room R51
+remove room R52
+remove room R53
+remove room R54
+remove room R55
+remove room R56
+remove room R57
+remove room R58
+remove room R59
+remove room R60
+remove room R61
+remove room R62
+remove room R63
+remove room R64
+remove room R65
+remove room R66
+remove room R67
+remove room R68
+remove room R69
+remove room R70
+remove room R71
+remove room R72
+remove room R73
+remove room R74
+remove room R75
+remove room R76
+remove room R77
+remove room R78
+remove room R79
+remove room R80
+room R81 living room A1
+room R82 kitchen A2
+room R83 bedroom A3
+room R84 bathroom A4
+room R85 bedroom A5
+room R86 bathroom A6
+room R87 bedroom A7
+room R88 bathroom A8
+room R89 bedroom A9
+room R90 bathroom A10
+room R91 bathroom B1
+room R92 bedroom B2
+room R93 bathroom B3
+room R94 bedroom B4
+room R95 bathroom B5
+room R96 bedroom B6
+room R97 bathroom B7
+room R98 bedroom B8
+room R99 bathroom B9
+room R100 bedroom B10
+room R101 bedroom C1
+room R102 bathroom C2
+room R103 bedroom C3
+room R104 bathroom C4
+room R105 bedroom C5
+room R106 bathroom C6
+room R107 bedroom C7
+room R108 bathroom C8
+room R109 bedroom C9
+room R110 bathroom C10
+room R111 bathroom D1
+room R112 bedroom D2
+room R113 bathroom D3
+room R114 bedroom D4
+room R115 bathroom D5
+room R116 bedroom D6
+room R117 bathroom D7
+room R118 bedroom D8
+room R119 bathroom D9
+room R120 bedroom D10
+room R121 bedroom E1
+room R122 bathroom E2
+room R123 bedroom E3
+room R124 bathroom E4
+room R125 bedroom E5
+room R126 bathroom E6
+room R127 bedroom E7
+room R128 bathroom E8
+room R129 bedroom E9
+room R130 bathroom E10
+room R131 bathroom F1
+room R132 bedroom F2
+room R133 bathroom F3
+room R134 bedroom F4
+room R135 bathroom F5
+room R136 bedroom F6
+room R137 bathroom F7
+room R138 bedroom F8
+room R139 bathroom F9
+room R140 bedroom F10
+room R141 bedroom G1
+room R142 bathroom G2
+room R143 bedroom G3
+room R144 bathroom G4
+room R145 bedroom G5
+room R146 bathroom G6
+room R147 bedroom G7
+room R148 bathroom G8
+room R149 bedroom G9
+room R150 bathroom G10
+room R151 bathroom H1
+room R152 bedroom H2
+room R153 bathroom H3
+room R154 bedroom H4
+room R155 bathroom H5
+room R156 bedroom H6
+room R157 bathroom H7
+room R158 bedroom H8
+room R159 bathroom H9
+room R160 bedroom H10
+room R161 bedroom I1
+room R162 bathroom I2
+room R163 bedroom I3
+room R164 bathroom I4
+room R165 bedroom I5
+room R166 bathroom I6
+room R167 bedroom I7
+room R168 bathroom I8
+room R169 bedroom I9
+room R170 bathroom I10
+room R171 bathroom J1
+room R172 bedroom J2
+room R173 bathroom J3
+room R174 bedroom J4
+room R175 bathroom J5
+room R176 bedroom J6
+room R177 bathroom J7
+room R178 bedroom J8
+room R179 bathroom J9
+room R180 bedroom J10
+door A1|north entrance
+door A1|A2
+door A2|A3
+door A3|A4
+door A4|A5
+door A5|A6
+door A6|A7
+door A7|A8
+door A8|A9
+door A9|A10
+door A10|B10
+door B9|B10
+door B8|B9
+door B7|B8
+door B6|B7
+door B5|B6
+door B4|B5
+door B3|B4
+door B2|B3
+door B1|B2
+door B1|C1
+door C1|C2
+door C2|C3
+door C3|C4
+door C4|C5
+door C5|C6
+door C6|C7
+door C7|C8
+door C8|C9
+door C9|C10
+door C10|D10
+door D9|D10
+door D8|D9
+door D7|D8
+door D6|D7
+door D5|D6
+door D4|D5
+door D3|D4
+door D2|D3
+door D1|D2
+door D1|E1
+door E1|E2
+door E2|E3
+door E3|E4
+door E4|E5
+door E5|E6
+door E6|E7
+door E7|E8
+door E8|E9
+door E9|E10
+door E10|F10
+door F9|F10
+door F8|F9
+door F7|F8
+door F6|F7
+door F5|F6
+door F4|F5
+door F3|F4
+door F2|F3
+door F1|F2
+door F1|G1
+door G1|G2
+door G2|G3
+door G3|G4
+door G4|G5
+door G5|G6
+door G6|G7
+door G7|G8
+door G8|G9
+door G9|G10
+door G10|H10
+door H9|H10
+door H8|H9
+door H7|H8
+door H6|H7
+door H5|H6
+door H4|H5
+door H3|H4
+door H2|H3
+door H1|H2
+door H1|I1
+door I1|I2
+door I2|I3
+door I3|I4
+door I4|I5
+door I5|I6
+door I6|I7
+door I7|I8
+door I8|I9
+door I9|I10
+door I10|J10
+door J9|J10
+door J8|J9
+door J7|J8
+door J6|J7
+door J5|J6
+door J4|J5
+door J3|J4
+door J2|J3
+door J1|J2
+
+run_0321
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |   R2  |   R1  |   R3  |   R5  |  R10  |  R13  |  R39  |  R48  |  R50  |  R53  |  R73  |  R78  |
+A |kitchen| living|hallway|bedroom|bedroom|  bath |  bath |bedroom|bedroom|  bath |  bath |bedroom|
+  |                                                                                               |
+  +-[   ]-+-[   ]-+-[   ]-+-------+-------+-------+-------+-------+-[   ]-+-[   ]-+-------+-[   ]-+
+  |   R8  |   R4  |   R6  |   R7  |  R11  |  R41  |  R36  |  R46  |  R52  |  R65  |  R71  |  R79  |
+B |bedroom|  bath |bedroom|  bath |  bath |  bath |bedroom|bedroom|bedroom|bedroom|  bath |  bath |
+  |       |       |                               |               |       |               |       |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-------+-------+-[   ]-+-------+-------+-------+-------+-------+
+  |  R14  |  R12  |   R9  |  R18  |  R15  |  R26  |  R32  |  R40  |  R74  |  R77  |
+C |bedroom|bedroom|  bath |hallway|  bath |  bath |bedroom|bedroom|bedroom|  bath |
+  |               |                                                               |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-------+-------+-------+
+  |  R20  |  R16  |  R22  |  R19  |  R23  |  R29  |  R38  |  R56  |  R58  |
+D |  bath |bedroom|  bath |bedroom|bedroom|  bath |bedroom|bedroom|bedroom|
+  |               |       |               |       |                       |
+  +-------+-[   ]-+-------+-[   ]-+-------+-------+-------+-------+-------+
+  |  R25  |  R27  |  R17  |  R21  |  R24  |  R45  |  R59  |  R63  |
+E |bedroom|hallway|  bath |bedroom|  bath |  bath |  bath |bedroom|
+  |                       |                                       |
+  +-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-------+-------+
+  |  R31  |  R28  |  R30  |  R35  |  R43  |  R47  |
+F |  bath |bedroom|bedroom|  bath |  bath |  bath |
+  |       |               |       |       |       |
+  +-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-------+
+  |  R34  |  R33  |  R37  |  R57  |  R44  |  R64  |
+G |bedroom|  bath |  bath |  bath |bedroom|  bath |
+  |       |               |       |               |
+  +-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+
+  |  R42  |  R51  |  R49  |       |  R72  |
+H |bedroom|  bath |  bath |       |bedroom|
+  |       |       |       |       |       |
+  +-------+-[   ]-+-[   ]-+-------+-------+
+  |  R61  |  R60  |  R54  |  R69  |
+I |bedroom|hallway|bedroom|  bath |
+  |                               |
+  +-------+-[   ]-+-[   ]-+-------+
+  |  R62  |  R55  |  R67  |  R66  |
+J |  bath |  bath |hallway|  bath |
+  |                               |
+  +-[   ]-+-[   ]-+-[   ]-+-------+
+  |  R75  |  R70  |  R68  |
+K |  bath |bedroom|bedroom|
+  |       |       |       |
+  +-[   ]-+-------+-------+
+  |  R76  |
+L |bedroom|
+  |       |
+  +-[   ]-+
+  |  R80  |
+M |bedroom|
+  |       |
+  +-------+
+
+N
+
+
+
+O
+
+
+
+corridor rooms    316
+privacy order     0.00
+walking distance  10.43
+compactness       18
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

@@ -1,4 +1,4 @@
-label: sonnet55-medium-h2-c1-all19   at 2026-10-25T19:23:38+00:00   commands: 40
+label: sonnet55-medium-h2-c2-all19   at 2026-10-25T19:23:38+00:00   commands: 40
 
 SCRIPT
 room R98 hallway N2
@@ -108,7 +108,7 @@ O         |bedroom|bedroom|bedroom|bedroom|bedroom|  bath |  bath |  bath |  bat
           |       |       |       |       |       |       |       |       |       |
           +-------+-------+-------+-------+-------+-------+-------+-------+-------+
 
-corridor rooms    579
+corridor rooms    52
 privacy order     0.00
 walking distance  13.37
 compactness       30

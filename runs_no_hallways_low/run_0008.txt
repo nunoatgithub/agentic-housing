@@ -32,7 +32,7 @@ E
 
 
 
-corridor rooms    12
+corridor rooms    7
 privacy order     0.06
 walking distance  3.35
 compactness       0

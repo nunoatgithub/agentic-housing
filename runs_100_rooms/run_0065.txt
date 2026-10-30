@@ -1,4 +1,4 @@
-label: sonnet55-medium-h2-c1-all00   at 2026-10-25T19:13:37+00:00   commands: 101
+label: sonnet55-medium-h2-c2-all00   at 2026-10-25T19:13:37+00:00   commands: 101
 
 SCRIPT
 remove room R68
@@ -169,7 +169,7 @@ O
 
 
 
-corridor rooms    521
+corridor rooms    39
 privacy order     0.00
 walking distance  14.91
 compactness       34

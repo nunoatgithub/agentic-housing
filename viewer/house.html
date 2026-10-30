@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>House growth – drawing view</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+<style>
+  :root { --ink:#1b1e27; --mut:rgba(27,30,39,.6); --accent:#3b6cff; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#e8e8e8; color:var(--ink);
+    font:13px/1.4 "Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  canvas { display:block; }
+  .panel { position:absolute; padding:14px 16px; border-radius:18px;
+    background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.6));
+    backdrop-filter:blur(22px) saturate(170%); -webkit-backdrop-filter:blur(22px) saturate(170%);
+    border:1px solid rgba(0,0,0,.12);
+    box-shadow:0 10px 34px rgba(30,50,100,.16), inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(120,140,190,.12); }
+  #info { display:flex; align-items:baseline; gap:10px; flex:none; font-size:11px; white-space:nowrap; }
+  #bar { left:50%; bottom:18px; transform:translateX(-50%); width:fit-content; max-width:calc(100% - 40px); box-sizing:border-box; padding:8px 14px; display:flex; flex-wrap:nowrap; align-items:center; gap:18px; }
+  #bar .row { margin:0; flex:none; gap:6px; }
+  #bar .row input[type=range] { width:90px; flex:none; }
+  #houses { left:50%; top:14px; transform:translateX(-50%); display:flex; gap:8px; padding:6px 10px; }
+  #houses button { display:flex; align-items:center; gap:6px; padding:5px 12px; }
+  #houses button svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linejoin:round; stroke-linecap:round; }
+  #houses button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  #chains { left:50%; top:66px; transform:translateX(-50%); display:flex; flex-wrap:wrap; justify-content:center; gap:6px; padding:5px 8px; max-width:calc(100% - 40px); }
+  #chains button { padding:3px 10px; font-size:12px; }
+  #chains button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  body.embed #bar, body.embed #houses, body.embed #chains, body.embed #tip { display:none !important; }
+  #source, #request { display:none; }
+  #bar #scrub { flex:none; width:200px; }
+  #info h1 { margin:0; font:600 10px/1 inherit; letter-spacing:.16em; text-transform:uppercase; color:var(--mut); }
+  #info .big { font-size:14px; font-weight:600; }
+  .muted { color:var(--mut); }
+  .row { display:flex; align-items:center; gap:10px; margin:6px 0; }
+  .row label { width:58px; color:var(--mut); flex:none; font-size:12px; }
+  input[type=range] { -webkit-appearance:none; appearance:none; flex:1; min-width:60px; height:4px; border-radius:4px; background:rgba(0,0,0,.18); outline:none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:#fff; border:1px solid rgba(22,33,58,.12); box-shadow:0 2px 8px rgba(22,33,58,.3); cursor:pointer; }
+  input[type=range]::-moz-range-thumb { width:16px; height:16px; border-radius:50%; background:#fff; border:1px solid rgba(22,33,58,.12); box-shadow:0 2px 8px rgba(22,33,58,.3); cursor:pointer; }
+  input[type=checkbox] { accent-color:var(--accent); width:16px; height:16px; }
+  button, select { font:inherit; color:var(--ink); cursor:pointer; padding:6px 13px; border-radius:999px;
+    background:rgba(0,0,0,.05); border:1px solid rgba(0,0,0,.18); box-shadow:none;
+    transition:background .15s, transform .1s; }
+  button:hover, select:hover { background:rgba(0,0,0,.12); }
+  button:active { transform:scale(.96); }
+  button.primary { background:var(--accent); color:#fff; border-color:rgba(255,255,255,.4); min-width:84px; font-weight:600; box-shadow:0 4px 14px rgba(59,108,255,.4); }
+  button.primary:hover { background:#2f5de8; }
+  .val { width:52px; text-align:right; color:var(--mut); flex:none; font-variant-numeric:tabular-nums; }
+  #tip { position:absolute; pointer-events:none; display:none; padding:4px 10px; font-size:12px; border-radius:10px;
+    background:rgba(255,255,255,.7); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,.9); box-shadow:0 4px 14px rgba(30,50,100,.18); }
+</style>
+</head>
+<body>
+<div id="cam" hidden>
+  <div class="row"><label>Zoom</label><input id="zoom" type="range" min="0" max="1000" step="1"></div>
+  <div class="row"><label>Rotate</label><input id="rot" type="range" min="-180" max="180" step="1"></div>
+  <div class="row"><label>Tilt</label><input id="tilt" type="range" min="3" max="90" step="1"></div>
+</div>
+
+<div id="houses" class="panel"></div>
+<div id="chains" class="panel"></div>
+<div id="bar" class="panel">
+  <div id="info">
+    <span class="big" id="call">–</span>
+    <span id="stats"></span><span class="muted" id="request"></span><span class="muted" id="source"></span>
+  </div>
+  <div class="row">
+    <select id="house" title="Choose the house to observe" style="display:none"></select>
+    <button id="first" title="Back to seed">⏮</button>
+    <button id="back" title="Previous step (←)">◀</button>
+    <button id="play" class="primary" title="Play / pause (space)">▶ Play</button>
+    <button id="fwd" title="Next step (→)">▶</button>
+    <button id="last" title="Jump to end">⏭</button>
+    <label style="width:auto;margin-left:10px">Speed</label>
+    <input id="speed" type="range" min="-2" max="5" step="0.1" value="1" >
+    <span class="val" id="speedVal"></span>
+  </div>
+  <input id="scrub" type="range" min="0" max="0" step="1" value="0">
+</div>
+<div id="tip"></div>
+<script type="module" src="./sketch.js?v=156"></script>
+</body>
+</html>

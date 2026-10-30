@@ -1,4 +1,4 @@
-label: sonnet55-medium-h3-c1-all25   at 2026-10-26T21:03:24+00:00   commands: 16
+label: sonnet55-medium-h3-c3-all25   at 2026-10-26T21:03:24+00:00   commands: 16
 
 SCRIPT
 room R3001 hallway L3
@@ -84,7 +84,7 @@ O                                                                               
                                                                                   |       |       |       |
                                                                                   +-------+-------+-------+
 
-corridor rooms    16
+corridor rooms    14
 privacy order     0.01
 walking distance  10.61
 compactness       24
