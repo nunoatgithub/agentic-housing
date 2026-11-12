@@ -62,6 +62,7 @@ def main() -> None:
         frame = {"label": d["run_id"], "tag": d["label"], "call": m[2], "request": d.get("request", ""), "scores": d.get("scores"), **parse_layout(d["layout"])}
         houses.setdefault(int(m[1]), []).append(frame)
 
+    houses = {k: v for k, v in houses.items() if len(v) > 1}   # a house with no agent call yet (a run still going) is left out
     out = {"source": runs.name, "grid": 15, "houses": {str(k): v for k, v in sorted(houses.items())}}
     Path(args.out).write_text(json.dumps(out, separators=(",", ":")))
     for k, v in sorted(houses.items()):

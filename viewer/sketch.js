@@ -170,7 +170,8 @@ const wallMat = new THREE.ShaderMaterial({
 });
 
 // room wash: watercolour that blooms outward from the centre, pooling at the edges
-const WASH = { bedroom: '#ff2d55', bathroom: '#1e90ff', kitchen: '#ffd60a', living: '#ff8a00', hallway: '#000000' };
+const WASH = { bedroom: '#ff2d55', bathroom: '#1e90ff', kitchen: '#ffd60a', living: '#b7e4c7', hallway: '#000000' };
+const LIVING_MAT = { mix: 0, opacity: 0.58, roughness: 0.06, metalness: 0, clearcoat: 1, envMapIntensity: 3, emissiveIntensity: 0.3 };
 const washProto = new THREE.ShaderMaterial({
   transparent: true, depthWrite: false,
   uniforms: { uColor: { value: new THREE.Color() }, uProg: { value: 1 }, uSeed: { value: 0 } },
@@ -356,11 +357,14 @@ function getRoom(r) {
     const PH = 0.28;
     mat.visible = false; // wash only serves as the picking target
     furn.visible = false;
+    const living = r.type === 'living';
     const slabMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(WASH[r.type] || '#ddd').lerp(new THREE.Color('#ffffff'), 0.8), emissive: new THREE.Color('#ffffff'), emissiveIntensity: 0.3, roughness: 0.06, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.01, ior: 1.5, reflectivity: 0.9,
-      specularIntensity: 0.6, envMapIntensity: 1.1, transparent: true, opacity: 0, depthWrite: false,
+      color: new THREE.Color(WASH[r.type] || '#ddd').lerp(new THREE.Color('#ffffff'), living ? LIVING_MAT.mix : 0.8), emissive: new THREE.Color('#ffffff'),
+      emissiveIntensity: living ? LIVING_MAT.emissiveIntensity : 0.3, roughness: living ? LIVING_MAT.roughness : 0.06,
+      metalness: living ? LIVING_MAT.metalness : 0, clearcoat: living ? LIVING_MAT.clearcoat : 1, clearcoatRoughness: 0.01, ior: 1.5, reflectivity: 0.9,
+      specularIntensity: 0.6, envMapIntensity: living ? LIVING_MAT.envMapIntensity : 1.1, transparent: true, opacity: 0, depthWrite: false,
     });
-    slabMat.userData.base = 0.42;
+    slabMat.userData.base = living ? LIVING_MAT.opacity : 0.42;
     const outline = (h, rr) => { const p = new THREE.Path();
       p.moveTo(-h + rr, -h); p.lineTo(h - rr, -h); p.absarc(h - rr, -h + rr, rr, -Math.PI / 2, 0, false);
       p.lineTo(h, h - rr); p.absarc(h - rr, h - rr, rr, 0, Math.PI / 2, false);

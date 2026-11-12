@@ -3,6 +3,10 @@
     python -m house.run_100_rooms [--runs runs_100_rooms]
     python -m house.run_100_rooms --runs runs_100_rooms_no_hallways --no-hallways [--house 3 [--chain 11]]
     python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor
+    python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor --agent deepseek --effort low --house 1 --chain 5
+    python -m house.run_100_rooms --refactor --cost
+    python -m house.run_100_rooms --cost
+    python -m house.run_100_rooms --cost --agent deepseek --effort low --house 1 --chain 1
 
 A run holds one or more chains per seed house; the chain number is separate from the house number and defaults to
 it. Each start runs the chain of the house given, or else the next one that is
@@ -16,6 +20,7 @@ allK adds every room still missing, in one request, to the house left by step K 
 Every call is labelled <model>-<effort>-h<house>-c<chain>-<call>, e.g. sonnet55-medium-h2-c10-step01.
 With --no-hallways no hallway can be built (the seed houses keep theirs, and agents may remove them); the prompt says so.
 With --refactor the prompt asks every agent, just before the request, to reorganise the house before adding to it.
+With --cost the prompt prices every command, as in the priced 5x5 runs; with --refactor too, it asks both.
 
 A failed call (script rejected, house invalid, reply cut off) is tried again with a fresh agent, up to 3 tries.
 If a one-room step still fails, the chain stops there. Every call of a chain must use the same CLI version.
@@ -34,6 +39,7 @@ from typing import Callable, List, Optional, Sequence, Tuple
 
 from .experiment import EFFORT, MODEL, load_runs
 from .copilot_agent import ask_copilot, copilot_cli_version
+from .deepseek_agent import ADAPTER_VERSION, ask_deepseek
 from .interpreter import RunResult, ScriptError, run_script
 from .layout_format import parse_layout
 from .model import ROOM_TYPES, Layout, set_grid_size
@@ -44,8 +50,10 @@ from .run_agents import MODEL_IDS, Reply, ask_claude
 # ---- the run, in one place -----------------------------------------------------------------------------------
 SIZE = 15
 TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms.txt")
+COST_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms_cost.txt")
 NO_HALLWAYS_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms_no_hallways.txt")
 REFACTOR_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms_refactor.txt")
+REFACTOR_COST_TEMPLATE_PATH = Path(__file__).with_name("prompt_template_100_rooms_refactor_cost.txt")
 HOUSES = (1, 2, 3, 4)
 STEPS = 30                                  # rooms added: 70 to 100
 MAX_TRIES = 3
@@ -130,7 +138,7 @@ def make_call(runs_dir: Path, house: int, call: Call, ask: Callable[[str], Reply
               hallways: bool = True, chain: Optional[int] = None, model: str = MODEL, effort: str = EFFORT,
               agent_cli: str = "claude-code", seed_dir: Optional[Path] = None,
               model_id: Optional[str] = None, chain_started_at: Optional[datetime] = None,
-              chain_timing_estimated: bool = False, refactor: bool = False) -> dict:
+              chain_timing_estimated: bool = False, refactor: bool = False, cost: bool = False) -> dict:
     """Ask a fresh agent, build its reply on the starting house and save the record."""
     if chain_started_at is None:
         chain_started_at = datetime.now(timezone.utc)
@@ -138,7 +146,10 @@ def make_call(runs_dir: Path, house: int, call: Call, ask: Callable[[str], Reply
     seed_text = ((seed_dir or runs_dir) / "seeds" / ("house%d.txt" % house)).read_text()
     layout_text = starting_house(runs, seed_text, house, call, chain, model, effort)
     wanted = request(call, rooms_added(parse_layout(seed_text)))
-    template = (REFACTOR_TEMPLATE_PATH if refactor else TEMPLATE_PATH if hallways else NO_HALLWAYS_TEMPLATE_PATH).read_text().rstrip("\n")
+    template = (REFACTOR_COST_TEMPLATE_PATH if cost and refactor else
+                COST_TEMPLATE_PATH if cost else
+                REFACTOR_TEMPLATE_PATH if refactor else
+                TEMPLATE_PATH if hallways else NO_HALLWAYS_TEMPLATE_PATH).read_text().rstrip("\n")
     call_started = time.monotonic()
     reply = ask(build_prompt(layout_text, wanted, template=template))
     call_duration_ms = round((time.monotonic() - call_started) * 1000)
@@ -183,7 +194,8 @@ def claude_code_version() -> str:
 def run_next_chain(runs_dir: Path, ask: Callable[[str], Reply], version: str, log: Callable[[str], None] = print,
                    hallways: bool = True, house: Optional[int] = None, chain: Optional[int] = None,
                    model: str = MODEL, effort: str = EFFORT, agent_cli: str = "claude-code",
-                   seed_dir: Optional[Path] = None, model_id: Optional[str] = None, refactor: bool = False) -> bool:
+                   seed_dir: Optional[Path] = None, model_id: Optional[str] = None, refactor: bool = False,
+                   cost: bool = False) -> bool:
     """Run the chain of this house, or else the next one that is not done; False if there is none."""
     for selected_house in (house,) if house else HOUSES:
         selected_chain = chain if chain is not None else selected_house
@@ -212,12 +224,12 @@ def run_next_chain(runs_dir: Path, ask: Callable[[str], Reply], version: str, lo
             call, attempt = todo
             record = make_call(runs_dir, selected_house, call, ask, version, hallways, selected_chain,
                                model, effort, agent_cli, seed_dir, model_id, chain_started_at,
-                               chain_timing_estimated, refactor)
+                               chain_timing_estimated, refactor, cost)
             usage = record["agent_usage"]
             output_tokens = usage.get("output_tokens")
-            cost = usage.get("cost_usd")
+            call_cost = usage.get("cost_usd")
             output_text = "%s output tokens" % output_tokens if output_tokens is not None else "output tokens unreported"
-            cost_text = "$%.3f" % cost if cost is not None else "cost unreported"
+            cost_text = "$%.3f" % call_cost if call_cost is not None else "cost unreported"
             log("%s %s try %d: %s (%s, %s)" % (record["run_id"], record["label"], attempt,
                                                outcome(record), output_text, cost_text))
         log("house %d chain %d is done" % (selected_house, selected_chain))
@@ -231,19 +243,24 @@ def main(argv: Sequence[str]) -> int:
     parser.add_argument("--seed-runs", type=Path, help="directory containing the four seed layouts")
     parser.add_argument("--no-hallways", action="store_true", help="a run in which no hallway can be built")
     parser.add_argument("--refactor", action="store_true", help="a run whose prompt asks to reorganise the house before adding to it")
+    parser.add_argument("--cost", action="store_true", help="a run whose prompt prices every command")
     parser.add_argument("--house", type=int, choices=HOUSES, help="run this house's chain (default: the next one not done)")
     parser.add_argument("--chain", type=int, help="chain number (defaults to the house number)")
-    parser.add_argument("--agent", choices=("claude", "copilot"), default="claude", help="CLI harness to use")
-    parser.add_argument("--model", help="model ID (Copilot default: gpt-6-luna)")
-    parser.add_argument("--effort", default=EFFORT, help="reasoning effort")
+    parser.add_argument("--agent", choices=("claude", "copilot", "deepseek"), default="claude", help="harness to use")
+    parser.add_argument("--model", help="model ID (DeepSeek default: deepseek-flash; Copilot default: gpt-6-luna)")
+    parser.add_argument("--effort", default=EFFORT, help="reasoning effort (for --agent deepseek: DeepSeek's low, high or max)")
     args = parser.parse_args(argv)
     if args.chain is not None and args.house is None:
         parser.error("--chain requires --house")
     if args.chain is not None and args.chain < 1:
         parser.error("--chain must be positive")
-    if args.refactor and args.no_hallways:
-        parser.error("--refactor is a run with hallways")
+    if args.no_hallways and (args.refactor or args.cost):
+        parser.error("--refactor and --cost are runs with hallways")
     set_grid_size(SIZE)
+    default_runs = ("runs_100_rooms_refactor_cost" if args.refactor and args.cost else
+                    "runs_100_rooms_cost" if args.cost else
+                    "runs_100_rooms_refactor" if args.refactor else "runs_100_rooms")
+    effort = args.effort
     if args.agent == "copilot":
         model_id = args.model or "gpt-6-luna"
         model_label = re.sub(r"[^a-zA-Z0-9]+", "", model_id).lower()
@@ -253,18 +270,26 @@ def main(argv: Sequence[str]) -> int:
         ask = lambda prompt: ask_copilot(prompt, model_id, args.effort)
         version = copilot_cli_version()
         agent_cli = "github-copilot-cli"
+    elif args.agent == "deepseek":
+        model_id = args.model or "deepseek-flash"
+        model_label = re.sub(r"[^a-zA-Z0-9]+", "", model_id).lower()
+        runs_dir = args.runs or Path(default_runs)
+        seed_dir = args.seed_runs or runs_dir
+        ask = lambda prompt: ask_deepseek(prompt, model_id, effort=args.effort)
+        version = ADAPTER_VERSION
+        agent_cli = "deepseek-api"
     else:
         model_id = args.model or MODEL_IDS[MODEL]
         model_label = MODEL if args.model is None else re.sub(r"[^a-zA-Z0-9]+", "", model_id).lower()
-        runs_dir = args.runs or Path("runs_100_rooms_refactor" if args.refactor else "runs_100_rooms")
+        runs_dir = args.runs or Path(default_runs)
         seed_dir = args.seed_runs or runs_dir
         ask = lambda prompt: ask_claude(prompt, model_id, args.effort)
         version = claude_code_version()
         agent_cli = "claude-code"
     selected_chain = args.chain if args.chain is not None else args.house
     if not run_next_chain(runs_dir, ask, version, hallways=not args.no_hallways, house=args.house,
-                          chain=selected_chain, model=model_label, effort=args.effort, agent_cli=agent_cli,
-                          seed_dir=seed_dir, model_id=model_id, refactor=args.refactor):
+                          chain=selected_chain, model=model_label, effort=effort, agent_cli=agent_cli,
+                          seed_dir=seed_dir, model_id=model_id, refactor=args.refactor, cost=args.cost):
         print("every chain is done")
     return 0
 

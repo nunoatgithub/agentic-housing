@@ -1,0 +1,184 @@
+label: sonnet55-medium-h4-c4-step21   at 2026-11-07T11:58:37+00:00   commands: 16
+
+SCRIPT
+remove room R9020
+remove room R9010
+remove room R9011
+remove room R9012
+remove room R7308
+remove room R7408
+remove room R7608
+remove room R7708
+room R9101 bedroom C8
+room R9102 bathroom D8
+room R9103 bedroom F8
+room R9104 bathroom G8
+door B8|C8
+door D8|E8
+door E8|F8
+door G8|H8
+
+run_0223
+INVALID (rule 1)
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+-------+-------+-------+-------+-------+-------+[ENTRY]+-------+-------+-------+-------+-------+-------+-------+
+  | R7101 | R7102 | R7103 | R7104 | R7105 | R7106 | R7107 | R7108 | R7109 | R7110 | R7111 | R7112 | R7113 | R7114 | R7115 |
+A |bedroom|  bath |bedroom|  bath |bedroom|  bath |kitchen| living|bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R7201 | R7202 | R7203 | R7204 | R7205 | R7206 | R7207 | R7208 | R7209 | R7210 | R7211 | R7212 | R7213 | R7214 | R7215 |
+B |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R7301 | R7302 | R7303 | R7304 | R7305 | R7306 | R7307 | R9101 | R7309 | R7310 | R7311 | R7312 | R7313 | R7314 | R7315 |
+C |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|bedroom|bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  | R7401 | R7402 | R7403 | R7404 | R7405 | R7406 | R7407 | R9102 | R7409 | R7410 | R7411 | R7412 | R7413 | R7414 | R7415 |
+D |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R7501 | R7502 | R7503 | R7504 | R7505 | R7506 | R7507 | R7508 | R7509 | R7510 | R7511 | R7512 | R7513 | R7514 | R7515 |
+E |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R7601 | R7602 | R7603 | R7604 | R7605 | R7606 | R7607 | R9103 | R7609 | R7610 | R7611 | R7612 | R7613 | R7614 | R7615 |
+F |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|bedroom|bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  | R7701 | R7702 | R7703 | R7704 | R7705 | R7706 | R7707 | R9104 | R7709 | R7710 | R7711 | R7712 | R7713 | R7714 | R7715 |
+G |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R7801 | R7802 | R7803 | R7804 | R7805 | R7806 | R7807 | R7808 | R7809 | R7810 | R7811 | R7812 | R7813 | R7814 | R7815 |
+H |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R7901 | R7902 | R7903 | R7904 | R7905 | R7906 | R7907 | R9001 | R7909 | R7910 | R7911 | R7912 | R7913 | R7914 | R8001 |
+I |  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+                                                  | R9003 | R9002 | R9004 |
+J                                                 |  bath |hallway|bedroom|
+                                                  |                       |
+                                                  +-------+-------+-------+
+
+K
+
+
+
+L
+
+
+
+M
+
+
+
+N
+
+
+
+O
+
+
+
+scores: none (house is invalid)
+
+Broken rules:
+  rule 1 (circulation): R7401 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7402 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7403 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7404 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7405 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7406 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7407 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7409 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7410 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7411 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7412 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7413 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7414 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7415 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7501 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7502 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7503 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7504 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7505 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7506 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7507 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7508 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7509 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7510 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7511 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7512 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7513 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7514 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7515 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7601 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7602 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7603 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7604 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7605 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7606 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7607 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7609 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7610 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7611 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7612 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7613 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7614 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7615 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7701 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7702 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7703 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7704 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7705 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7706 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7707 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7709 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7710 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7711 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7712 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7713 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7714 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7715 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7801 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7802 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7803 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7804 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7805 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7806 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7807 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7808 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7809 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7810 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7811 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7812 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7813 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7814 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7815 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7901 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7902 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7903 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7904 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7905 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7906 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7907 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7909 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7910 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7911 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7912 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7913 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7914 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R8001 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9001 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9002 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9003 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9004 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9102 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9103 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R9104 (bathroom) cannot be reached from the entrance through doors
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

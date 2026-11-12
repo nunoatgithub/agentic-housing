@@ -40,6 +40,7 @@
   #trend g[id^=tr_] { transition:transform .4s ease; }
   #trend text.big { font-size:12px; font-weight:700; }
   #trend path.hit { fill:none; stroke:transparent; stroke-width:10; pointer-events:stroke; }
+  #trend.closed path.hit { pointer-events:none; } /* the closed panel must not catch hover on the drawing */
   #ttip { position:fixed; z-index:6; display:none; pointer-events:none; padding:4px 8px; border-radius:6px; font-size:11px; white-space:nowrap;
     background:rgba(255,255,255,.94); box-shadow:0 2px 8px rgba(30,50,100,.2); font-variant-numeric:tabular-nums; }
   #tab { position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:5; writing-mode:vertical-rl; padding:12px 5px; font-size:12px;
@@ -267,7 +268,7 @@ $('charts').addEventListener('mousemove', e => { // the value of the hovered lin
   tip.style.display = 'block'; tip.style.left = e.clientX + 14 + 'px'; tip.style.top = e.clientY + 14 + 'px';
 });
 $('charts').addEventListener('mouseleave', () => { $('ttip').style.display = 'none'; });
-$('tab').onclick = () => { const closed = $('trend').classList.toggle('closed'); $('tab').classList.toggle('on', !closed); };
+$('tab').onclick = () => { const closed = $('trend').classList.toggle('closed'); $('tab').classList.toggle('on', !closed); $('ttip').style.display = 'none'; };
 const fill = el => el.style.setProperty('--p', `${(el.value - el.min) / (el.max - el.min) * 100}%`);
 function label() { $('scrub').value = n; fill($('scrub')); $('pos').textContent = `${n} / ${MAX}`; gi = n; if (phase === 'LEFT' && (mode === 'all' || !playing)) ga = n; updateTrend(); }
 
@@ -349,8 +350,8 @@ addEventListener('message', e => {
   if (m.info) $('capL').innerHTML = `<b>${who}</b>${m.info.call === 'seed' ? 'seed house' : m.info.call} · ${m.info.rooms} rooms`
     + (m.info.scores ? METRICS.map(([k, name, dp]) => ` · <span class="muted">${name.toLowerCase()}</span> ${(+m.info.scores[k]).toFixed(dp)}`).join('') : ''); // the four scores of the house shown
 });
-const RUNS = { 1: 'data_run1.json', 2: 'data.json' };
-let runNo = 2;
+const RUNS = { 1: 'data_run1.json', 2: 'data.json', 3: 'data_run3.json', 4: 'data_run4.json', 5: 'data_run5.json' };
+let runNo = 5;
 async function loadRun(r) {
   runNo = r; data = await (await fetch(RUNS[runNo], { cache: 'no-cache' })).json();
   house = Object.keys(data.houses)[0]; chain = chainsOf(house)[0][0];
@@ -358,8 +359,8 @@ async function loadRun(r) {
 }
 function drawRuns() {
   $('runs').innerHTML = '';
-  for (const r of [1, 2]) {
-    const b = document.createElement('button'); b.textContent = 'Run ' + r; b.title = r === 1 ? 'hallways allowed' : 'no hallways'; b.classList.toggle('on', r === runNo);
+  for (const r of [1, 2, 3, 4, 5]) {
+    const b = document.createElement('button'); b.textContent = 'Run ' + r; b.title = { 1: 'hallways allowed', 2: 'no hallways', 3: 'reorganise first', 4: 'cost, reorganise', 5: 'cost, no reorganise' }[r]; b.classList.toggle('on', r === runNo);
     b.onclick = () => { if (r !== runNo) loadRun(r); }; $('runs').appendChild(b);
   }
 }

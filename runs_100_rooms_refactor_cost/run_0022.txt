@@ -1,0 +1,78 @@
+label: deepseekflash-low-h1-c1-step11   at 2026-11-08T10:30:17+00:00   commands: 2
+
+SCRIPT
+room R2001 bedroom O1
+door O1|N1
+
+run_0022
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+          +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+
+          | R1100 | R1101 | R1102 | R1103 | R1104 | R1105 | R1106 | R1107 | R1108 |
+A         | living|kitchen|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+          |       |       |       |       |       |       |       |       |       |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1001 | R1015 | R1016 | R1017 | R1018 | R1019 | R1020 | R1021 | R1022 | R1023 |
+B |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                               |
+  +-[   ]-+-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1002 |               | R1109 | R1110 | R1111 | R1112 | R1113 | R1114 | R1115 |
+C |hallway|               |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |               |       |       |       |       |       |       |       |
+  +-[   ]-+               +-------+-------+-------+-------+-------+-------+-------+
+  | R1003 |               | R1116 | R1117 | R1118 | R1119 | R1120 | R1121 | R1122 |
+D |hallway|               |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |               |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1004 | R1024 | R1025 | R1026 | R1027 | R1028 | R1029 | R1030 | R1031 | R1032 |
+E |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                               |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1005 |       | R1123 | R1124 | R1125 | R1126 | R1127 | R1128 | R1129 | R1130 |
+F |hallway|       |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+       +-------+-------+-------+-------+-------+-------+-------+-------+
+  | R1006 |       | R1131 | R1132 | R1133 | R1134 | R1135 | R1136 | R1137 | R1138 |
+G |hallway|       |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1007 | R1033 | R1034 | R1035 | R1036 | R1037 | R1038 | R1039 | R1040 | R1041 |
+H |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                               |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1008 |       | R1139 | R1140 | R1141 | R1142 | R1143 | R1144 | R1145 | R1146 |
+I |hallway|       |bedroom|bedroom|  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+       +-------+-------+-------+-------+-------+-------+-------+-------+
+  | R1009 |       | R1147 | R1148 | R1149 | R1150 | R1151 | R1152 | R1153 | R1154 |
+J |hallway|       |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1010 | R1042 | R1043 | R1044 | R1045 | R1046 | R1047 | R1048 | R1049 | R1050 |
+K |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                               |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1011 |       | R1155 | R1156 | R1157 | R1158 | R1159 | R1160 | R1161 | R1162 |
+L |hallway|       |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+       +-------+-------+-------+-------+-------+-------+-------+-------+
+  | R1012 |       | R1163 | R1164 | R1165 | R1166 | R1167 | R1168 | R1169 | R1170 |
+M |hallway|       |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1013 | R1051 | R1052 | R1053 | R1054 | R1055 | R1056 | R1057 | R1058 | R1059 |
+N |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                               |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R2001 | R2000 | R1171 | R1172 | R1173 | R1174 | R1175 | R1176 | R1177 | R1178 |
+O |bedroom|  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  14.34
+compactness       28
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

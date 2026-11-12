@@ -105,7 +105,7 @@ Procedure:
 
 ## The 70-to-100-room runs
 
-The same question, with houses big enough that redesigning is no longer casual: houses of 70 rooms grown to 100 on a 15×15 grid (225 cells, rows A to O), building and demolishing free, with the hard rules and four scores above. There are three runs, alike in everything except one thing: in the hallway run (data in `runs_100_rooms/`) hallways can be built; in the no-hallways run (data in `runs_100_rooms_no_hallways/`) they cannot; the reorganising run (data in `runs_100_rooms_refactor/`) is the hallway run with one sentence added to the prompt, asking every agent to reorganise the house before adding to it.
+The same question, with houses big enough that redesigning is no longer casual: houses of 70 rooms grown to 100 on a 15×15 grid (225 cells, rows A to O), with the hard rules and four scores above. There are five runs. In three of them building and demolishing cost nothing: in the hallway run (data in `runs_100_rooms/`) hallways can be built; in the no-hallways run (data in `runs_100_rooms_no_hallways/`) they cannot; the reorganising run (data in `runs_100_rooms_refactor/`) is the hallway run with one sentence added to the prompt, asking every agent to reorganise the house before adding to it. The cost run (data in `runs_100_rooms_refactor_cost/`) is the reorganising run with a price on every command. The cost-only run (data in `runs_100_rooms_cost/`) is the hallway run with a price on every command.
 
 **Question.** On the 5×5 grid, with building and demolishing free, adding rooms one at a time never ended worse than planning, and the agents showed no built-in preference for local changes. Does adding the rooms one at a time end worse than adding all the remaining rooms at once to the same house? And does the answer depend on the house the agents start from: one that grew under a tight budget, or one that grew without cost constraints?
 
@@ -113,9 +113,11 @@ The same question, with houses big enough that redesigning is no longer casual: 
 
 **Why ask to reorganise.** In the hallway run neither kind of agent redesigned the house: the one-room agents attached rooms and the all-at-once agents hung a hallway wing behind the house they received. Asked outright to reorganise first, do the agents redesign, and does adding the rooms one at a time still end worse than adding them all at once?
 
-**Expectation.** Written before the hallway run: as in the free 5×5 runs, the house after step 30 scores no worse than the house built all at once from step 0. All three runs are described, not tested.
+**Why cost.** On the 5×5 grid, pricing every command made the patch agents purely local; in the world with hallways they stopped refactoring and the stepwise houses ended worse than planning. Asked to reorganise and told what every command costs, do the agents still rebuild, and does adding the rooms one at a time then end worse than adding them all at once? The cost-only run asks the same price without the reorganise sentence, so the two effects can be told apart.
 
-**Prompt.** `house/prompt_template_100_rooms.txt` is the prompt of the priced runs with hallways (`house/prompt_template_hallways.txt` at commit `25e3cef`) with the cost section taken out, the grid size set to 15, and one line added after the room types: "Room ids: R followed by a number, as in R1, R2, R3." The no-hallways run uses `house/prompt_template_100_rooms_no_hallways.txt`, the same prompt with two changes: rule 6 says hallways may be removed but not added, and the language section says "No hallway can be built; the ones already in the layout may be removed." The reorganising run uses `house/prompt_template_100_rooms_refactor.txt`, the hallway run's prompt with one sentence placed just before the request, in every call: "Before you add anything, reorganise the existing house to reduce its complexity, keeping the exact same final number of rooms (excluding hallways, whose number can change)." In the no-hallways run, a script that builds a hallway is rejected ("there are no hallways in this house") and tried again with a fresh agent, like any other rejected script.
+**Expectation.** Written before the hallway run: as in the free 5×5 runs, the house after step 30 scores no worse than the house built all at once from step 0. All five runs are described, not tested.
+
+**Prompt.** `house/prompt_template_100_rooms.txt` is the prompt of the priced runs with hallways (`house/prompt_template_hallways.txt` at commit `25e3cef`) with the cost section taken out, the grid size set to 15, and one line added after the room types: "Room ids: R followed by a number, as in R1, R2, R3." The no-hallways run uses `house/prompt_template_100_rooms_no_hallways.txt`, the same prompt with two changes: rule 6 says hallways may be removed but not added, and the language section says "No hallway can be built; the ones already in the layout may be removed." The reorganising run uses `house/prompt_template_100_rooms_refactor.txt`, the hallway run's prompt with one sentence placed just before the request, in every call: "Before you add anything, reorganise the existing house to reduce its complexity, keeping the exact same final number of rooms (excluding hallways, whose number can change)." The cost run uses `house/prompt_template_100_rooms_refactor_cost.txt`, that prompt with the priced runs' cost section added: every command costs something, whether it builds or removes, a room or the removal of a room 4 (a room is four walls), a door or a window 1, and the total cost of the script also counts. The cost-only run uses `house/prompt_template_100_rooms_cost.txt`, the hallway run's prompt with the same cost section added. In the no-hallways run, a script that builds a hallway is rejected ("there are no hallways in this house") and tried again with a fresh agent, like any other rejected script.
 
 **Seed houses.** Four seed houses of 70 rooms (living room, kitchen, 34 bedrooms, 34 bathrooms), made in code, not by agents. Each starts from the 11-room house that ended one chain of the priced runs and grew one room at a time on the 15×15 grid:
 
@@ -123,7 +125,7 @@ The same question, with houses big enough that redesigning is no longer casual: 
 * Houses 3 and 4 grew without cost constraints: of every five rooms, in a random order, three were added by the change that gave the best scores over the whole house, one by the change that gave the best scores over the rooms within two cells of it, and one by a change chosen at random. Scores were ranked corridor rooms first, then privacy order, walking distance and compactness. Houses 3 and 4 start from chains 3 and 5 of the priced run.
 * Of each kind, 12 candidates were grown, one from each priced-run chain. Each candidate was finished to 100 rooms 10 times by each of four simulated builders (the three above, and one copying the agents of the first 5×5 run). The two chosen of each kind are those whose finished houses varied most in corridor rooms: the houses whose outcome depends most on how they are extended.
 
-The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. All three runs use them unchanged, so the no-hallways run is not a house without hallways but a world in which none can be built: the hallways a seed house has can be used (a door onto one) or removed. The seed houses and the code that made them are in `runs_100_rooms/seeds/`, with copies in `runs_100_rooms_no_hallways/seeds/` and `runs_100_rooms_refactor/seeds/`.
+The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. All five runs use them unchanged, so the no-hallways run is not a house without hallways but a world in which none can be built: the hallways a seed house has can be used (a door onto one) or removed. The seed houses and the code that made them are in `runs_100_rooms/seeds/`, with copies in `runs_100_rooms_no_hallways/seeds/`, `runs_100_rooms_refactor/seeds/`, `runs_100_rooms_refactor_cost/seeds/` and `runs_100_rooms_cost/seeds/`.
 
 **Chains.** Each chain starts from one seed house and has two kinds of agent:
 
@@ -132,17 +134,27 @@ The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. All 
 
 A chain has 59 calls, made in this order: all at once from step 0, step 1, all at once from step 1, step 2, and so on. Every agent is fresh, with no tools, no memory and no score feedback. A failed call (script rejected or house invalid) is tried again with a fresh agent, up to 3 tries. If a one-room step still fails, that chain's one-room steps stop, and the all-at-once calls from the steps already reached are still made. A reply cut off by the output limit is recorded as cut off, not as an invalid house. No agent builds the 100-room house from scratch.
 
-**Agents.** All at medium effort:
+**Agents.** The Sonnet and GPT-6 Luna chains are at medium effort. DeepSeek chains 5 and 7 in the hallway run and in
+the reorganising run (seed houses 1 and 3; chains 6 and 8 not run) and chains 1 and 3 in the cost run and in the
+cost-only run (seed houses 1 and 3) use a standalone DeepSeek adapter at low thinking: it posts the house prompt to DeepSeek's Anthropic-compatible
+API with thinking enabled at low effort, and no Claude Code system or environment wrapper. It is a separate harness
+and is reported separately.
 
-| Run          | Chains | Seed houses | Model      | Harness                                                        |
-| ------------ | ------ | ----------- | ---------- | -------------------------------------------------------------- |
-| Hallways     | 1–4    | 1–4         | Sonnet 5.5 | Claude Code 2.1.310                                            |
-| No hallways  | 1–4    | 1–4         | Sonnet 5.5 | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
-| No hallways  | 5–8    | 1–4         | GPT-6 Luna | GitHub Copilot CLI 1.0.105                                     |
-| No hallways  | 9–12   | 1–4         | Sonnet 5.5 | Claude Code 2.1.314                                            |
-| Reorganising | 1–4    | 1–4         | Sonnet 5.5 | not run yet                                                    |
+| Run          | Chains | Seed houses | Model          | Harness                                                        |
+| ------------ | ------ | ----------- | -------------- | -------------------------------------------------------------- |
+| Hallways     | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.310                                            |
+| Hallways     | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
+| No hallways  | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
+| No hallways  | 5–8    | 1–4         | GPT-6 Luna     | GitHub Copilot CLI 1.0.105                                     |
+| No hallways  | 9–12   | 1–4         | Sonnet 5.5     | Claude Code 2.1.314                                            |
+| Reorganising | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.314 (chain 1), 2.1.319 (chains 2–4)            |
+| Reorganising | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
+| Cost         | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
+| Cost         | 5–8    | 1–4         | Sonnet 5.5     | Claude Code 2.1.322                                            |
+| Cost only    | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
+| Cost only    | 5, 7   | 1, 3        | Sonnet 5.5     | Claude Code 2.1.322                                            |
 
-The two models are reported separately, never pooled.
+The models are reported separately, never pooled.
 
 ## System and interaction
 

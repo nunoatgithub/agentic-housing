@@ -1,0 +1,287 @@
+grid 15x15
+     1    2    3    4    5    6    7    8    9    10   11   12   13   14   15
+A    R2   R1   R3   R7   R11  R45  R91  .    .    .    .    .    .    .    .
+B    R6   R4   R5   R8   R15  R26  R24  R78  .    .    .    .    .    .    .
+C    R17  R16  R12  R14  R22  R25  R51  R77  R52  .    .    .    .    .    .
+D    R9   R18  R10  R20  R13  R27  R23  R85  R82  .    .    .    .    .    .
+E    R33  R32  R21  R29  R30  R34  R35  R87  R86  .    .    .    .    .    .
+F    R41  R40  R39  R38  R37  R36  R28  R88  R107 .    .    .    .    .    .
+G    R19  R47  R44  R43  R31  R49  R42  R92  R106 R93  .    .    .    .    .
+H    R48  R57  R46  R53  R54  R59  R60  R94  R55  .    .    .    .    .    .
+I    R61  R62  R63  R64  R65  R66  R50  R96  R95  .    .    .    .    .    .
+J    R69  R68  R70  R71  R72  R73  R74  R99  R100 .    .    .    .    .    .
+K    R84  R83  R76  R75  R56  R79  R80  R108 R97  .    .    .    .    .    .
+L    R111 R110 R90  R89  R81  R101 R102 R109 .    .    .    .    .    .    .
+M    R115 R114 R104 R103 R98  R112 R113 .    .    .    .    .    .    .    .
+N    .    R58  .    R105 .    R67  .    .    .    .    .    .    .    .    .
+O    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .
+
+rooms
+R1   living room   A2
+R2   kitchen       A1
+R3   bedroom       A3
+R4   bathroom      B2
+R5   bedroom       B3
+R6   bathroom      B1
+R7   bedroom       A4
+R8   bathroom      B4
+R9   bedroom       D1
+R10  bathroom      D3
+R11  bedroom       A5
+R12  hallway       C3
+R13  bathroom      D5
+R14  hallway       C4
+R15  bedroom       B5
+R16  hallway       C2
+R17  bathroom      C1
+R18  hallway       D2
+R19  bedroom       G1
+R20  hallway       D4
+R21  bathroom      E3
+R22  hallway       C5
+R23  bedroom       D7
+R24  bathroom      B7
+R25  hallway       C6
+R26  bedroom       B6
+R27  hallway       D6
+R28  bathroom      F7
+R29  hallway       E4
+R30  bedroom       E5
+R31  bathroom      G5
+R32  hallway       E2
+R33  bedroom       E1
+R34  hallway       E6
+R35  bathroom      E7
+R36  hallway       F6
+R37  bedroom       F5
+R38  hallway       F4
+R39  bathroom      F3
+R40  hallway       F2
+R41  bedroom       F1
+R42  bathroom      G7
+R43  hallway       G4
+R44  bedroom       G3
+R45  bathroom      A6
+R46  bedroom       H3
+R47  hallway       G2
+R48  bathroom      H1
+R49  hallway       G6
+R50  bedroom       I7
+R51  hallway       C7
+R52  bathroom      C9
+R53  hallway       H4
+R54  bedroom       H5
+R55  bathroom      H9
+R56  bedroom       K5
+R57  hallway       H2
+R58  bathroom      N2
+R59  hallway       H6
+R60  bedroom       H7
+R61  bathroom      I1
+R62  hallway       I2
+R63  bedroom       I3
+R64  hallway       I4
+R65  bathroom      I5
+R66  hallway       I6
+R67  bedroom       N6
+R68  hallway       J2
+R69  bathroom      J1
+R70  bedroom       J3
+R71  hallway       J4
+R72  bathroom      J5
+R73  hallway       J6
+R74  bedroom       J7
+R75  hallway       K4
+R76  bathroom      K3
+R77  hallway       C8
+R78  bedroom       B8
+R79  hallway       K6
+R80  bathroom      K7
+R81  bedroom       L5
+R82  bathroom      D9
+R83  hallway       K2
+R84  bedroom       K1
+R85  hallway       D8
+R86  bathroom      E9
+R87  hallway       E8
+R88  bedroom       F8
+R89  hallway       L4
+R90  bathroom      L3
+R91  bedroom       A7
+R92  hallway       G8
+R93  bathroom      G10
+R94  hallway       H8
+R95  bedroom       I9
+R96  hallway       I8
+R97  bathroom      K9
+R98  bedroom       M5
+R99  hallway       J8
+R100 bathroom      J9
+R101 hallway       L6
+R102 bedroom       L7
+R103 hallway       M4
+R104 bathroom      M3
+R105 bedroom       N4
+R106 hallway       G9
+R107 bathroom      F9
+R108 hallway       K8
+R109 bedroom       L8
+R110 hallway       L2
+R111 bathroom      L1
+R112 hallway       M6
+R113 bedroom       M7
+R114 hallway       M2
+R115 bathroom      M1
+
+doors
+A1|A2
+A1|B1
+A2|north           entrance
+A2|A3
+A2|B2
+A3|A4
+A3|B3
+A4|A5
+A5|A6
+A6|A7
+B2|C2
+B3|B4
+B3|C3
+B4|C4
+B5|C5
+B6|C6
+B7|C7
+B8|C8
+C1|C2
+C2|C3
+C2|D2
+C3|C4
+C3|D3
+C4|C5
+C4|D4
+C5|C6
+C5|D5
+C6|C7
+C6|D6
+C7|C8
+C7|D7
+C8|C9
+C8|D8
+D1|D2
+D2|D3
+D2|E2
+D3|D4
+D4|D5
+D4|E4
+D5|D6
+D6|D7
+D6|E6
+D7|D8
+D8|D9
+D8|E8
+E1|E2
+E2|E3
+E2|F2
+E3|E4
+E4|E5
+E4|F4
+E5|E6
+E6|E7
+E6|F6
+E7|E8
+E8|E9
+E8|F8
+F1|F2
+F2|F3
+F2|G2
+F3|F4
+F4|F5
+F4|G4
+F5|F6
+F6|F7
+F6|G6
+F8|G8
+F9|G9
+G1|G2
+G2|G3
+G2|H2
+G3|G4
+G4|G5
+G4|H4
+G5|G6
+G6|G7
+G6|H6
+G7|G8
+G8|G9
+G8|H8
+G9|G10
+G9|H9
+H1|H2
+H1|I1
+H2|H3
+H2|I2
+H3|H4
+H4|H5
+H4|I4
+H5|H6
+H6|H7
+H6|I6
+H7|H8
+H8|H9
+H8|I8
+I1|I2
+I2|I3
+I2|J2
+I3|I4
+I4|I5
+I4|J4
+I5|I6
+I6|I7
+I6|J6
+I7|I8
+I8|I9
+I8|J8
+J1|J2
+J2|J3
+J2|K2
+J3|J4
+J4|J5
+J4|K4
+J5|J6
+J6|J7
+J6|K6
+J7|J8
+J8|J9
+J8|K8
+K1|K2
+K2|K3
+K2|L2
+K3|K4
+K4|K5
+K4|L4
+K5|K6
+K6|K7
+K6|L6
+K7|K8
+K8|K9
+K8|L8
+L1|L2
+L2|L3
+L2|M2
+L3|L4
+L4|L5
+L4|M4
+L5|L6
+L6|L7
+L6|M6
+M1|M2
+M2|M3
+M2|N2
+M3|M4
+M4|M5
+M4|N4
+M5|M6
+M6|M7
+M6|N6
+
+windows

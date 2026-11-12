@@ -1,0 +1,1167 @@
+{
+  "run_id": "run_0285",
+  "timestamp": "2026-11-07T19:16:21+00:00",
+  "label": "deepseekflash-low-h1-c5-all19",
+  "request": "add: bedroom x5, bathroom x6",
+  "hallways": true,
+  "command_count": 593,
+  "accepted": false,
+  "errors": [
+    {
+      "line": 369,
+      "text": "door R200|north",
+      "reason": "bad cell 'R200': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 370,
+      "text": "door R200|R300",
+      "reason": "bad cell 'R200': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 371,
+      "text": "door R201|R301",
+      "reason": "bad cell 'R201': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 372,
+      "text": "door R202|R302",
+      "reason": "bad cell 'R202': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 373,
+      "text": "door R203|R303",
+      "reason": "bad cell 'R203': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 374,
+      "text": "door R204|R304",
+      "reason": "bad cell 'R204': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 375,
+      "text": "door R205|R305",
+      "reason": "bad cell 'R205': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 376,
+      "text": "door R206|R306",
+      "reason": "bad cell 'R206': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 377,
+      "text": "door R207|R307",
+      "reason": "bad cell 'R207': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 378,
+      "text": "door R208|R308",
+      "reason": "bad cell 'R208': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 379,
+      "text": "door R209|R309",
+      "reason": "bad cell 'R209': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 380,
+      "text": "door R210|R310",
+      "reason": "bad cell 'R210': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 381,
+      "text": "door R211|R311",
+      "reason": "bad cell 'R211': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 382,
+      "text": "door R212|R312",
+      "reason": "bad cell 'R212': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 383,
+      "text": "door R213|R313",
+      "reason": "bad cell 'R213': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 384,
+      "text": "door R214|R315",
+      "reason": "bad cell 'R214': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 385,
+      "text": "door R215|R316",
+      "reason": "bad cell 'R215': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 386,
+      "text": "door R216|R317",
+      "reason": "bad cell 'R216': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 387,
+      "text": "door R217|R318",
+      "reason": "bad cell 'R217': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 388,
+      "text": "door R218|R319",
+      "reason": "bad cell 'R218': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 389,
+      "text": "door R219|R320",
+      "reason": "bad cell 'R219': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 390,
+      "text": "door R220|R321",
+      "reason": "bad cell 'R220': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 391,
+      "text": "door R221|R322",
+      "reason": "bad cell 'R221': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 392,
+      "text": "door R222|R323",
+      "reason": "bad cell 'R222': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 393,
+      "text": "door R223|R324",
+      "reason": "bad cell 'R223': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 394,
+      "text": "door R224|R325",
+      "reason": "bad cell 'R224': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 395,
+      "text": "door R225|R326",
+      "reason": "bad cell 'R225': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 396,
+      "text": "door R226|R327",
+      "reason": "bad cell 'R226': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 397,
+      "text": "door R227|R328",
+      "reason": "bad cell 'R227': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 398,
+      "text": "door R228|R330",
+      "reason": "bad cell 'R228': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 399,
+      "text": "door R229|R331",
+      "reason": "bad cell 'R229': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 400,
+      "text": "door R230|R332",
+      "reason": "bad cell 'R230': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 401,
+      "text": "door R231|R333",
+      "reason": "bad cell 'R231': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 402,
+      "text": "door R232|R334",
+      "reason": "bad cell 'R232': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 403,
+      "text": "door R233|R335",
+      "reason": "bad cell 'R233': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 404,
+      "text": "door R234|R336",
+      "reason": "bad cell 'R234': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 405,
+      "text": "door R235|R337",
+      "reason": "bad cell 'R235': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 406,
+      "text": "door R236|R338",
+      "reason": "bad cell 'R236': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 407,
+      "text": "door R237|R339",
+      "reason": "bad cell 'R237': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 408,
+      "text": "door R238|R340",
+      "reason": "bad cell 'R238': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 409,
+      "text": "door R239|R341",
+      "reason": "bad cell 'R239': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 410,
+      "text": "door R240|R342",
+      "reason": "bad cell 'R240': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 411,
+      "text": "door R241|R343",
+      "reason": "bad cell 'R241': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 412,
+      "text": "door R242|R345",
+      "reason": "bad cell 'R242': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 413,
+      "text": "door R243|R346",
+      "reason": "bad cell 'R243': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 414,
+      "text": "door R244|R347",
+      "reason": "bad cell 'R244': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 415,
+      "text": "door R245|R348",
+      "reason": "bad cell 'R245': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 416,
+      "text": "door R246|R349",
+      "reason": "bad cell 'R246': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 417,
+      "text": "door R247|R350",
+      "reason": "bad cell 'R247': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 418,
+      "text": "door R248|R351",
+      "reason": "bad cell 'R248': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 419,
+      "text": "door R249|R352",
+      "reason": "bad cell 'R249': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 420,
+      "text": "door R250|R353",
+      "reason": "bad cell 'R250': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 421,
+      "text": "door R251|R354",
+      "reason": "bad cell 'R251': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 422,
+      "text": "door R252|R355",
+      "reason": "bad cell 'R252': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 423,
+      "text": "door R253|R356",
+      "reason": "bad cell 'R253': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 424,
+      "text": "door R254|R357",
+      "reason": "bad cell 'R254': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 425,
+      "text": "door R255|R358",
+      "reason": "bad cell 'R255': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 426,
+      "text": "door R256|R360",
+      "reason": "bad cell 'R256': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 427,
+      "text": "door R257|R361",
+      "reason": "bad cell 'R257': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 428,
+      "text": "door R258|R362",
+      "reason": "bad cell 'R258': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 429,
+      "text": "door R259|R363",
+      "reason": "bad cell 'R259': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 430,
+      "text": "door R260|R364",
+      "reason": "bad cell 'R260': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 431,
+      "text": "door R261|R365",
+      "reason": "bad cell 'R261': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 432,
+      "text": "door R262|R366",
+      "reason": "bad cell 'R262': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 433,
+      "text": "door R263|R367",
+      "reason": "bad cell 'R263': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 434,
+      "text": "door R264|R368",
+      "reason": "bad cell 'R264': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 435,
+      "text": "door R265|R369",
+      "reason": "bad cell 'R265': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 436,
+      "text": "door R266|R370",
+      "reason": "bad cell 'R266': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 437,
+      "text": "door R267|R371",
+      "reason": "bad cell 'R267': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 438,
+      "text": "door R268|R372",
+      "reason": "bad cell 'R268': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 439,
+      "text": "door R269|R373",
+      "reason": "bad cell 'R269': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 440,
+      "text": "door R270|R375",
+      "reason": "bad cell 'R270': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 441,
+      "text": "door R271|R376",
+      "reason": "bad cell 'R271': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 442,
+      "text": "door R272|R377",
+      "reason": "bad cell 'R272': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 443,
+      "text": "door R273|R378",
+      "reason": "bad cell 'R273': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 444,
+      "text": "door R274|R379",
+      "reason": "bad cell 'R274': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 445,
+      "text": "door R275|R380",
+      "reason": "bad cell 'R275': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 446,
+      "text": "door R276|R381",
+      "reason": "bad cell 'R276': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 447,
+      "text": "door R277|R382",
+      "reason": "bad cell 'R277': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 448,
+      "text": "door R278|R383",
+      "reason": "bad cell 'R278': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 449,
+      "text": "door R279|R384",
+      "reason": "bad cell 'R279': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 450,
+      "text": "door R280|R385",
+      "reason": "bad cell 'R280': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 451,
+      "text": "door R281|R386",
+      "reason": "bad cell 'R281': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 452,
+      "text": "door R282|R387",
+      "reason": "bad cell 'R282': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 453,
+      "text": "door R283|R388",
+      "reason": "bad cell 'R283': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 454,
+      "text": "door R284|R390",
+      "reason": "bad cell 'R284': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 455,
+      "text": "door R285|R391",
+      "reason": "bad cell 'R285': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 456,
+      "text": "door R286|R392",
+      "reason": "bad cell 'R286': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 457,
+      "text": "door R287|R393",
+      "reason": "bad cell 'R287': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 458,
+      "text": "door R288|R394",
+      "reason": "bad cell 'R288': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 459,
+      "text": "door R289|R395",
+      "reason": "bad cell 'R289': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 460,
+      "text": "door R290|R396",
+      "reason": "bad cell 'R290': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 461,
+      "text": "door R291|R397",
+      "reason": "bad cell 'R291': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 462,
+      "text": "door R292|R398",
+      "reason": "bad cell 'R292': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 463,
+      "text": "door R293|R399",
+      "reason": "bad cell 'R293': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 464,
+      "text": "door R294|R400",
+      "reason": "bad cell 'R294': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 465,
+      "text": "door R295|R401",
+      "reason": "bad cell 'R295': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 466,
+      "text": "door R296|R402",
+      "reason": "bad cell 'R296': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 467,
+      "text": "door R297|R403",
+      "reason": "bad cell 'R297': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 468,
+      "text": "door R298|R390",
+      "reason": "bad cell 'R298': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 469,
+      "text": "door R299|R391",
+      "reason": "bad cell 'R299': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 470,
+      "text": "door R300|R301",
+      "reason": "bad cell 'R300': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 471,
+      "text": "door R301|R302",
+      "reason": "bad cell 'R301': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 472,
+      "text": "door R302|R303",
+      "reason": "bad cell 'R302': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 473,
+      "text": "door R303|R304",
+      "reason": "bad cell 'R303': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 474,
+      "text": "door R304|R305",
+      "reason": "bad cell 'R304': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 475,
+      "text": "door R305|R306",
+      "reason": "bad cell 'R305': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 476,
+      "text": "door R306|R307",
+      "reason": "bad cell 'R306': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 477,
+      "text": "door R307|R308",
+      "reason": "bad cell 'R307': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 478,
+      "text": "door R308|R309",
+      "reason": "bad cell 'R308': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 479,
+      "text": "door R309|R310",
+      "reason": "bad cell 'R309': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 480,
+      "text": "door R310|R311",
+      "reason": "bad cell 'R310': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 481,
+      "text": "door R311|R312",
+      "reason": "bad cell 'R311': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 482,
+      "text": "door R312|R313",
+      "reason": "bad cell 'R312': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 483,
+      "text": "door R313|R314",
+      "reason": "bad cell 'R313': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 484,
+      "text": "door R315|R316",
+      "reason": "bad cell 'R315': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 485,
+      "text": "door R316|R317",
+      "reason": "bad cell 'R316': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 486,
+      "text": "door R317|R318",
+      "reason": "bad cell 'R317': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 487,
+      "text": "door R318|R319",
+      "reason": "bad cell 'R318': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 488,
+      "text": "door R319|R320",
+      "reason": "bad cell 'R319': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 489,
+      "text": "door R320|R321",
+      "reason": "bad cell 'R320': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 490,
+      "text": "door R321|R322",
+      "reason": "bad cell 'R321': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 491,
+      "text": "door R322|R323",
+      "reason": "bad cell 'R322': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 492,
+      "text": "door R323|R324",
+      "reason": "bad cell 'R323': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 493,
+      "text": "door R324|R325",
+      "reason": "bad cell 'R324': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 494,
+      "text": "door R325|R326",
+      "reason": "bad cell 'R325': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 495,
+      "text": "door R326|R327",
+      "reason": "bad cell 'R326': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 496,
+      "text": "door R327|R328",
+      "reason": "bad cell 'R327': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 497,
+      "text": "door R328|R329",
+      "reason": "bad cell 'R328': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 498,
+      "text": "door R330|R331",
+      "reason": "bad cell 'R330': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 499,
+      "text": "door R331|R332",
+      "reason": "bad cell 'R331': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 500,
+      "text": "door R332|R333",
+      "reason": "bad cell 'R332': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 501,
+      "text": "door R333|R334",
+      "reason": "bad cell 'R333': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 502,
+      "text": "door R334|R335",
+      "reason": "bad cell 'R334': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 503,
+      "text": "door R335|R336",
+      "reason": "bad cell 'R335': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 504,
+      "text": "door R336|R337",
+      "reason": "bad cell 'R336': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 505,
+      "text": "door R337|R338",
+      "reason": "bad cell 'R337': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 506,
+      "text": "door R338|R339",
+      "reason": "bad cell 'R338': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 507,
+      "text": "door R339|R340",
+      "reason": "bad cell 'R339': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 508,
+      "text": "door R340|R341",
+      "reason": "bad cell 'R340': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 509,
+      "text": "door R341|R342",
+      "reason": "bad cell 'R341': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 510,
+      "text": "door R342|R343",
+      "reason": "bad cell 'R342': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 511,
+      "text": "door R343|R344",
+      "reason": "bad cell 'R343': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 512,
+      "text": "door R345|R346",
+      "reason": "bad cell 'R345': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 513,
+      "text": "door R346|R347",
+      "reason": "bad cell 'R346': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 514,
+      "text": "door R347|R348",
+      "reason": "bad cell 'R347': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 515,
+      "text": "door R348|R349",
+      "reason": "bad cell 'R348': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 516,
+      "text": "door R349|R350",
+      "reason": "bad cell 'R349': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 517,
+      "text": "door R350|R351",
+      "reason": "bad cell 'R350': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 518,
+      "text": "door R351|R352",
+      "reason": "bad cell 'R351': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 519,
+      "text": "door R352|R353",
+      "reason": "bad cell 'R352': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 520,
+      "text": "door R353|R354",
+      "reason": "bad cell 'R353': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 521,
+      "text": "door R354|R355",
+      "reason": "bad cell 'R354': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 522,
+      "text": "door R355|R356",
+      "reason": "bad cell 'R355': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 523,
+      "text": "door R356|R357",
+      "reason": "bad cell 'R356': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 524,
+      "text": "door R357|R358",
+      "reason": "bad cell 'R357': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 525,
+      "text": "door R358|R359",
+      "reason": "bad cell 'R358': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 526,
+      "text": "door R360|R361",
+      "reason": "bad cell 'R360': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 527,
+      "text": "door R361|R362",
+      "reason": "bad cell 'R361': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 528,
+      "text": "door R362|R363",
+      "reason": "bad cell 'R362': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 529,
+      "text": "door R363|R364",
+      "reason": "bad cell 'R363': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 530,
+      "text": "door R364|R365",
+      "reason": "bad cell 'R364': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 531,
+      "text": "door R365|R366",
+      "reason": "bad cell 'R365': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 532,
+      "text": "door R366|R367",
+      "reason": "bad cell 'R366': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 533,
+      "text": "door R367|R368",
+      "reason": "bad cell 'R367': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 534,
+      "text": "door R368|R369",
+      "reason": "bad cell 'R368': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 535,
+      "text": "door R369|R370",
+      "reason": "bad cell 'R369': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 536,
+      "text": "door R370|R371",
+      "reason": "bad cell 'R370': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 537,
+      "text": "door R371|R372",
+      "reason": "bad cell 'R371': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 538,
+      "text": "door R372|R373",
+      "reason": "bad cell 'R372': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 539,
+      "text": "door R373|R374",
+      "reason": "bad cell 'R373': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 540,
+      "text": "door R375|R376",
+      "reason": "bad cell 'R375': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 541,
+      "text": "door R376|R377",
+      "reason": "bad cell 'R376': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 542,
+      "text": "door R377|R378",
+      "reason": "bad cell 'R377': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 543,
+      "text": "door R378|R379",
+      "reason": "bad cell 'R378': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 544,
+      "text": "door R379|R380",
+      "reason": "bad cell 'R379': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 545,
+      "text": "door R380|R381",
+      "reason": "bad cell 'R380': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 546,
+      "text": "door R381|R382",
+      "reason": "bad cell 'R381': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 547,
+      "text": "door R382|R383",
+      "reason": "bad cell 'R382': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 548,
+      "text": "door R383|R384",
+      "reason": "bad cell 'R383': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 549,
+      "text": "door R384|R385",
+      "reason": "bad cell 'R384': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 550,
+      "text": "door R385|R386",
+      "reason": "bad cell 'R385': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 551,
+      "text": "door R386|R387",
+      "reason": "bad cell 'R386': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 552,
+      "text": "door R387|R388",
+      "reason": "bad cell 'R387': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 553,
+      "text": "door R388|R389",
+      "reason": "bad cell 'R388': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 554,
+      "text": "door R390|R391",
+      "reason": "bad cell 'R390': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 555,
+      "text": "door R391|R392",
+      "reason": "bad cell 'R391': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 556,
+      "text": "door R392|R393",
+      "reason": "bad cell 'R392': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 557,
+      "text": "door R393|R394",
+      "reason": "bad cell 'R393': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 558,
+      "text": "door R394|R395",
+      "reason": "bad cell 'R394': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 559,
+      "text": "door R395|R396",
+      "reason": "bad cell 'R395': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 560,
+      "text": "door R396|R397",
+      "reason": "bad cell 'R396': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 561,
+      "text": "door R397|R398",
+      "reason": "bad cell 'R397': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 562,
+      "text": "door R398|R399",
+      "reason": "bad cell 'R398': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 563,
+      "text": "door R399|R400",
+      "reason": "bad cell 'R399': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 564,
+      "text": "door R400|R401",
+      "reason": "bad cell 'R400': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 565,
+      "text": "door R401|R402",
+      "reason": "bad cell 'R401': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 566,
+      "text": "door R402|R403",
+      "reason": "bad cell 'R402': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 567,
+      "text": "door R403|R404",
+      "reason": "bad cell 'R403': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 568,
+      "text": "door R412|R413",
+      "reason": "bad cell 'R412': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 569,
+      "text": "door R413|R414",
+      "reason": "bad cell 'R413': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 570,
+      "text": "door R414|R415",
+      "reason": "bad cell 'R414': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 571,
+      "text": "door R415|R416",
+      "reason": "bad cell 'R415': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 572,
+      "text": "door R416|R417",
+      "reason": "bad cell 'R416': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 573,
+      "text": "door R417|R418",
+      "reason": "bad cell 'R417': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 574,
+      "text": "door R418|R419",
+      "reason": "bad cell 'R418': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 575,
+      "text": "door R419|R420",
+      "reason": "bad cell 'R419': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 576,
+      "text": "door R420|R421",
+      "reason": "bad cell 'R420': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 577,
+      "text": "door R421|R422",
+      "reason": "bad cell 'R421': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 578,
+      "text": "door R422|R423",
+      "reason": "bad cell 'R422': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 579,
+      "text": "door R423|R424",
+      "reason": "bad cell 'R423': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 580,
+      "text": "door R405|R314",
+      "reason": "bad cell 'R405': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 581,
+      "text": "door R314|R406",
+      "reason": "bad cell 'R314': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 582,
+      "text": "door R406|R329",
+      "reason": "bad cell 'R406': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 583,
+      "text": "door R329|R407",
+      "reason": "bad cell 'R329': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 584,
+      "text": "door R407|R344",
+      "reason": "bad cell 'R407': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 585,
+      "text": "door R344|R408",
+      "reason": "bad cell 'R344': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 586,
+      "text": "door R408|R359",
+      "reason": "bad cell 'R408': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 587,
+      "text": "door R359|R409",
+      "reason": "bad cell 'R359': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 588,
+      "text": "door R409|R374",
+      "reason": "bad cell 'R409': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 589,
+      "text": "door R374|R410",
+      "reason": "bad cell 'R374': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 590,
+      "text": "door R410|R389",
+      "reason": "bad cell 'R410': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 591,
+      "text": "door R389|R411",
+      "reason": "bad cell 'R389': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 592,
+      "text": "door R411|R404",
+      "reason": "bad cell 'R411': expected a letter A-O and a number 1-15, like B2"
+    },
+    {
+      "line": 593,
+      "text": "door R404|R424",
+      "reason": "bad cell 'R404': expected a letter A-O and a number 1-15, like B2"
+    }
+  ],
+  "script": "remove room R1\nremove room R2\nremove room R3\nremove room R4\nremove room R5\nremove room R6\nremove room R7\nremove room R8\nremove room R9\nremove room R10\nremove room R11\nremove room R12\nremove room R13\nremove room R14\nremove room R15\nremove room R16\nremove room R17\nremove room R18\nremove room R19\nremove room R20\nremove room R21\nremove room R22\nremove room R23\nremove room R24\nremove room R25\nremove room R26\nremove room R27\nremove room R28\nremove room R29\nremove room R30\nremove room R31\nremove room R32\nremove room R33\nremove room R34\nremove room R35\nremove room R36\nremove room R37\nremove room R38\nremove room R39\nremove room R40\nremove room R41\nremove room R42\nremove room R43\nremove room R44\nremove room R45\nremove room R46\nremove room R47\nremove room R48\nremove room R49\nremove room R50\nremove room R51\nremove room R52\nremove room R53\nremove room R54\nremove room R55\nremove room R56\nremove room R57\nremove room R58\nremove room R59\nremove room R60\nremove room R61\nremove room R62\nremove room R63\nremove room R64\nremove room R65\nremove room R66\nremove room R67\nremove room R68\nremove room R69\nremove room R70\nremove room R71\nremove room R72\nremove room R73\nremove room R74\nremove room R75\nremove room R76\nremove room R77\nremove room R78\nremove room R79\nremove room R80\nremove room R81\nremove room R82\nremove room R83\nremove room R84\nremove room R85\nremove room R86\nremove room R87\nremove room R88\nremove room R89\nremove room R90\nremove room R91\nremove room R92\nremove room R93\nremove room R94\nremove room R95\nremove room R96\nremove room R97\nremove room R98\nremove room R99\nremove room R100\nremove room R101\nremove room R102\nremove room R103\nremove room R104\nremove room R105\nremove room R106\nremove room R107\nremove room R108\nremove room R109\nremove room R110\nremove room R111\nremove room R112\nremove room R113\nremove room R114\nremove room R115\nremove room R116\nremove room R117\nremove room R118\nremove room R119\nremove room R120\nremove room R121\nremove room R122\nremove room R123\nremove room R124\nremove room R125\nremove room R126\nremove room R127\nremove room R128\nremove room R129\nremove room R130\nremove room R131\nremove room R132\nremove room R133\nremove room R134\nremove room R135\nremove room R136\nremove room R137\nremove room R138\nremove room R139\nremove room R140\nremove room R141\nremove room R142\nremove room R143\nroom R200 living room A1\nroom R201 kitchen A2\nroom R202 bedroom A3\nroom R203 bedroom A4\nroom R204 bedroom A5\nroom R205 bedroom A6\nroom R206 bedroom A7\nroom R207 bedroom A8\nroom R208 bedroom A9\nroom R209 bedroom A10\nroom R210 bedroom A11\nroom R211 bedroom A12\nroom R212 bedroom A13\nroom R213 bedroom A14\nroom R214 bedroom C1\nroom R215 bedroom C2\nroom R216 bedroom C3\nroom R217 bedroom C4\nroom R218 bedroom C5\nroom R219 bedroom C6\nroom R220 bedroom C7\nroom R221 bedroom C8\nroom R222 bedroom C9\nroom R223 bedroom C10\nroom R224 bedroom C11\nroom R225 bedroom C12\nroom R226 bedroom C13\nroom R227 bedroom C14\nroom R228 bedroom E1\nroom R229 bedroom E2\nroom R230 bedroom E3\nroom R231 bedroom E4\nroom R232 bedroom E5\nroom R233 bedroom E6\nroom R234 bedroom E7\nroom R235 bedroom E8\nroom R236 bedroom E9\nroom R237 bedroom E10\nroom R238 bedroom E11\nroom R239 bedroom E12\nroom R240 bedroom E13\nroom R241 bedroom E14\nroom R242 bedroom G1\nroom R243 bedroom G2\nroom R244 bedroom G3\nroom R245 bedroom G4\nroom R246 bedroom G5\nroom R247 bedroom G6\nroom R248 bedroom G7\nroom R249 bedroom G8\nroom R250 bedroom G9\nroom R251 bathroom G10\nroom R252 bathroom G11\nroom R253 bathroom G12\nroom R254 bathroom G13\nroom R255 bathroom G14\nroom R256 bathroom I1\nroom R257 bathroom I2\nroom R258 bathroom I3\nroom R259 bathroom I4\nroom R260 bathroom I5\nroom R261 bathroom I6\nroom R262 bathroom I7\nroom R263 bathroom I8\nroom R264 bathroom I9\nroom R265 bathroom I10\nroom R266 bathroom I11\nroom R267 bathroom I12\nroom R268 bathroom I13\nroom R269 bathroom I14\nroom R270 bathroom K1\nroom R271 bathroom K2\nroom R272 bathroom K3\nroom R273 bathroom K4\nroom R274 bathroom K5\nroom R275 bathroom K6\nroom R276 bathroom K7\nroom R277 bathroom K8\nroom R278 bathroom K9\nroom R279 bathroom K10\nroom R280 bathroom K11\nroom R281 bathroom K12\nroom R282 bathroom K13\nroom R283 bathroom K14\nroom R284 bathroom M1\nroom R285 bathroom M2\nroom R286 bathroom M3\nroom R287 bathroom M4\nroom R288 bathroom M5\nroom R289 bathroom M6\nroom R290 bathroom M7\nroom R291 bathroom M8\nroom R292 bathroom M9\nroom R293 bathroom M10\nroom R294 bathroom M11\nroom R295 bathroom M12\nroom R296 bathroom M13\nroom R297 bathroom M14\nroom R298 bathroom O1\nroom R299 bathroom O2\nroom R300 hallway B1\nroom R301 hallway B2\nroom R302 hallway B3\nroom R303 hallway B4\nroom R304 hallway B5\nroom R305 hallway B6\nroom R306 hallway B7\nroom R307 hallway B8\nroom R308 hallway B9\nroom R309 hallway B10\nroom R310 hallway B11\nroom R311 hallway B12\nroom R312 hallway B13\nroom R313 hallway B14\nroom R314 hallway B15\nroom R315 hallway D1\nroom R316 hallway D2\nroom R317 hallway D3\nroom R318 hallway D4\nroom R319 hallway D5\nroom R320 hallway D6\nroom R321 hallway D7\nroom R322 hallway D8\nroom R323 hallway D9\nroom R324 hallway D10\nroom R325 hallway D11\nroom R326 hallway D12\nroom R327 hallway D13\nroom R328 hallway D14\nroom R329 hallway D15\nroom R330 hallway F1\nroom R331 hallway F2\nroom R332 hallway F3\nroom R333 hallway F4\nroom R334 hallway F5\nroom R335 hallway F6\nroom R336 hallway F7\nroom R337 hallway F8\nroom R338 hallway F9\nroom R339 hallway F10\nroom R340 hallway F11\nroom R341 hallway F12\nroom R342 hallway F13\nroom R343 hallway F14\nroom R344 hallway F15\nroom R345 hallway H1\nroom R346 hallway H2\nroom R347 hallway H3\nroom R348 hallway H4\nroom R349 hallway H5\nroom R350 hallway H6\nroom R351 hallway H7\nroom R352 hallway H8\nroom R353 hallway H9\nroom R354 hallway H10\nroom R355 hallway H11\nroom R356 hallway H12\nroom R357 hallway H13\nroom R358 hallway H14\nroom R359 hallway H15\nroom R360 hallway J1\nroom R361 hallway J2\nroom R362 hallway J3\nroom R363 hallway J4\nroom R364 hallway J5\nroom R365 hallway J6\nroom R366 hallway J7\nroom R367 hallway J8\nroom R368 hallway J9\nroom R369 hallway J10\nroom R370 hallway J11\nroom R371 hallway J12\nroom R372 hallway J13\nroom R373 hallway J14\nroom R374 hallway J15\nroom R375 hallway L1\nroom R376 hallway L2\nroom R377 hallway L3\nroom R378 hallway L4\nroom R379 hallway L5\nroom R380 hallway L6\nroom R381 hallway L7\nroom R382 hallway L8\nroom R383 hallway L9\nroom R384 hallway L10\nroom R385 hallway L11\nroom R386 hallway L12\nroom R387 hallway L13\nroom R388 hallway L14\nroom R389 hallway L15\nroom R390 hallway N1\nroom R391 hallway N2\nroom R392 hallway N3\nroom R393 hallway N4\nroom R394 hallway N5\nroom R395 hallway N6\nroom R396 hallway N7\nroom R397 hallway N8\nroom R398 hallway N9\nroom R399 hallway N10\nroom R400 hallway N11\nroom R401 hallway N12\nroom R402 hallway N13\nroom R403 hallway N14\nroom R404 hallway N15\nroom R405 hallway A15\nroom R406 hallway C15\nroom R407 hallway E15\nroom R408 hallway G15\nroom R409 hallway I15\nroom R410 hallway K15\nroom R411 hallway M15\nroom R412 hallway O3\nroom R413 hallway O4\nroom R414 hallway O5\nroom R415 hallway O6\nroom R416 hallway O7\nroom R417 hallway O8\nroom R418 hallway O9\nroom R419 hallway O10\nroom R420 hallway O11\nroom R421 hallway O12\nroom R422 hallway O13\nroom R423 hallway O14\nroom R424 hallway O15\ndoor R200|north\ndoor R200|R300\ndoor R201|R301\ndoor R202|R302\ndoor R203|R303\ndoor R204|R304\ndoor R205|R305\ndoor R206|R306\ndoor R207|R307\ndoor R208|R308\ndoor R209|R309\ndoor R210|R310\ndoor R211|R311\ndoor R212|R312\ndoor R213|R313\ndoor R214|R315\ndoor R215|R316\ndoor R216|R317\ndoor R217|R318\ndoor R218|R319\ndoor R219|R320\ndoor R220|R321\ndoor R221|R322\ndoor R222|R323\ndoor R223|R324\ndoor R224|R325\ndoor R225|R326\ndoor R226|R327\ndoor R227|R328\ndoor R228|R330\ndoor R229|R331\ndoor R230|R332\ndoor R231|R333\ndoor R232|R334\ndoor R233|R335\ndoor R234|R336\ndoor R235|R337\ndoor R236|R338\ndoor R237|R339\ndoor R238|R340\ndoor R239|R341\ndoor R240|R342\ndoor R241|R343\ndoor R242|R345\ndoor R243|R346\ndoor R244|R347\ndoor R245|R348\ndoor R246|R349\ndoor R247|R350\ndoor R248|R351\ndoor R249|R352\ndoor R250|R353\ndoor R251|R354\ndoor R252|R355\ndoor R253|R356\ndoor R254|R357\ndoor R255|R358\ndoor R256|R360\ndoor R257|R361\ndoor R258|R362\ndoor R259|R363\ndoor R260|R364\ndoor R261|R365\ndoor R262|R366\ndoor R263|R367\ndoor R264|R368\ndoor R265|R369\ndoor R266|R370\ndoor R267|R371\ndoor R268|R372\ndoor R269|R373\ndoor R270|R375\ndoor R271|R376\ndoor R272|R377\ndoor R273|R378\ndoor R274|R379\ndoor R275|R380\ndoor R276|R381\ndoor R277|R382\ndoor R278|R383\ndoor R279|R384\ndoor R280|R385\ndoor R281|R386\ndoor R282|R387\ndoor R283|R388\ndoor R284|R390\ndoor R285|R391\ndoor R286|R392\ndoor R287|R393\ndoor R288|R394\ndoor R289|R395\ndoor R290|R396\ndoor R291|R397\ndoor R292|R398\ndoor R293|R399\ndoor R294|R400\ndoor R295|R401\ndoor R296|R402\ndoor R297|R403\ndoor R298|R390\ndoor R299|R391\ndoor R300|R301\ndoor R301|R302\ndoor R302|R303\ndoor R303|R304\ndoor R304|R305\ndoor R305|R306\ndoor R306|R307\ndoor R307|R308\ndoor R308|R309\ndoor R309|R310\ndoor R310|R311\ndoor R311|R312\ndoor R312|R313\ndoor R313|R314\ndoor R315|R316\ndoor R316|R317\ndoor R317|R318\ndoor R318|R319\ndoor R319|R320\ndoor R320|R321\ndoor R321|R322\ndoor R322|R323\ndoor R323|R324\ndoor R324|R325\ndoor R325|R326\ndoor R326|R327\ndoor R327|R328\ndoor R328|R329\ndoor R330|R331\ndoor R331|R332\ndoor R332|R333\ndoor R333|R334\ndoor R334|R335\ndoor R335|R336\ndoor R336|R337\ndoor R337|R338\ndoor R338|R339\ndoor R339|R340\ndoor R340|R341\ndoor R341|R342\ndoor R342|R343\ndoor R343|R344\ndoor R345|R346\ndoor R346|R347\ndoor R347|R348\ndoor R348|R349\ndoor R349|R350\ndoor R350|R351\ndoor R351|R352\ndoor R352|R353\ndoor R353|R354\ndoor R354|R355\ndoor R355|R356\ndoor R356|R357\ndoor R357|R358\ndoor R358|R359\ndoor R360|R361\ndoor R361|R362\ndoor R362|R363\ndoor R363|R364\ndoor R364|R365\ndoor R365|R366\ndoor R366|R367\ndoor R367|R368\ndoor R368|R369\ndoor R369|R370\ndoor R370|R371\ndoor R371|R372\ndoor R372|R373\ndoor R373|R374\ndoor R375|R376\ndoor R376|R377\ndoor R377|R378\ndoor R378|R379\ndoor R379|R380\ndoor R380|R381\ndoor R381|R382\ndoor R382|R383\ndoor R383|R384\ndoor R384|R385\ndoor R385|R386\ndoor R386|R387\ndoor R387|R388\ndoor R388|R389\ndoor R390|R391\ndoor R391|R392\ndoor R392|R393\ndoor R393|R394\ndoor R394|R395\ndoor R395|R396\ndoor R396|R397\ndoor R397|R398\ndoor R398|R399\ndoor R399|R400\ndoor R400|R401\ndoor R401|R402\ndoor R402|R403\ndoor R403|R404\ndoor R412|R413\ndoor R413|R414\ndoor R414|R415\ndoor R415|R416\ndoor R416|R417\ndoor R417|R418\ndoor R418|R419\ndoor R419|R420\ndoor R420|R421\ndoor R421|R422\ndoor R422|R423\ndoor R423|R424\ndoor R405|R314\ndoor R314|R406\ndoor R406|R329\ndoor R329|R407\ndoor R407|R344\ndoor R344|R408\ndoor R408|R359\ndoor R359|R409\ndoor R409|R374\ndoor R374|R410\ndoor R410|R389\ndoor R389|R411\ndoor R411|R404\ndoor R404|R424",
+  "layout": "grid 15x15\n     1    2    3    4    5    6    7    8    9    10   11   12   13   14   15\nA    R55  R56  R57  R58  R59  R60  R61  R62  R63  R64  R65  R66  .    .    .\nB    R1   R2   R3   R4   R5   R6   R7   R8   R9   R10  R11  R12  .    .    .\nC    R67  R68  R69  R70  R71  R72  R73  R74  R75  R76  R77  R13  .    .    .\nD    R78  R79  R80  R81  R82  R83  R84  R85  R86  R87  R88  R14  .    .    .\nE    R26  R25  R24  R23  R22  R21  R20  R19  R18  R17  R16  R15  .    .    .\nF    R27  R89  R90  R91  R92  R93  R94  R95  R96  R97  R98  R99  .    .    .\nG    R28  R100 R101 R102 R103 R104 R105 R106 R107 R108 R109 R110 .    .    .\nH    R29  R30  R31  R32  R33  R34  R35  R36  R37  R38  R39  R40  .    .    .\nI    R111 R112 R113 R114 R115 R116 R117 R118 R119 R120 R121 R41  .    .    .\nJ    R122 R123 R124 R125 R126 R127 R128 R129 R130 R131 R132 R42  .    .    .\nK    R54  R53  R52  R51  R50  R49  R48  R47  R46  R45  R44  R43  .    .    .\nL    .    R133 R134 R135 R136 R137 R138 R139 R140 R141 R142 R143 .    .    .\nM    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\nN    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\nO    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .\n\nrooms\nR1   hallway       B1\nR2   hallway       B2\nR3   hallway       B3\nR4   hallway       B4\nR5   hallway       B5\nR6   hallway       B6\nR7   hallway       B7\nR8   hallway       B8\nR9   hallway       B9\nR10  hallway       B10\nR11  hallway       B11\nR12  hallway       B12\nR13  hallway       C12\nR14  hallway       D12\nR15  hallway       E12\nR16  hallway       E11\nR17  hallway       E10\nR18  hallway       E9\nR19  hallway       E8\nR20  hallway       E7\nR21  hallway       E6\nR22  hallway       E5\nR23  hallway       E4\nR24  hallway       E3\nR25  hallway       E2\nR26  hallway       E1\nR27  hallway       F1\nR28  hallway       G1\nR29  hallway       H1\nR30  hallway       H2\nR31  hallway       H3\nR32  hallway       H4\nR33  hallway       H5\nR34  hallway       H6\nR35  hallway       H7\nR36  hallway       H8\nR37  hallway       H9\nR38  hallway       H10\nR39  hallway       H11\nR40  hallway       H12\nR41  hallway       I12\nR42  hallway       J12\nR43  hallway       K12\nR44  hallway       K11\nR45  hallway       K10\nR46  hallway       K9\nR47  hallway       K8\nR48  hallway       K7\nR49  hallway       K6\nR50  hallway       K5\nR51  hallway       K4\nR52  hallway       K3\nR53  hallway       K2\nR54  hallway       K1\nR55  living room   A1\nR56  kitchen       A2\nR57  bedroom       A3\nR58  bathroom      A4\nR59  bedroom       A5\nR60  bathroom      A6\nR61  bedroom       A7\nR62  bathroom      A8\nR63  bedroom       A9\nR64  bathroom      A10\nR65  bedroom       A11\nR66  bathroom      A12\nR67  bedroom       C1\nR68  bathroom      C2\nR69  bedroom       C3\nR70  bathroom      C4\nR71  bedroom       C5\nR72  bathroom      C6\nR73  bedroom       C7\nR74  bathroom      C8\nR75  bedroom       C9\nR76  bathroom      C10\nR77  bedroom       C11\nR78  bedroom       D1\nR79  bathroom      D2\nR80  bedroom       D3\nR81  bathroom      D4\nR82  bedroom       D5\nR83  bathroom      D6\nR84  bedroom       D7\nR85  bathroom      D8\nR86  bedroom       D9\nR87  bathroom      D10\nR88  bedroom       D11\nR89  bedroom       F2\nR90  bathroom      F3\nR91  bedroom       F4\nR92  bathroom      F5\nR93  bedroom       F6\nR94  bathroom      F7\nR95  bedroom       F8\nR96  bathroom      F9\nR97  bedroom       F10\nR98  bathroom      F11\nR99  bedroom       F12\nR100 bedroom       G2\nR101 bathroom      G3\nR102 bedroom       G4\nR103 bathroom      G5\nR104 bedroom       G6\nR105 bathroom      G7\nR106 bedroom       G8\nR107 bathroom      G9\nR108 bedroom       G10\nR109 bathroom      G11\nR110 bedroom       G12\nR111 bathroom      I1\nR112 bedroom       I2\nR113 bathroom      I3\nR114 bedroom       I4\nR115 bathroom      I5\nR116 bedroom       I6\nR117 bathroom      I7\nR118 bedroom       I8\nR119 bathroom      I9\nR120 bedroom       I10\nR121 bathroom      I11\nR122 bathroom      J1\nR123 bedroom       J2\nR124 bathroom      J3\nR125 bedroom       J4\nR126 bathroom      J5\nR127 bedroom       J6\nR128 bathroom      J7\nR129 bedroom       J8\nR130 bathroom      J9\nR131 bedroom       J10\nR132 bathroom      J11\nR133 bathroom      L2\nR134 bedroom       L3\nR135 bathroom      L4\nR136 bedroom       L5\nR137 bathroom      L6\nR138 bedroom       L7\nR139 bathroom      L8\nR140 bedroom       L9\nR141 bathroom      L10\nR142 bedroom       L11\nR143 bathroom      L12\n\ndoors\nA1|north           entrance\nA1|B1\nA2|B2\nA3|B3\nA4|B4\nA5|B5\nA6|B6\nA7|B7\nA8|B8\nA9|B9\nA10|B10\nA11|B11\nA12|B12\nB1|B2\nB1|C1\nB2|B3\nB2|C2\nB3|B4\nB3|C3\nB4|B5\nB4|C4\nB5|B6\nB5|C5\nB6|B7\nB6|C6\nB7|B8\nB7|C7\nB8|B9\nB8|C8\nB9|B10\nB9|C9\nB10|B11\nB10|C10\nB11|B12\nB11|C11\nB12|C12\nC12|D12\nD1|E1\nD2|E2\nD3|E3\nD4|E4\nD5|E5\nD6|E6\nD7|E7\nD8|E8\nD9|E9\nD10|E10\nD11|E11\nD12|E12\nE1|E2\nE1|F1\nE2|E3\nE2|F2\nE3|E4\nE3|F3\nE4|E5\nE4|F4\nE5|E6\nE5|F5\nE6|E7\nE6|F6\nE7|E8\nE7|F7\nE8|E9\nE8|F8\nE9|E10\nE9|F9\nE10|E11\nE10|F10\nE11|E12\nE11|F11\nE12|F12\nF1|G1\nG1|H1\nG2|H2\nG3|H3\nG4|H4\nG5|H5\nG6|H6\nG7|H7\nG8|H8\nG9|H9\nG10|H10\nG11|H11\nG12|H12\nH1|H2\nH1|I1\nH2|H3\nH2|I2\nH3|H4\nH3|I3\nH4|H5\nH4|I4\nH5|H6\nH5|I5\nH6|H7\nH6|I6\nH7|H8\nH7|I7\nH8|H9\nH8|I8\nH9|H10\nH9|I9\nH10|H11\nH10|I10\nH11|H12\nH11|I11\nH12|I12\nI12|J12\nJ1|K1\nJ2|K2\nJ3|K3\nJ4|K4\nJ5|K5\nJ6|K6\nJ7|K7\nJ8|K8\nJ9|K9\nJ10|K10\nJ11|K11\nJ12|K12\nK1|K2\nK2|K3\nK2|L2\nK3|K4\nK3|L3\nK4|K5\nK4|L4\nK5|K6\nK5|L5\nK6|K7\nK6|L6\nK7|K8\nK7|L7\nK8|K9\nK8|L8\nK9|K10\nK9|L9\nK10|K11\nK10|L10\nK11|K12\nK11|L11\nK12|L12\n\nwindows",
+  "drawing": "run_0285\nVALID\n\n      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15\n  +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R55  |  R56  |  R57  |  R58  |  R59  |  R60  |  R61  |  R62  |  R63  |  R64  |  R65  |  R66  |\nA | living|kitchen|bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |   R1  |   R2  |   R3  |   R4  |   R5  |   R6  |   R7  |   R8  |   R9  |  R10  |  R11  |  R12  |\nB |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|\n  |                                                                                               |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |  R67  |  R68  |  R69  |  R70  |  R71  |  R72  |  R73  |  R74  |  R75  |  R76  |  R77  |  R13  |\nC |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|hallway|\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+\n  |  R78  |  R79  |  R80  |  R81  |  R82  |  R83  |  R84  |  R85  |  R86  |  R87  |  R88  |  R14  |\nD |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|hallway|\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |  R26  |  R25  |  R24  |  R23  |  R22  |  R21  |  R20  |  R19  |  R18  |  R17  |  R16  |  R15  |\nE |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|\n  |                                                                                               |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |  R27  |  R89  |  R90  |  R91  |  R92  |  R93  |  R94  |  R95  |  R96  |  R97  |  R98  |  R99  |\nF |hallway|bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n  |  R28  |  R100 |  R101 |  R102 |  R103 |  R104 |  R105 |  R106 |  R107 |  R108 |  R109 |  R110 |\nG |hallway|bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |  R29  |  R30  |  R31  |  R32  |  R33  |  R34  |  R35  |  R36  |  R37  |  R38  |  R39  |  R40  |\nH |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|\n  |                                                                                               |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |  R111 |  R112 |  R113 |  R114 |  R115 |  R116 |  R117 |  R118 |  R119 |  R120 |  R121 |  R41  |\nI |  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |hallway|\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+\n  |  R122 |  R123 |  R124 |  R125 |  R126 |  R127 |  R128 |  R129 |  R130 |  R131 |  R132 |  R42  |\nJ |  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |hallway|\n  |       |       |       |       |       |       |       |       |       |       |       |       |\n  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n  |  R54  |  R53  |  R52  |  R51  |  R50  |  R49  |  R48  |  R47  |  R46  |  R45  |  R44  |  R43  |\nK |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|\n  |                                                                                               |\n  +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+\n          |  R133 |  R134 |  R135 |  R136 |  R137 |  R138 |  R139 |  R140 |  R141 |  R142 |  R143 |\nL         |  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |\n          |       |       |       |       |       |       |       |       |       |       |       |\n          +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+\n\nM\n\n\n\nN\n\n\n\nO\n\n\n\ncorridor rooms    0\nprivacy order     0.01\nwalking distance  19.75\ncompactness       0\n\nLegend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window",
+  "valid": null,
+  "violations": [],
+  "scores": null,
+  "cost": null,
+  "cut_off": false,
+  "agent_usage": {
+    "input_tokens": 2760,
+    "cache_creation_input_tokens": 0,
+    "cache_read_input_tokens": 640,
+    "output_tokens": 13842,
+    "thinking_tokens": 0,
+    "cost_usd": 0.008721,
+    "duration_ms": 64895
+  },
+  "agent_cli": "deepseek-api",
+  "agent_version": "1",
+  "model": "deepseek-flash",
+  "model_label": "deepseekflash",
+  "effort": "low",
+  "call_duration_ms": 65048,
+  "chain_started_at": "2026-11-07T17:53:16+00:00",
+  "chain_elapsed_ms": 4985071,
+  "chain_timing_estimated": false,
+  "agent_metadata": {
+    "deepseek_stop_reason": "end_turn",
+    "deepseek_model": "deepseek-flash",
+    "deepseek_effort": "low"
+  }
+}

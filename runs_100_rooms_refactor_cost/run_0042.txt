@@ -1,0 +1,104 @@
+label: deepseekflash-low-h1-c1-all20   at 2026-11-08T11:10:31+00:00   commands: 28
+
+SCRIPT
+room R7001 hallway M2
+room R7002 hallway M5
+room R7003 hallway M8
+room R7004 hallway M11
+room R7005 bedroom M1
+room R7006 bedroom M3
+room R7007 bathroom N2
+room R7008 bedroom M4
+room R7009 bedroom M6
+room R7010 bathroom N5
+room R7011 bathroom M7
+room R7012 bathroom M9
+room R7013 bedroom N8
+room R7014 bathroom M12
+door L2|M2
+door L5|M5
+door L8|M8
+door L11|M11
+door M1|M2
+door M2|M3
+door M2|N2
+door M4|M5
+door M5|M6
+door M5|N5
+door M7|M8
+door M8|M9
+door M8|N8
+door M11|M12
+
+run_0042
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  | R6001 | R5001 | R5002 | R5003 | R5004 | R5005 | R5006 | R5007 | R5008 | R5009 | R5010 | R6003 |
+A | living|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|bedroom|
+  |                                                                                               |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6002 | R5011 | R6004 | R6005 | R5012 | R6006 | R6007 | R5013 | R6008 | R6009 | R5014 | R6010 |
+B |kitchen|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6011 | R5015 | R6012 | R6013 | R5016 | R6014 | R6015 | R5017 | R6016 | R6017 | R5018 | R6018 |
+C |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6019 | R5019 | R6020 | R6021 | R5020 | R6022 | R6023 | R5021 | R6024 | R6025 | R5022 | R6026 |
+D |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6027 | R5023 | R6028 | R6029 | R5024 | R6030 | R6031 | R5025 | R6032 | R6033 | R5026 | R6034 |
+E |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6035 | R5027 | R6036 | R6037 | R5028 | R6038 | R6039 | R5029 | R6040 | R6041 | R5030 | R6042 |
+F |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6043 | R5031 | R6044 | R6045 | R5032 | R6046 | R6047 | R5033 | R6048 | R6049 | R5034 | R6050 |
+G |bedroom|hallway|bedroom|bedroom|hallway|bedroom|  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6051 | R5035 | R6052 | R6053 | R5036 | R6054 | R6055 | R5037 | R6056 | R6057 | R5038 | R6058 |
+H |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6059 | R5039 | R6060 | R6061 | R5040 | R6062 | R6063 | R5041 | R6064 | R6065 | R5042 | R6066 |
+I |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6067 | R5043 | R6068 | R6069 | R5044 | R6070 | R6071 | R5045 | R6072 | R6073 | R5046 | R6074 |
+J |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6075 | R5047 | R6076 | R6077 | R5048 | R6078 | R6079 | R5049 | R6080 | R6081 | R5050 | R6082 |
+K |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R6083 | R5051 | R6084 | R6085 | R5052 | R6086 | R6087 | R5053 | R6088 | R6089 | R5054 | R6090 |
+L |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R7005 | R7001 | R7006 | R7008 | R7002 | R7009 | R7011 | R7003 | R7012 |       | R7004 | R7014 |
+M |bedroom|hallway|bedroom|bedroom|hallway|bedroom|  bath |hallway|  bath |       |hallway|  bath |
+  |                       |                       |                       |       |               |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+       +-------+-------+
+          | R7007 |               | R7010 |               | R7013 |
+N         |  bath |               |  bath |               |bedroom|
+          |       |               |       |               |       |
+          +-------+               +-------+               +-------+
+
+O
+
+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  15.28
+compactness       6
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

@@ -1,0 +1,117 @@
+label: deepseekflash-low-h1-c1-all17   at 2026-11-08T15:29:59+00:00   commands: 41
+
+SCRIPT
+room R109 hallway L3
+room R110 hallway L4
+room R111 hallway L5
+room R112 hallway L6
+room R113 hallway L7
+room R114 hallway L8
+room R115 hallway L9
+room R116 bedroom K5
+room R117 bathroom K6
+room R118 bedroom K7
+room R119 bathroom K8
+room R120 bedroom K9
+room R121 bathroom M3
+room R122 bedroom M4
+room R123 bathroom M5
+room R124 bedroom M6
+room R125 bathroom M7
+room R126 bedroom M8
+room R127 bathroom M9
+room R128 bathroom L10
+door K3|L3
+door L3|L4
+door L4|L5
+door L5|L6
+door L6|L7
+door L7|L8
+door L8|L9
+door K5|L5
+door K6|L6
+door K7|L7
+door K8|L8
+door K9|L9
+door M3|L3
+door M4|L4
+door M5|L5
+door M6|L6
+door M7|L7
+door M8|L8
+door M9|L9
+door L2|L3
+door L10|L9
+
+run_0036
+INVALID (rule 4)
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |   R2  |   R1  |   R3  |  R13  |  R14  |  R20  |  R39  |  R42  |  R41  |  R46  |  R55  |  R68  |  R87  |  R95  |  R103 |
+A |kitchen| living|bedroom|bedroom|  bath |  bath |  bath |hallway|  bath |  bath |bedroom|bedroom|bedroom|bedroom|bedroom|
+  |                                                                                                                       |
+  +-------+-[   ]-+-------+-------+-------+-------+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-------+-------+-------+-------+
+  |   R6  |   R5  |   R7  |  R11  |  R16  |  R28  |  R45  |  R43  |  R51  |  R52  |  R74  |  R77  |  R88  |  R90  |
+B |  bath |hallway|bedroom|bedroom|  bath |  bath |bedroom|bedroom|bedroom|  bath |hallway|hallway|hallway|bedroom|
+  |                                       |       |       |               |                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-------+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+  |  R10  |   R8  |   R9  |  R15  |  R17  |  R21  |  R31  |  R49  |  R53  |  R60  |  R75  |  R79  |  R91  |  R92  |
+C |  bath |  bath |bedroom|bedroom|bedroom|bedroom|  bath |bedroom|bedroom|  bath |bedroom|bedroom|hallway|bedroom|
+  |       |       |                                       |               |       |       |       |               |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-------+-------+-[   ]-+-------+
+  |  R24  |  R12  |  R18  |  R19  |  R23  |  R25  |  R35  |  R64  |  R54  |  R83  |  R101 |  R104 |  R93  |  R94  |
+D |  bath |  bath |  bath |bedroom|bedroom|bedroom|  bath |  bath |  bath |bedroom|bedroom|  bath |  bath |  bath |
+  |               |       |       |       |       |       |       |                       |                       |
+  +-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-------+-------+-------+-------+-------+
+  |  R38  |  R30  |  R29  |  R22  |  R27  |  R47  |  R57  |  R76  |  R96  |  R102 |
+E |bedroom|bedroom|hallway|  bath |bedroom|bedroom|bedroom|  bath |  bath |  bath |
+  |                               |       |               |                       |
+  +-------+-[   ]-+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R44  |  R34  |  R26  |  R33  |  R37  |  R61  |  R70  |
+F |  bath |bedroom|  bath |  bath |  bath |bedroom|bedroom|
+  |               |                                       |
+  +-------+-------+-[   ]-+-------+-------+-------+-------+
+  |  R59  |  R40  |  R32  |  R36  |  R62  |  R69  |
+G |bedroom|bedroom|bedroom|bedroom|  bath |  bath |
+  |                                               |
+  +-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+
+  |  R73  |  R58  |  R48  |  R50  |  R63  |  R99  |
+H |  bath |  bath |  bath |  bath |bedroom|  bath |
+  |       |                       |       |       |
+  +-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+          |  R66  |  R65  |  R80  |  R84  |  R97  |  R98  |
+I         |bedroom|hallway|hallway|hallway|hallway|bedroom|
+          |                                               |
+          +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+          |  R71  |  R105 |  R82  |  R85  |  R100 |
+J         |  bath |hallway|  bath |  bath |  bath |
+          |               |       |       |       |
+          +-------+-[   ]-+-------+-------+-------+-------+-------+-------+
+          |  R107 |  R106 |  R108 |  R116 |  R117 |  R118 |  R119 |  R120 |
+K         |  bath |hallway|bedroom|bedroom|  bath |bedroom|  bath |bedroom|
+          |                       |       |       |       |       |       |
+          +-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+                  |  R109 |  R110 |  R111 |  R112 |  R113 |  R114 |  R115 |  R128 |
+L                 |hallway|hallway|hallway|hallway|hallway|hallway|hallway|  bath |
+                  E                                                               |
+                  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+                  |  R121 |  R122 |  R123 |  R124 |  R125 |  R126 |  R127 |
+M                 |  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |
+                  |       |       |       |       |       |       |       |
+                  +-------+-------+-------+-------+-------+-------+-------+
+
+N
+
+
+
+O
+
+
+
+scores: none (house is invalid)
+
+Broken rules:
+  rule 4 (one entrance): R109 (hallway) has a door in an outer wall; only the living room may
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

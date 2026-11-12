@@ -1,0 +1,510 @@
+label: deepseekflash-low-h1-c1-step21   at 2026-11-08T11:14:13+00:00   commands: 434
+
+SCRIPT
+remove room R5001
+remove room R5002
+remove room R5003
+remove room R5004
+remove room R5005
+remove room R5006
+remove room R5007
+remove room R5008
+remove room R5009
+remove room R5010
+remove room R5011
+remove room R5012
+remove room R5013
+remove room R5014
+remove room R5015
+remove room R5016
+remove room R5017
+remove room R5018
+remove room R5019
+remove room R5020
+remove room R5021
+remove room R5022
+remove room R5023
+remove room R5024
+remove room R5025
+remove room R5026
+remove room R5027
+remove room R5028
+remove room R5029
+remove room R5030
+remove room R5031
+remove room R5032
+remove room R5033
+remove room R5034
+remove room R5035
+remove room R5036
+remove room R5037
+remove room R5038
+remove room R5039
+remove room R5040
+remove room R5041
+remove room R5042
+remove room R5043
+remove room R5044
+remove room R5045
+remove room R5046
+remove room R5047
+remove room R5048
+remove room R5049
+remove room R5050
+remove room R5051
+remove room R5052
+remove room R5053
+remove room R5054
+remove room R6001
+remove room R6002
+remove room R6003
+remove room R6004
+remove room R6005
+remove room R6006
+remove room R6007
+remove room R6008
+remove room R6009
+remove room R6010
+remove room R6011
+remove room R6012
+remove room R6013
+remove room R6014
+remove room R6015
+remove room R6016
+remove room R6017
+remove room R6018
+remove room R6019
+remove room R6020
+remove room R6021
+remove room R6022
+remove room R6023
+remove room R6024
+remove room R6025
+remove room R6026
+remove room R6027
+remove room R6028
+remove room R6029
+remove room R6030
+remove room R6031
+remove room R6032
+remove room R6033
+remove room R6034
+remove room R6035
+remove room R6036
+remove room R6037
+remove room R6038
+remove room R6039
+remove room R6040
+remove room R6041
+remove room R6042
+remove room R6043
+remove room R6044
+remove room R6045
+remove room R6046
+remove room R6047
+remove room R6048
+remove room R6049
+remove room R6050
+remove room R6051
+remove room R6052
+remove room R6053
+remove room R6054
+remove room R6055
+remove room R6056
+remove room R6057
+remove room R6058
+remove room R6059
+remove room R6060
+remove room R6061
+remove room R6062
+remove room R6063
+remove room R6064
+remove room R6065
+remove room R6066
+remove room R6067
+remove room R6068
+remove room R6069
+remove room R6070
+remove room R6071
+remove room R6072
+remove room R6073
+remove room R6074
+remove room R6075
+remove room R6076
+remove room R6077
+remove room R6078
+remove room R6079
+remove room R6080
+remove room R6081
+remove room R6082
+remove room R6083
+remove room R6084
+remove room R6085
+remove room R6086
+remove room R6087
+remove room R6088
+remove room R6089
+remove room R6090
+room R4001 living room A1
+room R4002 kitchen A12
+room R2001 bedroom B1
+room R2002 bedroom B3
+room R2003 bedroom B4
+room R2004 bedroom B6
+room R2005 bedroom B7
+room R2006 bedroom B9
+room R2007 bedroom B10
+room R2008 bedroom B12
+room R2009 bedroom C1
+room R2010 bedroom C3
+room R2011 bedroom C4
+room R2012 bedroom C6
+room R2013 bedroom C7
+room R2014 bedroom C9
+room R2015 bedroom C10
+room R2016 bedroom C12
+room R2017 bedroom D1
+room R2018 bedroom D3
+room R2019 bedroom D4
+room R2020 bedroom D6
+room R2021 bedroom D7
+room R2022 bedroom D9
+room R2023 bedroom D10
+room R2024 bedroom D12
+room R2025 bedroom E1
+room R2026 bedroom E3
+room R2027 bedroom E4
+room R2028 bedroom E6
+room R2029 bedroom E7
+room R2030 bedroom E9
+room R2031 bedroom E10
+room R2032 bedroom E12
+room R2033 bedroom F1
+room R2034 bedroom F3
+room R2035 bedroom F4
+room R2036 bedroom F6
+room R2037 bedroom F7
+room R2038 bedroom F9
+room R2039 bedroom F10
+room R2040 bedroom F12
+room R2041 bedroom G1
+room R2042 bedroom G3
+room R2043 bedroom G4
+room R2044 bedroom G6
+room R2045 bedroom M2
+room R3001 bathroom G7
+room R3002 bathroom G9
+room R3003 bathroom G10
+room R3004 bathroom G12
+room R3005 bathroom H1
+room R3006 bathroom H3
+room R3007 bathroom H4
+room R3008 bathroom H6
+room R3009 bathroom H7
+room R3010 bathroom H9
+room R3011 bathroom H10
+room R3012 bathroom H12
+room R3013 bathroom I1
+room R3014 bathroom I3
+room R3015 bathroom I4
+room R3016 bathroom I6
+room R3017 bathroom I7
+room R3018 bathroom I9
+room R3019 bathroom I10
+room R3020 bathroom I12
+room R3021 bathroom J1
+room R3022 bathroom J3
+room R3023 bathroom J4
+room R3024 bathroom J6
+room R3025 bathroom J7
+room R3026 bathroom J9
+room R3027 bathroom J10
+room R3028 bathroom J12
+room R3029 bathroom K1
+room R3030 bathroom K3
+room R3031 bathroom K4
+room R3032 bathroom K6
+room R3033 bathroom K7
+room R3034 bathroom K9
+room R3035 bathroom K10
+room R3036 bathroom K12
+room R3037 bathroom L1
+room R3038 bathroom L3
+room R3039 bathroom L4
+room R3040 bathroom L6
+room R3041 bathroom L7
+room R3042 bathroom L9
+room R3043 bathroom L10
+room R3044 bathroom L12
+room R7001 hallway A2
+room R7002 hallway A3
+room R7003 hallway A4
+room R7004 hallway A5
+room R7005 hallway A6
+room R7006 hallway A7
+room R7007 hallway A8
+room R7008 hallway A9
+room R7009 hallway A10
+room R7010 hallway A11
+room R7011 hallway B2
+room R7012 hallway B5
+room R7013 hallway B8
+room R7014 hallway B11
+room R7015 hallway C2
+room R7016 hallway C5
+room R7017 hallway C8
+room R7018 hallway C11
+room R7019 hallway D2
+room R7020 hallway D5
+room R7021 hallway D8
+room R7022 hallway D11
+room R7023 hallway E2
+room R7024 hallway E5
+room R7025 hallway E8
+room R7026 hallway E11
+room R7027 hallway F2
+room R7028 hallway F5
+room R7029 hallway F8
+room R7030 hallway F11
+room R7031 hallway G2
+room R7032 hallway G5
+room R7033 hallway G8
+room R7034 hallway G11
+room R7035 hallway H2
+room R7036 hallway H5
+room R7037 hallway H8
+room R7038 hallway H11
+room R7039 hallway I2
+room R7040 hallway I5
+room R7041 hallway I8
+room R7042 hallway I11
+room R7043 hallway J2
+room R7044 hallway J5
+room R7045 hallway J8
+room R7046 hallway J11
+room R7047 hallway K2
+room R7048 hallway K5
+room R7049 hallway K8
+room R7050 hallway K11
+room R7051 hallway L2
+room R7052 hallway L5
+room R7053 hallway L8
+room R7054 hallway L11
+door A1|north
+door A1|A2
+door A11|A12
+door A2|A3
+door A3|A4
+door A4|A5
+door A5|A6
+door A6|A7
+door A7|A8
+door A8|A9
+door A9|A10
+door A10|A11
+door A2|B2
+door B2|C2
+door C2|D2
+door D2|E2
+door E2|F2
+door F2|G2
+door G2|H2
+door H2|I2
+door I2|J2
+door J2|K2
+door K2|L2
+door A5|B5
+door B5|C5
+door C5|D5
+door D5|E5
+door E5|F5
+door F5|G5
+door G5|H5
+door H5|I5
+door I5|J5
+door J5|K5
+door K5|L5
+door A8|B8
+door B8|C8
+door C8|D8
+door D8|E8
+door E8|F8
+door F8|G8
+door G8|H8
+door H8|I8
+door I8|J8
+door J8|K8
+door K8|L8
+door A11|B11
+door B11|C11
+door C11|D11
+door D11|E11
+door E11|F11
+door F11|G11
+door G11|H11
+door H11|I11
+door I11|J11
+door J11|K11
+door K11|L11
+door B1|B2
+door B2|B3
+door B4|B5
+door B5|B6
+door B7|B8
+door B8|B9
+door B10|B11
+door B11|B12
+door C1|C2
+door C2|C3
+door C4|C5
+door C5|C6
+door C7|C8
+door C8|C9
+door C10|C11
+door C11|C12
+door D1|D2
+door D2|D3
+door D4|D5
+door D5|D6
+door D7|D8
+door D8|D9
+door D10|D11
+door D11|D12
+door E1|E2
+door E2|E3
+door E4|E5
+door E5|E6
+door E7|E8
+door E8|E9
+door E10|E11
+door E11|E12
+door F1|F2
+door F2|F3
+door F4|F5
+door F5|F6
+door F7|F8
+door F8|F9
+door F10|F11
+door F11|F12
+door G1|G2
+door G2|G3
+door G4|G5
+door G5|G6
+door G7|G8
+door G8|G9
+door G10|G11
+door G11|G12
+door H1|H2
+door H2|H3
+door H4|H5
+door H5|H6
+door H7|H8
+door H8|H9
+door H10|H11
+door H11|H12
+door I1|I2
+door I2|I3
+door I4|I5
+door I5|I6
+door I7|I8
+door I8|I9
+door I10|I11
+door I11|I12
+door J1|J2
+door J2|J3
+door J4|J5
+door J5|J6
+door J7|J8
+door J8|J9
+door J10|J11
+door J11|J12
+door K1|K2
+door K2|K3
+door K4|K5
+door K5|K6
+door K7|K8
+door K8|K9
+door K10|K11
+door K11|K12
+door L1|L2
+door L2|L3
+door L4|L5
+door L5|L6
+door L7|L8
+door L8|L9
+door L10|L11
+door L11|L12
+door L2|M2
+
+run_0043
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  | R4001 | R7001 | R7002 | R7003 | R7004 | R7005 | R7006 | R7007 | R7008 | R7009 | R7010 | R4002 |
+A | living|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|kitchen|
+  |                                                                                               |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2001 | R7011 | R2002 | R2003 | R7012 | R2004 | R2005 | R7013 | R2006 | R2007 | R7014 | R2008 |
+B |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2009 | R7015 | R2010 | R2011 | R7016 | R2012 | R2013 | R7017 | R2014 | R2015 | R7018 | R2016 |
+C |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2017 | R7019 | R2018 | R2019 | R7020 | R2020 | R2021 | R7021 | R2022 | R2023 | R7022 | R2024 |
+D |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2025 | R7023 | R2026 | R2027 | R7024 | R2028 | R2029 | R7025 | R2030 | R2031 | R7026 | R2032 |
+E |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2033 | R7027 | R2034 | R2035 | R7028 | R2036 | R2037 | R7029 | R2038 | R2039 | R7030 | R2040 |
+F |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2041 | R7031 | R2042 | R2043 | R7032 | R2044 | R3001 | R7033 | R3002 | R3003 | R7034 | R3004 |
+G |bedroom|hallway|bedroom|bedroom|hallway|bedroom|  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3005 | R7035 | R3006 | R3007 | R7036 | R3008 | R3009 | R7037 | R3010 | R3011 | R7038 | R3012 |
+H |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3013 | R7039 | R3014 | R3015 | R7040 | R3016 | R3017 | R7041 | R3018 | R3019 | R7042 | R3020 |
+I |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3021 | R7043 | R3022 | R3023 | R7044 | R3024 | R3025 | R7045 | R3026 | R3027 | R7046 | R3028 |
+J |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3029 | R7047 | R3030 | R3031 | R7048 | R3032 | R3033 | R7049 | R3034 | R3035 | R7050 | R3036 |
+K |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3037 | R7051 | R3038 | R3039 | R7052 | R3040 | R3041 | R7053 | R3042 | R3043 | R7054 | R3044 |
+L |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+          | R2045 |
+M         |bedroom|
+          |       |
+          +-------+
+
+N
+
+
+
+O
+
+
+
+corridor rooms    0
+privacy order     0.19
+walking distance  14.41
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

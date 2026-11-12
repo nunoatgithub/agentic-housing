@@ -1,0 +1,255 @@
+label: deepseekflash-low-h3-c7-all25   at 2026-11-12T12:59:26+00:00   commands: 15
+
+SCRIPT
+remove room R246
+remove room R276
+remove room R306
+remove room R336
+remove room R253
+room R1 bedroom D1
+room R2 bathroom F1
+room R3 bathroom H1
+room R4 bedroom J1
+room R5 bathroom D8
+door C1|D1
+door E1|F1
+door H1|I1
+door I1|J1
+door C8|D8
+
+run_0365
+INVALID (rule 1)
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |  R201 |  R202 |  R203 |  R204 |  R205 |  R206 |  R207 |  R208 |  R209 |  R210 |  R211 |  R212 |  R213 |  R214 |  R215 |
+A |hallway|hallway|hallway|hallway|bedroom|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                       |                                                                               |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R216 |  R217 |  R218 |  R219 |  R220 |  R221 |  R222 |  R223 |  R224 |  R225 |  R226 |  R227 |  R228 |  R229 |  R230 |
+B |hallway|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|bedroom|bedroom|bedroom|bedroom|bedroom|kitchen| living|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       E
+  +-[   ]-+-------+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R231 |  R232 |  R233 |  R234 |  R235 |  R236 |  R237 |  R238 |  R239 |  R240 |  R241 |  R242 |  R243 |  R244 |  R245 |
+C |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |   R1  |  R247 |  R248 |  R249 |  R250 |  R251 |  R252 |   R5  |  R254 |  R255 |  R256 |  R257 |  R258 |  R259 |  R260 |
+D |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|  bath |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |  R261 |  R262 |  R263 |  R264 |  R265 |  R266 |  R267 |  R268 |  R269 |  R270 |  R271 |  R272 |  R273 |  R274 |  R275 |
+E |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |   R2  |  R277 |  R278 |  R279 |  R280 |  R281 |  R282 |  R283 |  R284 |  R285 |  R286 |  R287 |  R288 |  R289 |  R290 |
+F |  bath |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R291 |  R292 |  R293 |  R294 |  R295 |  R296 |  R297 |  R298 |  R299 |  R300 |  R301 |  R302 |  R303 |  R304 |  R305 |
+G |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |   R3  |  R307 |  R308 |  R309 |  R310 |  R311 |  R312 |  R313 |  R314 |  R315 |  R316 |  R317 |  R318 |  R319 |  R320 |
+H |  bath |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|bedroom|bedroom|bedroom|  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R321 |  R322 |  R323 |  R324 |  R325 |  R326 |  R327 |  R328 |  R329 |  R330 |  R331 |  R332 |  R333 |  R334 |  R335 |
+I |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |   R4  |  R337 |  R338 |  R339 |  R340 |  R341 |  R342 |  R343 |  R344 |  R345 |  R346 |  R347 |  R348 |  R349 |  R350 |
+J |bedroom|  bath |  bath |  bath |  bath |  bath |  bath |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R351 |  R352 |  R353 |  R354 |  R355 |  R356 |  R357 |  R358 |  R359 |  R360 |  R361 |  R362 |  R363 |  R364 |  R365 |
+K |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R366 |  R367 |  R368 |  R369 |  R370 |  R371 |  R372 |  R373 |  R374 |  R375 |  R376 |  R377 |  R378 |  R379 |  R380 |
+L |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |  R381 |  R382 |  R383 |  R384 |  R385 |  R386 |  R387 |  R388 |  R389 |  R390 |  R391 |  R392 |  R393 |  R394 |  R395 |
+M |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R396 |  R397 |  R398 |  R399 |  R400 |  R401 |  R402 |  R403 |  R404 |  R405 |  R406 |  R407 |  R408 |  R409 |  R410 |
+N |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |  R411 |  R412 |  R413 |  R414 |  R415 |  R416 |  R417 |  R418 |  R419 |  R420 |  R421 |  R422 |  R423 |  R424 |  R426 |
+O |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|  bath |
+  |                                                                                                                       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+scores: none (house is invalid)
+
+Broken rules:
+  rule 1 (circulation): R2 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R3 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R4 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R261 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R262 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R263 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R264 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R265 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R266 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R267 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R268 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R269 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R270 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R271 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R272 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R273 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R274 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R275 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R277 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R278 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R279 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R280 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R281 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R282 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R283 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R284 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R285 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R286 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R287 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R288 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R289 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R290 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R291 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R292 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R293 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R294 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R295 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R296 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R297 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R298 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R299 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R300 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R301 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R302 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R303 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R304 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R305 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R307 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R308 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R309 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R310 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R311 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R312 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R313 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R314 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R315 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R316 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R317 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R318 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R319 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R320 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R321 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R322 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R323 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R324 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R325 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R326 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R327 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R328 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R329 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R330 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R331 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R332 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R333 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R334 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R335 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R337 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R338 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R339 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R340 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R341 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R342 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R343 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R344 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R345 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R346 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R347 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R348 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R349 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R350 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R351 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R352 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R353 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R354 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R355 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R356 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R357 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R358 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R359 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R360 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R361 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R362 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R363 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R364 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R365 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R366 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R367 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R368 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R369 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R370 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R371 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R372 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R373 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R374 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R375 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R376 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R377 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R378 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R379 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R380 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R381 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R382 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R383 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R384 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R385 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R386 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R387 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R388 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R389 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R390 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R391 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R392 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R393 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R394 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R395 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R396 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R397 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R398 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R399 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R400 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R401 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R402 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R403 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R404 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R405 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R406 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R407 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R408 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R409 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R410 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R411 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R412 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R413 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R414 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R415 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R416 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R417 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R418 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R419 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R420 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R421 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R422 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R423 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R424 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R426 (bathroom) cannot be reached from the entrance through doors
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

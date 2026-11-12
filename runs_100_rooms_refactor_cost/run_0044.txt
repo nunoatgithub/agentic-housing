@@ -1,0 +1,100 @@
+label: deepseekflash-low-h1-c1-all21   at 2026-11-08T11:15:43+00:00   commands: 24
+
+SCRIPT
+room R8001 hallway M5
+room R8002 hallway M8
+room R8003 hallway M11
+room R5001 bedroom M4
+room R5002 bedroom M6
+room R5003 bedroom M7
+room R5004 bedroom M9
+room R5005 bathroom N5
+room R5006 bathroom N8
+room R5007 bathroom N11
+room R5008 bathroom M10
+room R5009 bathroom M12
+door L5|M5
+door L8|M8
+door L11|M11
+door M4|M5
+door M5|M6
+door M5|N5
+door M7|M8
+door M8|M9
+door M8|N8
+door M10|M11
+door M11|M12
+door M11|N11
+
+run_0044
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  | R4001 | R7001 | R7002 | R7003 | R7004 | R7005 | R7006 | R7007 | R7008 | R7009 | R7010 | R4002 |
+A | living|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|kitchen|
+  |                                                                                               |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2001 | R7011 | R2002 | R2003 | R7012 | R2004 | R2005 | R7013 | R2006 | R2007 | R7014 | R2008 |
+B |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2009 | R7015 | R2010 | R2011 | R7016 | R2012 | R2013 | R7017 | R2014 | R2015 | R7018 | R2016 |
+C |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2017 | R7019 | R2018 | R2019 | R7020 | R2020 | R2021 | R7021 | R2022 | R2023 | R7022 | R2024 |
+D |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2025 | R7023 | R2026 | R2027 | R7024 | R2028 | R2029 | R7025 | R2030 | R2031 | R7026 | R2032 |
+E |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2033 | R7027 | R2034 | R2035 | R7028 | R2036 | R2037 | R7029 | R2038 | R2039 | R7030 | R2040 |
+F |bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|bedroom|hallway|bedroom|
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R2041 | R7031 | R2042 | R2043 | R7032 | R2044 | R3001 | R7033 | R3002 | R3003 | R7034 | R3004 |
+G |bedroom|hallway|bedroom|bedroom|hallway|bedroom|  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3005 | R7035 | R3006 | R3007 | R7036 | R3008 | R3009 | R7037 | R3010 | R3011 | R7038 | R3012 |
+H |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3013 | R7039 | R3014 | R3015 | R7040 | R3016 | R3017 | R7041 | R3018 | R3019 | R7042 | R3020 |
+I |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3021 | R7043 | R3022 | R3023 | R7044 | R3024 | R3025 | R7045 | R3026 | R3027 | R7046 | R3028 |
+J |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3029 | R7047 | R3030 | R3031 | R7048 | R3032 | R3033 | R7049 | R3034 | R3035 | R7050 | R3036 |
+K |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+  | R3037 | R7051 | R3038 | R3039 | R7052 | R3040 | R3041 | R7053 | R3042 | R3043 | R7054 | R3044 |
+L |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |  bath |hallway|  bath |
+  |                       |                       |                       |                       |
+  +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+          | R2045 |       | R5001 | R8001 | R5002 | R5003 | R8002 | R5004 | R5008 | R8003 | R5009 |
+M         |bedroom|       |bedroom|hallway|bedroom|bedroom|hallway|bedroom|  bath |hallway|  bath |
+          |       |       |                       |                       |                       |
+          +-------+       +-------+-[   ]-+-------+-------+-[   ]-+-------+-------+-[   ]-+-------+
+                                  | R5005 |               | R5006 |               | R5007 |
+N                                 |  bath |               |  bath |               |  bath |
+                                  |       |               |       |               |       |
+                                  +-------+               +-------+               +-------+
+
+O
+
+
+
+corridor rooms    0
+privacy order     0.17
+walking distance  15.20
+compactness       6
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

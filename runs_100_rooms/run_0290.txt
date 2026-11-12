@@ -1,0 +1,128 @@
+label: deepseekflash-low-h1-c5-all18   at 2026-11-12T11:46:33+00:00   commands: 52
+
+SCRIPT
+remove room R121
+remove window F13|east
+room R122 hallway D15
+room R123 hallway E15
+room R124 hallway F15
+room R125 hallway G15
+room R126 hallway G14
+room R127 hallway G13
+room R128 hallway G12
+room R129 hallway G11
+room R130 hallway G10
+room R131 hallway G9
+room R132 hallway G8
+room R133 hallway G7
+room R134 bedroom F14
+room R135 bedroom F12
+room R136 bedroom F11
+room R137 bedroom F10
+room R138 bedroom F9
+room R139 bedroom F8
+room R140 bathroom H7
+room R141 bathroom H8
+room R142 bathroom H9
+room R143 bathroom H10
+room R144 bathroom H11
+room R145 bathroom H12
+room R146 bathroom H13
+door C15|D15
+door D15|E15
+door E15|F15
+door F15|G15
+door G15|G14
+door G14|G13
+door G13|G12
+door G12|G11
+door G11|G10
+door G10|G9
+door G9|G8
+door G8|G7
+door F14|G14
+door F12|G12
+door F11|G11
+door F10|G10
+door F9|G9
+door F8|G8
+door H7|G7
+door H8|G8
+door H9|G9
+door H10|G10
+door H11|G11
+door H12|G12
+door H13|G13
+
+run_0290
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |   R2  |   R1  |   R3  |  R13  |  R14  |  R20  |  R39  |  R42  |  R41  |  R46  |  R55  |  R68  |  R97  |  R107 |
+A |kitchen| living|bedroom|bedroom|  bath |  bath |  bath |hallway|  bath |  bath |bedroom|bedroom|  bath |bedroom|
+  |                                                                                                               |
+  +-------+-[   ]-+-------+-------+-------+-------+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-------+-------+-------+-------+
+  |   R6  |   R5  |   R7  |  R11  |  R16  |  R28  |  R45  |  R43  |  R51  |  R52  |  R74  |  R72  |  R93  |  R116 |  R120 |
+B |  bath |hallway|bedroom|bedroom|  bath |  bath |bedroom|bedroom|bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |
+  |                                       |       |       |               |                       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-------+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+
+  |  R10  |   R8  |   R9  |  R15  |  R17  |  R21  |  R31  |  R49  |  R53  |  R60  |  R85  |  R86  |  R90  |  R115 |  R119 |
+C |  bath |  bath |bedroom|bedroom|bedroom|bedroom|  bath |bedroom|bedroom|  bath |hallway|hallway|hallway|hallway|hallway|
+  |       |       |                                       |               |       |                                       |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+
+  |  R24  |  R12  |  R18  |  R19  |  R23  |  R25  |  R35  |  R64  |  R54  |  R101 |  R100 |  R108 |  R109 |  R110 |  R122 |
+D |  bath |  bath |  bath |bedroom|bedroom|bedroom|  bath |  bath |  bath |hallway|hallway|  bath |hallway|bedroom|hallway|
+  |               |       |       |       |       |       |       |       |                       |               |       |
+  +-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+-[   ]-+-------+-[   ]-+-------+-[   ]-+
+  |  R38  |  R30  |  R29  |  R22  |  R27  |  R47  |  R57  |  R76  |  R84  |  R102 |  R103 |  R113 |  R112 |  R114 |  R123 |
+E |bedroom|bedroom|hallway|  bath |bedroom|bedroom|bedroom|  bath |  bath |bedroom|  bath |bedroom|hallway|bedroom|hallway|
+  |                               |       |               |               |       |       |                       |       |
+  +-------+-[   ]-+-[   ]-+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+-------+-[   ]-+
+  |  R44  |  R34  |  R26  |  R33  |  R37  |  R61  |  R70  |  R139 |  R138 |  R137 |  R136 |  R135 |  R118 |  R134 |  R124 |
+F |  bath |bedroom|  bath |  bath |  bath |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|
+  |               |                                       |       |       |       |       |       |       |       |       |
+  +-------+-------+-[   ]-+-------+-------+-------+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+
+  |  R59  |  R40  |  R32  |  R36  |  R62  |  R69  |  R133 |  R132 |  R131 |  R130 |  R129 |  R128 |  R127 |  R126 |  R125 |
+G |bedroom|bedroom|bedroom|bedroom|  bath |  bath |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                               |                                                                       |
+  +-[   ]-+-------+-[   ]-+-------+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-------+
+  |  R73  |  R58  |  R48  |  R50  |  R63  |       |  R140 |  R141 |  R142 |  R143 |  R144 |  R145 |  R146 |
+H |  bath |  bath |  bath |  bath |bedroom|       |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |                       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-[   ]-+-------+-------+       +-------+-------+-------+-------+-------+-------+-------+
+          |  R66  |  R65  |  R67  |
+I         |bedroom|hallway|  bath |
+          |                       |
+          +-------+-[   ]-+-------+
+          |  R71  |  R77  |  R79  |
+J         |  bath |hallway|  bath |
+          |                       |
+          +-------+-[   ]-+-------+-------+
+          |  R81  |  R80  |  R94  |  R96  |
+K         |  bath |hallway|hallway|bedroom|
+          |                               |
+          +-------+-[   ]-+-[   ]-+-------+
+          |  R106 |  R104 |  R95  |
+L         |bedroom|hallway|bedroom|
+          |               |       |
+          +-------+-[   ]-+-------+
+                  |  R105 |
+M                 |  bath |
+                  |       |
+                  +-------+
+
+N
+
+
+
+O
+
+
+
+corridor rooms    44
+privacy order     0.00
+walking distance  15.76
+compactness       14
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

@@ -4,9 +4,10 @@ from house.experiment import load_runs
 from house.interpreter import run_script
 from house.layout_format import format_layout, parse_layout
 from house.model import Cell, Layout, ModelError, set_grid_size
-from house.prompt import build_prompt
-from house.run_100_rooms import (NO_HALLWAYS_TEMPLATE_PATH, REFACTOR_TEMPLATE_PATH, TEMPLATE_PATH, Call, calls, label,
-                                 make_call, next_call, outcome, request, rooms_added, run_next_chain, starting_house)
+from house.prompt import HALLWAYS_TEMPLATE_PATH, build_prompt
+from house.run_100_rooms import (COST_TEMPLATE_PATH, NO_HALLWAYS_TEMPLATE_PATH, REFACTOR_COST_TEMPLATE_PATH,
+                                 REFACTOR_TEMPLATE_PATH, TEMPLATE_PATH, Call, calls, label, make_call, next_call,
+                                 outcome, request, rooms_added, run_next_chain, starting_house)
 from house.run_agents import Reply
 
 SEED = """room R1 living room A1
@@ -109,6 +110,15 @@ def test_every_call_of_a_chain_uses_the_same_claude_code_version(runs_dir):
         run_next_chain(runs_dir, lambda prompt: Reply("", USAGE, cut_off=True), "2.0", log=lambda line: None, house=1)
 
 
+def test_a_deepseek_adapter_call_has_its_own_label_and_record(runs_dir):
+    saved = make_call(runs_dir, 1, Call("step", 1), lambda prompt: Reply("room R5 bedroom B2\ndoor B1|B2", USAGE),
+                      "1", chain=5, model="deepseekflash", effort="low",
+                      agent_cli="deepseek-api", model_id="deepseek-flash")
+    assert saved["label"] == "deepseekflash-low-h1-c5-step01"
+    assert (saved["model"], saved["model_label"], saved["effort"], saved["agent_cli"]) == (
+        "deepseek-flash", "deepseekflash", "low", "deepseek-api")
+
+
 def test_when_no_hallway_can_be_built_a_script_that_builds_one_is_rejected_and_the_seed_houses_own_stay(runs_dir):
     seed = run_script(SEED + "\nroom R5 hallway B2\ndoor B1|B2", Layout(), hallways=True).layout
     (runs_dir / "seeds" / "house1.txt").write_text(format_layout(seed) + "\n")
@@ -139,6 +149,42 @@ def test_a_refactor_run_asks_to_reorganise_just_before_the_request(runs_dir):
     assert request_line.startswith("add: bedroom")
     assert prompts[0] == build_prompt((runs_dir / "seeds" / "house1.txt").read_text(), "add: bedroom",
                                       template=REFACTOR_TEMPLATE_PATH.read_text().rstrip("\n"))
+
+
+def test_a_cost_run_prices_every_command_and_still_asks_to_reorganise(runs_dir):
+    prompts = []
+    make_call(runs_dir, 1, Call("step", 1),
+              lambda prompt: prompts.append(prompt) or Reply("", USAGE), "1.0", refactor=True, cost=True)
+
+    def cost_block(text):
+        return text[text.index("COST\n"):text.index("\n\nLANGUAGE")]
+
+    before, request_line = prompts[0].split("\nREQUEST\n")
+    assert cost_block(before) == cost_block(HALLWAYS_TEMPLATE_PATH.read_text())
+    assert before.rstrip().endswith("reorganise the existing house to reduce its complexity, keeping the exact same final "
+                                    "number of rooms (excluding hallways, whose number can change).")
+    assert request_line.startswith("add: bedroom")
+    assert prompts[0] == build_prompt((runs_dir / "seeds" / "house1.txt").read_text(), "add: bedroom",
+                                      template=REFACTOR_COST_TEMPLATE_PATH.read_text().rstrip("\n"))
+
+
+def test_a_cost_only_run_prices_every_command_without_asking_to_reorganise(runs_dir):
+    prompts = []
+    make_call(runs_dir, 1, Call("step", 1),
+              lambda prompt: prompts.append(prompt) or Reply("", USAGE), "1.0", cost=True)
+    assert "COST\nEvery command costs something" in prompts[0]
+    assert "Before you add anything" not in prompts[0]
+    assert prompts[0] == build_prompt((runs_dir / "seeds" / "house1.txt").read_text(), "add: bedroom",
+                                      template=COST_TEMPLATE_PATH.read_text().rstrip("\n"))
+
+
+def test_the_cost_prompt_stays_on_after_a_call_that_reports_no_cost(runs_dir):
+    prompts = []
+    reply = Reply("", {"output_tokens": 0, "cost_usd": 0.0}, cut_off=True)
+    run_next_chain(runs_dir, lambda prompt: prompts.append(prompt) or reply, "1.0",
+                   log=lambda line: None, house=1, cost=True)
+    assert len(prompts) == 6
+    assert all("COST\nEvery command costs something" in prompt for prompt in prompts)
 
 
 def test_a_house_can_be_chosen_to_run_before_the_ones_ahead_of_it(runs_dir):

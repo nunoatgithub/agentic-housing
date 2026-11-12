@@ -2,8 +2,9 @@
 
     python paper/build_report_100_rooms.py
 
-Every number in the report is computed here from the saved records in runs_100_rooms/ and runs_100_rooms_no_hallways/,
-and every claim the text makes about them is checked here. The runs are described, not tested.
+Every number in the report is computed here from the saved records of the five runs (runs_100_rooms/,
+runs_100_rooms_no_hallways/, runs_100_rooms_refactor/, runs_100_rooms_refactor_cost/ and runs_100_rooms_cost/), and every
+claim the text makes about them is checked here. The runs are described, not tested.
 """
 import json
 import re
@@ -22,7 +23,7 @@ set_grid_size(15)
 SCORES = ("corridor_rooms", "privacy_order", "walking_distance", "compactness")
 NAMES = ("Corridor rooms", "Privacy order", "Walking distance", "Compactness")
 DIGITS = {"corridor_rooms": 0, "privacy_order": 4, "walking_distance": 2, "compactness": 0}
-MODELS = {"sonnet55": "Sonnet 5.5", "gpt6luna": "GPT-6 Luna"}
+MODELS = {"sonnet55": "Sonnet 5.5", "gpt6luna": "GPT-6 Luna", "deepseekflash": "DeepSeek adapter, low"}
 KINDS = (("step", "One room at a time"), ("all", "All at once"))
 LABEL = re.compile(r"^(\w+)-(\w+)-h(\d+)-c(\d+)-(step|all)(\d+)$")
 ALONG = (0, 5, 10, 15, 20, 25, 30)          # the steps the along-the-chain tables show
@@ -43,6 +44,20 @@ def fmt(value, name):
 
 def words(n):
     return ("no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")[n] if n <= 10 else str(n)
+
+
+def and_list(values):
+    values = list(values)
+    return values[0] if len(values) == 1 else ", ".join(values[:-1]) + " and " + values[-1]
+
+
+def share(change):
+    """The share of the house a call received that is gone from its own house (removed or replaced)."""
+    return change[0] / change[1]
+
+
+def pct(value):
+    return "%.0f%%" % (100 * value)
 
 
 def key(layout):
@@ -123,6 +138,8 @@ def chain_name(chain):
 def final_table(run, models):
     rows = [("Seed house", "Chain", "Model", "House") + NAMES]
     for h in range(1, 5):
+        if not any(c[1] == h and c[0] in models for c in run.chains):
+            continue
         seed = vars(score(run.seeds[h]))
         rows.append((str(h), "", "", "seed house (70 rooms)") + tuple(fmt(seed[s], s) for s in SCORES))
         for chain in run.chains:
@@ -172,14 +189,34 @@ def tries_table(run, models):
     return md(rows)
 
 
+def by_chain(run, model, kind):
+    """The calls of this model and kind, chain by chain, in house order."""
+    out = defaultdict(list)
+    for c in run.changes(model, kind):
+        out[c[5]].append(c)
+    return [out[chain] for chain in sorted(out, key=lambda ch: ch[1])]
+
+
+def refactoring(run, model, kind):
+    """Per chain, in house order: how many calls of this kind removed or replaced 10% or more of the house."""
+    return [sum(share(c) >= 0.1 for c in calls) for calls in by_chain(run, model, kind)]
+
+
+def most_refactored(run, model):
+    return max(share(c) for kind, _ in KINDS for c in run.changes(model, kind))
+
+
 # ---- run 1: hallways free
 r1 = Run("runs_100_rooms")
-S1 = [c for c in r1.chains]
-assert all(c[0] == "sonnet55" for c in S1) and len(S1) == 4, "run 1 has four Sonnet chains, one per seed house"
-assert all(len(r1.calls[c]) == 59 for c in S1), "every run 1 chain has all 59 calls"
+S1 = [c for c in r1.chains if c[0] == "sonnet55"]
+D1 = [c for c in r1.chains if c[0] == "deepseekflash"]
+assert sorted(c[1] for c in S1) == [1, 2, 3, 4], "run 1 has four Sonnet chains, one per seed house"
+assert sorted((c[1], c[2]) for c in D1) == [(1, 5), (3, 7)], "run 1 has DeepSeek chains for houses 1 and 3"
+assert all(len(r1.calls[c]) == 59 for c in S1 + D1), "every run 1 chain has all 59 calls"
 T["r1_final"] = final_table(r1, ["sonnet55"])
-T["r1_changes"] = change_table(r1, ["sonnet55"], hallways=True)
-T["r1_tries"] = tries_table(r1, ["sonnet55"])
+T["r1_final_deepseek"] = final_table(r1, ["deepseekflash"])
+T["r1_changes"] = change_table(r1, ["sonnet55", "deepseekflash"], hallways=True)
+T["r1_tries"] = tries_table(r1, ["sonnet55", "deepseekflash"])
 T["r1_along"] = along_tables(r1)
 seed_sc = {h: vars(score(r1.seeds[h])) for h in range(1, 5)}
 step30 = {c[1]: r1.scores(c, "step", 30) for c in S1}
@@ -199,7 +236,22 @@ r1_step, r1_all = r1.changes("sonnet55", "step"), r1.changes("sonnet55", "all")
 assert max(c[0] for c in r1_step) == 1 and max(c[0] for c in r1_all) <= 3, "run 1: no call removed more than three rooms"
 T["r1_step_hall"], T["r1_all_hall"] = "%.2f" % st.mean(c[2] for c in r1_step), "%.2f" % st.mean(c[2] for c in r1_all)
 T["r1_all_kept"] = "%.1f%%" % (100 * min(1 - c[0] / c[1] for c in r1_all))
-T["r1_versions"] = ", ".join(sorted({r["claude_code"].split()[0] for r in r1.records}))
+T["r1_versions"] = ", ".join(sorted({r["claude_code"].split()[0] for r in r1.records if r["label"].startswith("sonnet55")}))
+assert all(r1.scores(c, k, s)["corridor_rooms"] == 0 for c in D1 for k, s in (("step", 30), ("all", 0))), \
+    "run 1: the DeepSeek houses after step 30 and all at once from step 0 have corridor rooms 0"
+d1_step, d1_all = r1.changes("deepseekflash", "step"), r1.changes("deepseekflash", "all")
+T["r1_d_step_calls"] = str(len(d1_step))
+T["r1_d_step_removed"] = words(sum(1 for c in d1_step if c[0]))
+assert refactoring(r1, "deepseekflash", "step") == [1, 1], "run 1: one DeepSeek one-room step in each house removed 10% or more"
+assert all(max(share(c) for c in calls) > 0.5 for calls in by_chain(r1, "deepseekflash", "step")), \
+    "run 1: that DeepSeek one-room step removed more than half of the house"
+T["r1_d_step_most"] = pct(max(share(c) for c in d1_step))
+T["r1_d_all_big"] = and_list(str(n) for n in refactoring(r1, "deepseekflash", "all"))
+T["r1_d_all_first"] = and_list(pct(share(calls[0])) for calls in by_chain(r1, "deepseekflash", "all"))
+assert all(calls[0][6] == 0 and share(calls[0]) >= 0.1 for calls in by_chain(r1, "deepseekflash", "all")), \
+    "run 1: the first DeepSeek all-at-once call in each house removed 10% or more"
+T["r1_d_step_hall"], T["r1_d_all_hall"] = "%.2f" % st.mean(c[2] for c in d1_step), "%.2f" % st.mean(c[2] for c in d1_all)
+assert max(share(c) for c in r1_step + r1_all) < 0.1, "run 1: no Sonnet call removed 10% or more of the house"
 
 # ---- run 2: no hallway can be built
 r2 = Run("runs_100_rooms_no_hallways")
@@ -271,7 +323,178 @@ T["r2_s_chains"], T["r2_l_chains"] = words(len(S2)), words(len(L2))
 T["r2_s_versions"] = ", ".join(sorted({(r.get("agent_version") or r["claude_code"]).split()[0] for r in r2.records if r["label"].startswith("sonnet55")}))
 T["r2_l_version"] = sorted({r["agent_version"].split("\n")[0].rstrip(".") for r in r2.records if r["label"].startswith("gpt6luna")})[0]
 
-for k in ("r1_versions", "r2_s_versions"):
+# ---- run 3: reorganise first
+r3 = Run("runs_100_rooms_refactor")
+S3 = [c for c in r3.chains if c[0] == "sonnet55"]
+D3 = [c for c in r3.chains if c[0] == "deepseekflash"]
+assert sorted(c[1] for c in S3) == [1, 2, 3, 4], "run 3 has one Sonnet chain per seed house"
+assert sorted((c[1], c[2]) for c in D3) == [(1, 5), (3, 7)], "run 3 has DeepSeek chains for houses 1 and 3"
+missing3 = [(c, (k, s)) for c in S3 + D3 for k, s in [("all", i) for i in range(LAST_ALL + 1)] + [("step", i) for i in range(1, 31)]
+            if (k, s) not in r3.calls[c]]
+assert len(missing3) == 1 and missing3[0][0] == ("deepseekflash", 1, 5) and missing3[0][1] == ("all", 2), \
+    "run 3: one call has no valid house, the all-at-once from step 2 in the DeepSeek house 1 chain"
+T["r3_missing"] = "the all-at-once call from step %d in %s" % (missing3[0][1][1], chain_name(missing3[0][0]))
+T["r3_final_sonnet"] = final_table(r3, ["sonnet55"])
+T["r3_final_deepseek"] = final_table(r3, ["deepseekflash"])
+T["r3_changes"] = change_table(r3, ["sonnet55", "deepseekflash"], hallways=True)
+T["r3_tries"] = tries_table(r3, ["sonnet55", "deepseekflash"])
+T["r3_along"] = along_tables(r3)
+
+pairs3 = [(c, r3.scores(c, "step", 30), r3.scores(c, "all", 0)) for c in S3 + D3]
+T["r3_chains"] = words(len(pairs3))
+T["r3_corr_lower"] = words(sum(a["corridor_rooms"] < b["corridor_rooms"] for _, a, b in pairs3))
+T["r3_corr_same"] = words(sum(a["corridor_rooms"] == b["corridor_rooms"] for _, a, b in pairs3))
+T["r3_corr_higher"] = words(sum(a["corridor_rooms"] > b["corridor_rooms"] for _, a, b in pairs3))
+T["r3_walk_lower"] = words(sum(a["walking_distance"] < b["walking_distance"] for _, a, b in pairs3))
+T["r3_walk_higher"] = words(sum(a["walking_distance"] > b["walking_distance"] for _, a, b in pairs3))
+assert (T["r3_corr_lower"], T["r3_corr_same"], T["r3_corr_higher"]) == ("one", "four", "one"), \
+    "run 3: step 30 had fewer corridor rooms in one chain, the same in four, more in one"
+assert (T["r3_walk_lower"], T["r3_walk_higher"]) == ("five", "one"), \
+    "run 3: step 30 was shorter to walk in five chains and longer in one"
+T["r3_step30_zero"] = words(sum(r3.scores(c, "step", 30)["corridor_rooms"] == 0 for c in S3 + D3))
+T["r3_all00_zero"] = words(sum(r3.scores(c, "all", 0)["corridor_rooms"] == 0 for c in S3 + D3))
+assert T["r3_step30_zero"] == "five" and T["r3_all00_zero"] == "five", "run 3: five final houses of each kind have corridor rooms 0"
+assert r3.scores(("sonnet55", 1, 1), "step", 30)["corridor_rooms"] == 1, "run 3: the Sonnet house 1 after step 30 has 1 corridor room"
+assert [c for c in r3.changes("deepseekflash", "all") if c[5] == ("deepseekflash", 1, 5) and c[6] == 0][0][0] == 1, \
+    "run 3: the DeepSeek house 1 all at once from step 0 removed one room"
+assert r3.scores(("deepseekflash", 1, 5), "all", 0)["corridor_rooms"] == vars(score(r3.seeds[1]))["corridor_rooms"], \
+    "run 3: the one all-at-once call that did not rebuild kept the seed's corridor rooms"
+
+for tag, model in (("s", "sonnet55"), ("d", "deepseekflash")):
+    for kind, _ in KINDS:
+        ch = r3.changes(model, kind)
+        T["r3_%s_%s_calls" % (tag, kind)] = str(len(ch))
+        T["r3_%s_%s_removed" % (tag, kind)] = words(sum(1 for c in ch if c[0]))
+        T["r3_%s_%s_max" % (tag, kind)] = str(max(c[0] for c in ch))
+        T["r3_%s_%s_kept" % (tag, kind)] = "%.1f%%" % (100 * min(1 - c[0] / c[1] for c in ch))
+        T["r3_%s_%s_hall" % (tag, kind)] = "%.2f" % st.mean(c[2] for c in ch)
+T["r3_s_first"] = and_list(str(c[0]) for c in r3.changes("sonnet55", "step") if c[6] == 1)
+T["r3_d_first"] = and_list(str(c[0]) for c in r3.changes("deepseekflash", "step") if c[6] == 1)
+assert int(T["r3_s_first"].split(",")[0]) > 0 and int(T["r3_d_first"].split()[0]) > 0, \
+    "run 3: the first one-room steps removed rooms from the seed house"
+assert float(T["r3_d_step_kept"].rstrip("%")) < float(T["r3_s_step_kept"].rstrip("%")), \
+    "run 3: the DeepSeek one-room steps kept less of the house than the Sonnet ones"
+assert min(r3.scores(c, "step", 30)["walking_distance"] for c in D3) > max(r3.scores(c, "step", 30)["walking_distance"] for c in S3), \
+    "run 3: the DeepSeek final houses walked further than the Sonnet ones"
+T["r3_s_versions"] = ", ".join(sorted({r["claude_code"].split()[0] for r in r3.records if r["label"].startswith("sonnet55")}))
+T["r3_adapter_version"] = sorted({r.get("agent_version") for r in r3.records if r["label"].startswith("deepseekflash")})[0]
+assert T["r3_adapter_version"] == "1", "run 3: one adapter version"
+
+
+def script_costs(run, model, kind):
+    """The cost of every valid script of this model and kind, at the prices the prompt gives."""
+    return [r["cost"] for c in run.chains if c[0] == model for (k, _), r in run.calls[c].items() if k == kind]
+
+
+def pair_counts(run, chains, tag):
+    """After step 30 against all at once from step 0, chain by chain: how many lower, the same and higher."""
+    for name in ("corridor_rooms", "walking_distance"):
+        pairs = [(run.scores(c, "step", 30)[name], run.scores(c, "all", 0)[name]) for c in chains]
+        T["%s_%s_lower" % (tag, name[:4])] = words(sum(a < b for a, b in pairs))
+        T["%s_%s_higher" % (tag, name[:4])] = words(sum(a > b for a, b in pairs))
+
+
+def complete(run, chains):
+    return all((k, s) in run.calls[c] for c in chains for k, s in [("all", i) for i in range(LAST_ALL + 1)] + [("step", i) for i in range(1, 31)])
+
+
+# ---- run 4: reorganise, with cost
+r4 = Run("runs_100_rooms_refactor_cost")
+S4 = [c for c in r4.chains if c[0] == "sonnet55"]
+D4 = [c for c in r4.chains if c[0] == "deepseekflash"]
+assert sorted((c[1], c[2]) for c in S4) == [(1, 5), (2, 6), (3, 7), (4, 8)], "run 4 has Sonnet chains 5 to 8, one per seed house"
+assert sorted((c[1], c[2]) for c in D4) == [(1, 1), (3, 3)], "run 4 has DeepSeek chains for houses 1 and 3"
+assert complete(r4, S4 + D4), "every run 4 chain has all 59 houses"
+T["r4_final_sonnet"] = final_table(r4, ["sonnet55"])
+T["r4_final_deepseek"] = final_table(r4, ["deepseekflash"])
+T["r4_changes"] = change_table(r4, ["sonnet55", "deepseekflash"], hallways=True)
+T["r4_tries"] = tries_table(r4, ["sonnet55", "deepseekflash"])
+T["r4_along"] = along_tables(r4)
+pair_counts(r4, S4, "r4_s")
+assert (T["r4_s_corr_lower"], T["r4_s_corr_higher"]) == ("one", "three"), "run 4: Sonnet step 30 had fewer corridor rooms in one house, more in three"
+assert (T["r4_s_walk_lower"], T["r4_s_walk_higher"]) == ("three", "one"), "run 4: Sonnet step 30 was shorter to walk in three houses, longer in one"
+assert all(r4.scores(c, k, s)["corridor_rooms"] == 0 for c in D4 for k, s in (("step", 30), ("all", 0))), \
+    "run 4: the DeepSeek houses after step 30 and all at once from step 0 have corridor rooms 0"
+assert all(r4.scores(c, "step", 30)["walking_distance"] > r4.scores(c, "all", 0)["walking_distance"] for c in D4), \
+    "run 4: the DeepSeek houses after step 30 were longer to walk than all at once from step 0"
+s4_step, s4_all = r4.changes("sonnet55", "step"), r4.changes("sonnet55", "all")
+T["r4_s_step_calls"], T["r4_s_all_calls"] = str(len(s4_step)), str(len(s4_all))
+T["r4_s_step_removed"], T["r4_s_all_removed"] = words(sum(1 for c in s4_step if c[0])), str(sum(1 for c in s4_all if c[0]))
+T["r4_s_most"] = "%.1f%%" % (100 * most_refactored(r4, "sonnet55"))
+T["r3_s_most"] = pct(most_refactored(r3, "sonnet55"))
+assert most_refactored(r4, "sonnet55") < 0.1, "run 4: no Sonnet call removed 10% or more of the house"
+T["r3_d_steps_big"] = and_list(str(n) for n in refactoring(r3, "deepseekflash", "step"))
+T["r4_d_steps_big"] = and_list(str(n) for n in refactoring(r4, "deepseekflash", "step"))
+T["r4_d_all_big"] = and_list(str(n) for n in refactoring(r4, "deepseekflash", "all"))
+assert all(a > b for a, b in zip(refactoring(r3, "deepseekflash", "step"), refactoring(r4, "deepseekflash", "step"))), \
+    "run 4: DeepSeek one-room steps removed 10% or more less often than in run 3, house by house"
+T["r4_d_first"] = and_list(pct(share(calls[0])) for calls in by_chain(r4, "deepseekflash", "step"))
+T["r4_d_most"] = pct(most_refactored(r4, "deepseekflash"))
+s4_cost = script_costs(r4, "sonnet55", "step")
+T["r4_s_step_cost"], T["r4_s_step_cost_max"] = "%d" % st.median(s4_cost), str(max(s4_cost))
+assert st.median(s4_cost) == 5, "run 4: the median Sonnet one-room script cost 5, a room and a door"
+T["r4_d_step_cost"], T["r4_d_step_cost_max"] = "%g" % st.median(script_costs(r4, "deepseekflash", "step")), str(max(script_costs(r4, "deepseekflash", "step")))
+T["r4_s_versions"] = ", ".join(sorted({r["claude_code"].split()[0] for r in r4.records if r["label"].startswith("sonnet55")}))
+
+# ---- run 5: cost, no reorganise
+r5 = Run("runs_100_rooms_cost")
+S5 = [c for c in r5.chains if c[0] == "sonnet55"]
+D5 = [c for c in r5.chains if c[0] == "deepseekflash"]
+assert sorted((c[1], c[2]) for c in S5) == [(1, 5), (3, 7)], "run 5 has Sonnet chains 5 and 7, houses 1 and 3"
+assert sorted((c[1], c[2]) for c in D5) == [(1, 1), (3, 3)], "run 5 has DeepSeek chains for houses 1 and 3"
+assert complete(r5, S5 + D5), "every run 5 chain has all 59 houses"
+T["r5_final_sonnet"] = final_table(r5, ["sonnet55"])
+T["r5_final_deepseek"] = final_table(r5, ["deepseekflash"])
+T["r5_changes"] = change_table(r5, ["sonnet55", "deepseekflash"], hallways=True)
+T["r5_tries"] = tries_table(r5, ["sonnet55", "deepseekflash"])
+T["r5_along"] = along_tables(r5)
+s5_pairs = [(c, r5.scores(c, "step", 30), r5.scores(c, "all", 0)) for c in S5]
+assert all(abs(a["corridor_rooms"] - b["corridor_rooms"]) <= 2 and abs(a["walking_distance"] - b["walking_distance"]) < 0.15
+           for _, a, b in s5_pairs), "run 5: for Sonnet, step 30 and all at once from step 0 ended within two corridor rooms and 0.15 of walking distance"
+T["r5_s_pairs"] = and_list("%d against %d in house %d" % (a["corridor_rooms"], b["corridor_rooms"], c[1]) for c, a, b in s5_pairs)
+d5 = {c[1]: (r5.scores(c, "step", 30)["corridor_rooms"], r5.scores(c, "all", 0)["corridor_rooms"]) for c in D5}
+assert d5[1][0] < d5[1][1] and d5[3][0] > d5[3][1], "run 5: DeepSeek step 30 had fewer corridor rooms in house 1, more in house 3"
+for tag, model in (("s", "sonnet55"), ("d", "deepseekflash")):
+    assert most_refactored(r5, model) < 0.1, "run 5: no call removed 10% or more of the house"
+    for kind, _ in KINDS:
+        ch = r5.changes(model, kind)
+        T["r5_%s_%s_calls" % (tag, kind)] = str(len(ch))
+        T["r5_%s_%s_removed" % (tag, kind)] = words(sum(1 for c in ch if c[0]))
+        T["r5_%s_%s_hall" % (tag, kind)] = "%.2f" % st.mean(c[2] for c in ch)
+assert T.pop("r5_s_step_removed") == "no" and max(c[0] for c in r5.changes("sonnet55", "all")) == 1, \
+    "run 5: no Sonnet one-room step removed a room, and no all-at-once call more than one"
+assert max(c[0] for kind, _ in KINDS for c in r5.changes("deepseekflash", kind)) == 1, "run 5: no DeepSeek call removed more than one room"
+T.pop("r5_d_step_removed"), T.pop("r5_d_all_removed")
+for k in ("r5_s_step_calls", "r5_d_step_calls", "r5_d_all_calls", "r5_d_step_hall", "r5_d_all_hall", "r5_s_step_hall"):
+    T.pop(k)
+s5_cost = script_costs(r5, "sonnet55", "step")
+assert set(s5_cost) == {5}, "run 5: every Sonnet one-room script cost 5, a room and a door"
+seed_corr = {h: vars(score(r5.seeds[h]))["corridor_rooms"] for h in (1, 3)}
+assert all(r5.scores(c, "all", 0)["corridor_rooms"] > seed_corr[c[1]] for c in S5), \
+    "run 5: the Sonnet houses built all at once from step 0 had more corridor rooms than their seed houses"
+T["r5_s_all00_corr"] = and_list("from %d to %d in house %d" % (seed_corr[c[1]], r5.scores(c, "all", 0)["corridor_rooms"], c[1]) for c in S5)
+r1_all00_s = [r1.scores(c, "all", 0)["corridor_rooms"] - seed_sc[c[1]]["corridor_rooms"] for c in S1]
+assert max(r1_all00_s) <= 1, "run 1: all at once from step 0 kept the seed's corridor rooms (within one)"
+T["r5_s_versions"] = ", ".join(sorted({r["claude_code"].split()[0] for r in r5.records if r["label"].startswith("sonnet55")}))
+T["r145_adapter_version"] = and_list(sorted({r.get("agent_version") for run in (r1, r4, r5) for r in run.records if r["label"].startswith("deepseekflash")}))
+assert T["r145_adapter_version"] == T["r3_adapter_version"], "every DeepSeek chain used the same adapter version"
+T.pop("r145_adapter_version")
+
+# ---- the conclusion, as written: check every figure it gives
+first = lambda run, model, kind: [share(calls[0]) for calls in by_chain(run, model, kind)]
+assert round(100 * most_refactored(r1, "sonnet55")) <= 3 and round(100 * most_refactored(r5, "sonnet55")) <= 3, \
+    "conclusion: in runs 1 and 5 no Sonnet call refactored more than 3% of the house"
+assert round(100 * most_refactored(r4, "sonnet55"), 1) <= 2.2, "conclusion: in run 4 no Sonnet call refactored more than 2.2% of the house"
+s3_first = sorted(round(100 * x) for x in first(r3, "sonnet55", "step"))
+assert s3_first == [11, 62, 65, 75], "conclusion: run 3, the first Sonnet step refactored 62-75% in three houses and 11% in the fourth"
+assert all(69 <= round(100 * x) <= 71 for x in first(r3, "sonnet55", "all")), "conclusion: run 3, the first Sonnet all-at-once call refactored 69-71%"
+assert refactoring(r1, "deepseekflash", "all") == [8, 7], "conclusion: run 1, 8 and 7 of 29 DeepSeek all-at-once calls refactored 10% or more"
+assert [round(100 * x) for x in first(r1, "deepseekflash", "all")] == [68, 75], "conclusion: run 1, the first DeepSeek all-at-once call refactored 68% and 75%"
+assert refactoring(r3, "deepseekflash", "step") == [23, 25], "conclusion: run 3, 23 and 25 of 30 DeepSeek steps refactored 10% or more"
+assert r3.calls[("deepseekflash", 1, 5)][("step", 1)]["command_count"] == 297, "conclusion: run 3, house 1's first DeepSeek step used 297 commands"
+assert refactoring(r4, "deepseekflash", "step") == [10, 13], "conclusion: run 4, 10 and 13 of 30 DeepSeek steps refactored 10% or more"
+
+for k in ("r1_versions", "r2_s_versions", "r3_s_versions", "r4_s_versions", "r5_s_versions"):
     assert re.fullmatch(r"[0-9., ]+", T[k]), k
 
 if __name__ == "__main__":

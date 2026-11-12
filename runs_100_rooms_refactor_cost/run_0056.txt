@@ -1,0 +1,205 @@
+label: deepseekflash-low-h1-c1-all27   at 2026-11-08T11:36:02+00:00   commands: 8
+
+SCRIPT
+remove room R5015
+remove room R5092
+room R7001 bathroom B15
+room R7002 bathroom C15
+door B14|B15
+door C15|D15
+room R7003 bedroom M14
+door L14|M14
+
+run_0056
+INVALID (rule 1)
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +[ENTRY]+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  | R1001 | R1002 | R1003 | R1004 | R1005 | R1006 | R1007 | R1008 | R1009 | R1010 | R1011 | R1012 | R1013 | R1014 |
+A | living|kitchen|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+  | R5001 | R5002 | R5003 | R5004 | R5005 | R5006 | R5007 | R5008 | R5009 | R5010 | R5011 | R5012 | R5013 | R5014 | R7001 |
+B |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|  bath |
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+  | R1015 | R1016 | R1017 | R1018 | R1019 | R1020 | R1021 | R1022 | R1023 | R1024 | R1025 | R1026 | R1027 | R1028 | R7002 |
+C |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+                                                                                                                  | R5030 |
+D                                                                                                                 |hallway|
+                                                                                                                  |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  | R1029 | R1030 | R1031 | R1032 | R1033 | R1034 | R1035 | R1036 | R1037 | R1038 | R1039 | R1040 | R1041 | R1042 | R5093 |
+E |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R5031 | R5032 | R5033 | R5034 | R5035 | R5036 | R5037 | R5038 | R5039 | R5040 | R5041 | R5042 | R5043 | R5044 | R5045 |
+F |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1043 | R1044 | R1045 | R1046 | R1047 | R1048 | R1049 | R1050 | R1051 | R1052 | R1053 | R1054 | R1055 | R1056 | R5094 |
+G |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+                                                                                                                  | R5060 |
+H                                                                                                                 |hallway|
+                                                                                                                  |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  | R1057 | R1058 | R1059 | R1060 | R1061 | R1062 | R1063 | R1064 | R1065 | R1066 | R1067 | R1068 | R1069 | R1070 | R5095 |
+I |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R5061 | R5062 | R5063 | R5064 | R5065 | R5066 | R5067 | R5068 | R5069 | R5070 | R5071 | R5072 | R5073 | R5074 | R5075 |
+J |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  | R1071 | R1072 | R1073 | R1074 | R1075 | R1076 | R1077 | R1078 | R1079 | R1080 | R1081 | R1082 | R1083 | R1084 | R5096 |
+K |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |hallway|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-[   ]-+
+  | R5076 | R5077 | R5078 | R5079 | R5080 | R5081 | R5082 | R5083 | R5084 | R5085 | R5086 | R5087 | R5088 | R5089 | R5090 |
+L |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+  | R1085 | R1086 | R1087 | R1088 | R1089 | R1090 | R1091 | R1092 | R1093 | R1094 | R1095 | R1096 | R6001 | R7003 |
+M |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |bedroom|bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+N
+
+
+
+O
+
+
+
+scores: none (house is invalid)
+
+Broken rules:
+  rule 1 (circulation): R1029 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1030 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1031 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1032 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1033 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1034 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1035 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1036 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1037 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1038 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1039 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1040 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1041 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1042 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1043 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1044 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1045 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1046 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1047 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1048 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1049 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1050 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1051 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1052 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1053 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1054 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1055 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1056 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1057 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1058 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1059 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1060 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1061 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1062 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1063 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1064 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1065 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1066 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1067 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1068 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1069 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1070 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1071 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1072 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1073 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1074 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1075 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1076 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1077 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1078 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1079 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1080 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1081 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1082 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1083 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1084 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1085 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1086 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1087 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1088 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1089 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1090 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1091 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1092 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1093 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1094 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1095 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R1096 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5030 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5031 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5032 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5033 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5034 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5035 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5036 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5037 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5038 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5039 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5040 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5041 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5042 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5043 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5044 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5045 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5060 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5061 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5062 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5063 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5064 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5065 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5066 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5067 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5068 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5069 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5070 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5071 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5072 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5073 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5074 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5075 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5076 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5077 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5078 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5079 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5080 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5081 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5082 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5083 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5084 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5085 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5086 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5087 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5088 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5089 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5090 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5093 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5094 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5095 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R5096 (hallway) cannot be reached from the entrance through doors
+  rule 1 (circulation): R6001 (bedroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7002 (bathroom) cannot be reached from the entrance through doors
+  rule 1 (circulation): R7003 (bedroom) cannot be reached from the entrance through doors
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

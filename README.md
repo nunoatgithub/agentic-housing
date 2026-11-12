@@ -101,12 +101,14 @@ agent call.
 The code, analysis plan and data folder of each run are listed in
 [running the experiment](docs/running-the-experiment.md#the-runs-in-the-report).
 
-Two later runs ask the same question with houses of 70 rooms grown to 100 on a 15×15 grid, from four seed houses
-([the second report](REPORT_100_rooms.md)). With hallways allowed, the houses grown one room at a time ended with more
-rooms that must be walked through, and the houses given all the rooms at once ended longer to walk; neither kind of
-agent redesigned the house. With no hallways, Claude Sonnet 5.5 hardly changed the house it was given, one room at a
-time or all at once, while GPT-6 Luna rewired and rebuilt the badly grown houses, which made them shorter to walk but put more
-bedrooms and bathrooms on the way between rooms.
+Five later runs ask the same question with houses of 70 rooms grown to 100 on a 15×15 grid, from four seed houses
+([the second report](REPORT_100_rooms.md)): with hallways, without hallways, with a request to reorganise the house
+before adding to it, with that request and a cost on every command, and with the cost alone. Claude Sonnet 5.5
+refactored only when asked to reorganise, and not even then once every command had a cost: cost prevailed, and it
+acted locally. DeepSeek, asked to reorganise, refactored far more than Sonnet, step by step and all at once, and cost
+only constrained it. In none of the runs did working step by step or all at once give a clear advantage in the final
+design. With cost and no request to reorganise, the conditions in which the small grid showed one, the houses built
+step by step ended no worse.
 
 ## Repository
 
