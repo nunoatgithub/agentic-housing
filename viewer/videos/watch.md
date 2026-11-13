@@ -14,21 +14,21 @@ Three incremental growth trajectories of the same base house (house #1 - a dific
 ### Opus 5.5 medium 
 
 <video width="100%" controls>
-  <source src="opus55.mp4" type="video/mp4">
+  <source src=./"opus55.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
 ### Deepseek-flash low 
 
 <video width="100%" controls>
-  <source src="deepseek.mp4" type="video/mp4">
+  <source src="./deepseek.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
 ### Sonnet 5.5. medium
 
 <video width="100%" controls>
-  <source src="sonnet55.mp4" type="video/mp4">
+  <source src="./sonnet55.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
