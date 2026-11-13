@@ -4,11 +4,11 @@ These are screenshots of the viewer tool, and help build a stronger intuition fo
 
 Each room is a square and the lines connecting them represent the doors. Lines without a square represent hallways.
 
-## House 1 - reorganize / reorganize + cost / cost 
+## House 1 - default / reorganize + cost / cost 
 
 Three incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
-- agent is asked to reduce complexity before adding new rooms (left)
-- the same but introducing construction costs (middle)
+- agent is asked simply to add new room, without any other explicit instruction about reconstruction or cost (left)
+- introducing request to reduce complexity before adding plus awareness about construction costs (middle)
 - agent is told only about construction costs (right)
 
 ### Opus 5.5 medium 
