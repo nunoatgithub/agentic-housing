@@ -14,10 +14,10 @@ Three incremental step-by-step growth trajectories of the same base house (house
 ### Opus 5.5 medium 
 ![Opus 5.5 medium](./opus55.gif)
 
-### Deepseek-flash low 
+### Deepseek 4.1 flash low 
 ![Opus 5.5 medium](./deepseek.gif)
 
-### Sonnet 5.5. medium
+### Sonnet 5.5 medium
 ![Opus 5.5 medium](./sonnet55.gif)
 
 
