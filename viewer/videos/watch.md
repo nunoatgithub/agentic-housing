@@ -6,7 +6,7 @@ Each room is a square and the lines connecting them represent the doors. Lines w
 
 ## House 1 - reorganize / reorganize + cost / cost 
 
-Three incremental growth trajectories of the same base house (house #1 - a difficult seed) : 
+Three incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
 - agent is asked to reduce complexity before adding new rooms (left)
 - the same but introducing construction costs (middle)
 - agent is told only about construction costs (right)
