@@ -12,9 +12,10 @@ Three incremental growth trajectories of the same base house (house #1 - a dific
 - agent is told only about construction costs (right)
 
 ### Opus 5.5 medium 
+[direct link](./opus55.mp4)
 
 <video width="100%" controls>
-  <source src=./"opus55.mp4" type="video/mp4">
+  <source src="./opus55.mp4" type="video/mp4">
   Your browser does not support HTML video.
 </video>
 
