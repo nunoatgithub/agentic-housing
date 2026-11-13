@@ -1,4 +1,4 @@
-Here we show animations of the design paterns used by the agents as they construct the house.
+Here we show animations of the design patterns used by the agents as they construct the 100 room house.
 
 These are screenshots of the viewer tool, and help build a stronger intuition for the products of this research.  
 
@@ -6,7 +6,7 @@ Each room is a square and the lines connecting them represent the doors. Lines w
 
 ## House 1 - reorganize / reorganize + cost / cost 
 
-Three incremental growth trajectories of the same base house (house #1 - a dificult seed) : 
+Three incremental growth trajectories of the same base house (house #1 - a difficult seed) : 
 - agent is asked to reduce complexity before adding new rooms (left)
 - the same but introducing construction costs (middle)
 - agent is told only about construction costs (right)
