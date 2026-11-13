@@ -247,7 +247,7 @@ def main(argv: Sequence[str]) -> int:
     parser.add_argument("--house", type=int, choices=HOUSES, help="run this house's chain (default: the next one not done)")
     parser.add_argument("--chain", type=int, help="chain number (defaults to the house number)")
     parser.add_argument("--agent", choices=("claude", "copilot", "deepseek"), default="claude", help="harness to use")
-    parser.add_argument("--model", help="model ID (DeepSeek default: deepseek-flash; Copilot default: gpt-6-luna)")
+    parser.add_argument("--model", help="model, by name or ID (Claude default: sonnet55; DeepSeek default: deepseek-flash; Copilot default: gpt-6-luna)")
     parser.add_argument("--effort", default=EFFORT, help="reasoning effort (for --agent deepseek: DeepSeek's low, high or max)")
     args = parser.parse_args(argv)
     if args.chain is not None and args.house is None:
@@ -279,8 +279,13 @@ def main(argv: Sequence[str]) -> int:
         version = ADAPTER_VERSION
         agent_cli = "deepseek-api"
     else:
-        model_id = args.model or MODEL_IDS[MODEL]
-        model_label = MODEL if args.model is None else re.sub(r"[^a-zA-Z0-9]+", "", model_id).lower()
+        by_id = {v: k for k, v in MODEL_IDS.items()}
+        if args.model in MODEL_IDS:                              # a model by its name, such as opus55
+            model_label, model_id = args.model, MODEL_IDS[args.model]
+        elif args.model:                                         # or by its ID, such as claude-opus-5-5
+            model_label, model_id = by_id.get(args.model, re.sub(r"[^a-zA-Z0-9]+", "", args.model).lower()), args.model
+        else:
+            model_label, model_id = MODEL, MODEL_IDS[MODEL]
         runs_dir = args.runs or Path(default_runs)
         seed_dir = args.seed_runs or runs_dir
         ask = lambda prompt: ask_claude(prompt, model_id, args.effort)

@@ -136,9 +136,11 @@ A chain has 59 calls, made in this order: all at once from step 0, step 1, all a
 
 **Agents.** The Sonnet and GPT-6 Luna chains are at medium effort. DeepSeek chains 5 and 7 in the hallway run and in
 the reorganising run (seed houses 1 and 3; chains 6 and 8 not run) and chains 1 and 3 in the cost run and in the
-cost-only run (seed houses 1 and 3) use a standalone DeepSeek adapter at low thinking: it posts the house prompt to DeepSeek's Anthropic-compatible
+cost-only run (seed houses 1 and 3) use a standalone DeepSeek adapter at low thinking, with the model `deepseek-flash`
+(DeepSeek-V4.1-Flash-1017): it posts the house prompt to DeepSeek's Anthropic-compatible
 API with thinking enabled at low effort, and no Claude Code system or environment wrapper. It is a separate harness
-and is reported separately.
+and is reported separately. DeepSeek is many times slower than Sonnet (a mean of 92 seconds per call against 18, and of 1.6 hours per chain against
+0.3), and it was run at low thinking because at high effort it was even slower.
 
 | Run          | Chains | Seed houses | Model          | Harness                                                        |
 | ------------ | ------ | ----------- | -------------- | -------------------------------------------------------------- |

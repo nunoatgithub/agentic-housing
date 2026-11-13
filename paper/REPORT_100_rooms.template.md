@@ -46,9 +46,9 @@ The full design is in [the study design](docs/study-design.md#the-70-to-100-room
 * **Agents.** Claude Sonnet 5.5 at medium effort through Claude Code: four chains in run 1, one per seed house
   (Claude Code {{r1_versions}}); eight in run 2, two per seed house ({{r2_s_versions}}); four in run 3
   ({{r3_s_versions}}); four in run 4 ({{r4_s_versions}}); and two in run 5, houses 1 and 3 ({{r5_s_versions}}). GPT-6
-  Luna at medium effort: four chains in run 2, one per seed house ({{r2_l_version}}). DeepSeek at low thinking through
-  a standalone adapter (version {{r3_adapter_version}}): two chains, houses 1 and 3, in runs 1, 3, 4 and 5. The models
-  are reported separately.
+  Luna at medium effort: four chains in run 2, one per seed house ({{r2_l_version}}). DeepSeek flash
+  (DeepSeek-V4.1-Flash-1017) at low thinking through a standalone adapter (version {{r3_adapter_version}}): two chains,
+  houses 1 and 3, in runs 1, 3, 4 and 5. The models are reported separately.
 
 The runs are described, not tested. Lower is better for every score. Corridor rooms counts the kitchens, bedrooms and
 bathrooms that lie on a best route between two other rooms, a best route being one that crosses as few kitchens,
@@ -322,7 +322,9 @@ The Sonnet cost is the Claude Code figure; the DeepSeek cost is computed from De
 Each run has one chain per seed house and model, except Sonnet in run 2, which has two. The DeepSeek chains cover
 only houses 1 and 3, and so do the Sonnet chains in run 5. Each model ran at one effort level, and GPT-6 Luna in one
 run. The DeepSeek chains use a standalone adapter with a clean prompt and low thinking, not Claude Code; they are not
-comparable with the Sonnet chains point by point. Claude Code changed version between the runs and within run 2
+comparable with the Sonnet chains point by point. DeepSeek is many times slower than Sonnet, a mean of
+{{call_s_deepseek}} seconds per call against {{call_s_sonnet}}, and a mean of {{chain_h_deepseek}} hours per chain against
+{{chain_h_sonnet}}; and it was run at low thinking because at high effort it was even slower. Claude Code changed version between the runs and within run 2
 (Section 2). Single chains show what an agent did, not how often it would do it.
 
 ## 9. Conclusion
@@ -339,7 +341,9 @@ observed design advantage of using incremental vs all-at-once steps.
 2. DeepSeek flash (low thinking). There is no clear default about the tendency to act globally when not asked
 explicitly to do so. Only that when asked, it refactors far more than Sonnet, step by step and all at once. In that
 situation, contrary to Sonnet, cost does not prevent it from refactoring; it only constrains it. There is no clear
-advantage of using an incremental or an all-at-once strategy in terms of the final design quality.
+advantage of using an incremental or an all-at-once strategy in terms of the final design quality. <u>When asked to
+reorganise, DeepSeek's successive layouts are far more distinct from each other than Sonnet's, which stays close to
+the layout it received.</u>
 - Run 1 (no cost, no reorganise): 1 of 30 steps in each house refactored 10% or more of the house, against 8 and 7
   of 29 all-at-once calls. The first all-at-once call refactored 68% and 75%.
 - Run 3 (no cost, reorganise): 23 and 25 of 30 steps refactored 10% or more. In house 1 the first step used 297
@@ -347,7 +351,18 @@ advantage of using an incremental or an all-at-once strategy in terms of the fin
 - Run 4 (cost, reorganise): 10 and 13 of 30 steps refactored 10% or more.
 - Run 5 (cost, no reorganise): no call refactored 10% or more.
 
-3. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
+3. Opus 5.5 (medium effort). By default it works much as it does under cost and reorganise: it refactors once at the
+start, then keeps what it built and adds the new rooms on top. Only cost without a request to reorganise stops that first
+refactoring, and in that case the incremental house ended with more corridor rooms than the all-at-once houses. On house 1
+neither Sonnet nor DeepSeek did this.
+- Run 1 (no cost, no reorganise), houses 1 and 2: the first step refactored 65% and 77% of the house, and the first
+  all-at-once call 67% and 67%. No later call refactored 10% or more. All its final houses have 0 or 1 corridor rooms.
+- Run 4 (cost, reorganise), house 1: the first step refactored 39% and the first all-at-once call 36%. No later call
+  refactored 10% or more. All its final houses have 0 corridor rooms.
+- Run 5 (cost, no reorganise), house 1: no call refactored more than 2.4%. The incremental house ended with 65 corridor
+  rooms against 41 and 53 for the all-at-once houses.
+
+4. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
 planned ones. Run 5 has the same conditions at 100 rooms, and with Sonnet the two houses showed no difference. There
 is no evidence supporting an advantage in working step by step other than the one collected during the 5×5
 experiment.

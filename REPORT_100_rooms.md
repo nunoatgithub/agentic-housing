@@ -14,6 +14,8 @@ asked. Refactoring was not the same as improving. In none of the runs did workin
 clear advantage in the final design; with cost and no request to reorganise, the conditions in which the small grid
 showed one, the houses built step by step ended no worse.
 
+[Whatch the videos](viewer/videos/watch.md)
+
 ## 1. Question
 
 In the first report (`REPORT.md`), on a 5×5 grid with building and demolishing free, adding rooms one at a time never
@@ -46,9 +48,9 @@ The full design is in [the study design](docs/study-design.md#the-70-to-100-room
 * **Agents.** Claude Sonnet 5.5 at medium effort through Claude Code: four chains in run 1, one per seed house
   (Claude Code 2.1.310); eight in run 2, two per seed house (2.1.311, 2.1.312, 2.1.314); four in run 3
   (2.1.314, 2.1.319); four in run 4 (2.1.322); and two in run 5, houses 1 and 3 (2.1.322). GPT-6
-  Luna at medium effort: four chains in run 2, one per seed house (GitHub Copilot CLI 1.0.105). DeepSeek at low thinking through
-  a standalone adapter (version 1): two chains, houses 1 and 3, in runs 1, 3, 4 and 5. The models
-  are reported separately.
+  Luna at medium effort: four chains in run 2, one per seed house (GitHub Copilot CLI 1.0.105). DeepSeek flash
+  (DeepSeek-V4.1-Flash-1017) at low thinking through a standalone adapter (version 1): two chains,
+  houses 1 and 3, in runs 1, 3, 4 and 5. The models are reported separately.
 
 The runs are described, not tested. Lower is better for every score. Corridor rooms counts the kitchens, bedrooms and
 bathrooms that lie on a best route between two other rooms, a best route being one that crosses as few kitchens,
@@ -514,7 +516,9 @@ The Sonnet cost is the Claude Code figure; the DeepSeek cost is computed from De
 Each run has one chain per seed house and model, except Sonnet in run 2, which has two. The DeepSeek chains cover
 only houses 1 and 3, and so do the Sonnet chains in run 5. Each model ran at one effort level, and GPT-6 Luna in one
 run. The DeepSeek chains use a standalone adapter with a clean prompt and low thinking, not Claude Code; they are not
-comparable with the Sonnet chains point by point. Claude Code changed version between the runs and within run 2
+comparable with the Sonnet chains point by point. DeepSeek is many times slower than Sonnet, a mean of
+92 seconds per call against 18, and a mean of 1.6 hours per chain against
+0.3; and it was run at low thinking because at high effort it was even slower. Claude Code changed version between the runs and within run 2
 (Section 2). Single chains show what an agent did, not how often it would do it.
 
 ## 9. Conclusion
@@ -531,7 +535,9 @@ observed design advantage of using incremental vs all-at-once steps.
 2. DeepSeek flash (low thinking). There is no clear default about the tendency to act globally when not asked
 explicitly to do so. Only that when asked, it refactors far more than Sonnet, step by step and all at once. In that
 situation, contrary to Sonnet, cost does not prevent it from refactoring; it only constrains it. There is no clear
-advantage of using an incremental or an all-at-once strategy in terms of the final design quality.
+advantage of using an incremental or an all-at-once strategy in terms of the final design quality. <u>When asked to
+reorganise, DeepSeek's successive layouts are far more distinct from each other than Sonnet's, which stays close to
+the layout it received.</u>
 - Run 1 (no cost, no reorganise): 1 of 30 steps in each house refactored 10% or more of the house, against 8 and 7
   of 29 all-at-once calls. The first all-at-once call refactored 68% and 75%.
 - Run 3 (no cost, reorganise): 23 and 25 of 30 steps refactored 10% or more. In house 1 the first step used 297
@@ -539,7 +545,18 @@ advantage of using an incremental or an all-at-once strategy in terms of the fin
 - Run 4 (cost, reorganise): 10 and 13 of 30 steps refactored 10% or more.
 - Run 5 (cost, no reorganise): no call refactored 10% or more.
 
-3. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
+3. Opus 5.5 (medium effort). By default it works much as it does under cost and reorganise: it refactors once at the
+start, then keeps what it built and adds the new rooms on top. Only cost without a request to reorganise stops that first
+refactoring, and in that case the incremental house ended with more corridor rooms than the all-at-once houses. On house 1
+neither Sonnet nor DeepSeek did this.
+- Run 1 (no cost, no reorganise), houses 1 and 2: the first step refactored 65% and 77% of the house, and the first
+  all-at-once call 67% and 67%. No later call refactored 10% or more. All its final houses have 0 or 1 corridor rooms.
+- Run 4 (cost, reorganise), house 1: the first step refactored 39% and the first all-at-once call 36%. No later call
+  refactored 10% or more. All its final houses have 0 corridor rooms.
+- Run 5 (cost, no reorganise), house 1: no call refactored more than 2.4%. The incremental house ended with 65 corridor
+  rooms against 41 and 53 for the all-at-once houses.
+
+4. The 5×5 result. On the 5×5 grid, with hallways, cost and no reorganise, houses built step by step ended worse than
 planned ones. Run 5 has the same conditions at 100 rooms, and with Sonnet the two houses showed no difference. There
 is no evidence supporting an advantage in working step by step other than the one collected during the 5×5
 experiment.
@@ -562,6 +579,10 @@ has none.
 | 3     | 3          | Sonnet 5.5            | all at once from the step | 15     | 15     | 15      | 17      | 20      | 21      | –       |
 | 4     | 4          | Sonnet 5.5            | after the step            | 13     | 13     | 14      | 16      | 17      | 19      | 23      |
 | 4     | 4          | Sonnet 5.5            | all at once from the step | 13     | 13     | 14      | 16      | 17      | 19      | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
+| 10    | 2          | Opus 5.5              | after the step            | 42     | 0      | 0       | 0       | 1       | 1       | 1       |
+| 10    | 2          | Opus 5.5              | all at once from the step | 0      | 0      | 0       | 0       | 1       | 1       | –       |
 | 5     | 1          | DeepSeek adapter, low | after the step            | 42     | 42     | 43      | 44      | 0       | 0       | 0       |
 | 5     | 1          | DeepSeek adapter, low | all at once from the step | 0      | 0      | 0       | 44      | 0       | 0       | –       |
 | 7     | 3          | DeepSeek adapter, low | after the step            | 14     | 15     | 15      | 19      | 19      | 0       | 0       |
@@ -579,6 +600,10 @@ has none.
 | 3     | 3          | Sonnet 5.5            | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
 | 4     | 4          | Sonnet 5.5            | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0054  | 0.0051  |
 | 4     | 4          | Sonnet 5.5            | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0.0026 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
+| 10    | 2          | Opus 5.5              | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
+| 10    | 2          | Opus 5.5              | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
 | 5     | 1          | DeepSeek adapter, low | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0000  | 0.0054  | 0.0051  |
 | 5     | 1          | DeepSeek adapter, low | all at once from the step | 0.0077 | 0.0000 | 0.0000  | 0.0026  | 0.0000  | 0.0051  | –       |
 | 7     | 3          | DeepSeek adapter, low | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0000  | 0.0026  |
@@ -596,6 +621,10 @@ has none.
 | 3     | 3          | Sonnet 5.5            | all at once from the step | 14.47  | 11.32  | 13.71   | 11.37   | 10.42   | 10.61   | –       |
 | 4     | 4          | Sonnet 5.5            | after the step            | 7.60   | 8.01   | 8.29    | 8.67    | 8.97    | 9.35    | 9.53    |
 | 4     | 4          | Sonnet 5.5            | all at once from the step | 10.60  | 10.71  | 10.13   | 10.04   | 9.78    | 9.82    | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 9.56   | 9.80   | 10.13   | 10.61   | 10.72   | 10.91   | 11.13   |
+| 9     | 1          | Opus 5.5              | all at once from the step | 14.77  | 11.08  | 11.05   | 11.48   | 11.48   | 11.13   | –       |
+| 10    | 2          | Opus 5.5              | after the step            | 9.91   | 9.80   | 10.16   | 10.69   | 10.72   | 10.92   | 11.14   |
+| 10    | 2          | Opus 5.5              | all at once from the step | 11.14  | 11.14  | 11.20   | 11.71   | 11.43   | 11.30   | –       |
 | 5     | 1          | DeepSeek adapter, low | after the step            | 9.56   | 10.35  | 11.05   | 11.97   | 11.21   | 11.31   | 11.38   |
 | 5     | 1          | DeepSeek adapter, low | all at once from the step | 11.34  | 18.74  | 11.70   | 14.91   | 11.49   | 11.43   | –       |
 | 7     | 3          | DeepSeek adapter, low | after the step            | 7.96   | 8.46   | 9.00    | 9.36    | 9.62    | 15.00   | 18.70   |
@@ -613,6 +642,10 @@ has none.
 | 3     | 3          | Sonnet 5.5            | all at once from the step | 16     | 28     | 38      | 18      | 20      | 24      | –       |
 | 4     | 4          | Sonnet 5.5            | after the step            | 8      | 6      | 10      | 10      | 8       | 14      | 12      |
 | 4     | 4          | Sonnet 5.5            | all at once from the step | 32     | 34     | 26      | 14      | 14      | 14      | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 8      | 2      | 6       | 2       | 6       | 8       | 8       |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0      | 2      | 6       | 0       | 0       | 8       | –       |
+| 10    | 2          | Opus 5.5              | after the step            | 12     | 2      | 4       | 2       | 6       | 10      | 8       |
+| 10    | 2          | Opus 5.5              | all at once from the step | 0      | 2      | 4       | 4       | 0       | 12      | –       |
 | 5     | 1          | DeepSeek adapter, low | after the step            | 8      | 14     | 16      | 16      | 26      | 28      | 22      |
 | 5     | 1          | DeepSeek adapter, low | all at once from the step | 0      | 0      | 0       | 26      | 14      | 22      | –       |
 | 7     | 3          | DeepSeek adapter, low | after the step            | 16     | 16     | 18      | 16      | 18      | 0       | 0       |
@@ -826,6 +859,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 12     | 16     | 22      | 29      | 32      | 37      | –       |
 | 8     | 4          | Sonnet 5.5            | after the step            | 13     | 18     | 20      | 24      | 27      | 31      | 34      |
 | 8     | 4          | Sonnet 5.5            | all at once from the step | 13     | 18     | 20      | 24      | 27      | 33      | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 42     | 0      | 0       | 0       | 0       | 0       | 0       |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 0      | 0      | 0       | 0       | 0       | 0       | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 14     | 0      | 0       | 0       | 0       | 0       | 0       |
@@ -843,6 +878,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
 | 8     | 4          | Sonnet 5.5            | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0054  | 0.0051  |
 | 8     | 4          | Sonnet 5.5            | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 0.0037 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | 0.0000  |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0.0000 | 0.0000 | 0.0000  | 0.0000  | 0.0000  | 0.0000  | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 0.0037 | 0.0103 | 0.0000  | 0.0000  | 0.0028  | 0.0081  | 0.0077  |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 0.0077 | 0.0077 | 0.0077  | 0.0000  | 0.0026  | 0.0077  | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 0.0074 | 0.0034 | 0.0032  | 0.0120  | 0.0085  | 0.0081  | 0.0102  |
@@ -860,6 +897,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 14.93  | 11.77  | 11.63   | 10.81   | 9.81    | 8.86    | –       |
 | 8     | 4          | Sonnet 5.5            | after the step            | 7.60   | 7.81   | 8.04    | 8.22    | 8.43    | 8.57    | 8.75    |
 | 8     | 4          | Sonnet 5.5            | all at once from the step | 10.53  | 9.95   | 10.24   | 10.53   | 9.28    | 8.74    | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 9.56   | 9.80   | 10.22   | 10.61   | 11.57   | 12.78   | 14.20   |
+| 9     | 1          | Opus 5.5              | all at once from the step | 13.76  | 11.08  | 13.21   | 11.08   | 14.36   | 11.59   | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 9.56   | 13.11  | 14.37   | 10.73   | 14.33   | 17.66   | 17.02   |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 11.73  | 17.01  | 12.42   | 12.01   | 15.28   | 15.04   | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 7.96   | 16.02  | 15.50   | 15.78   | 10.81   | 16.85   | 12.87   |
@@ -877,6 +916,8 @@ As in Appendix A.
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 12     | 18     | 24      | 10      | 14      | 6       | –       |
 | 8     | 4          | Sonnet 5.5            | after the step            | 8      | 4      | 4       | 6       | 8       | 6       | 6       |
 | 8     | 4          | Sonnet 5.5            | all at once from the step | 30     | 6      | 24      | 22      | 14      | 4       | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 8      | 2      | 0       | 2       | 4       | 4       | 0       |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0      | 2      | 2       | 6       | 0       | 8       | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 8      | 2      | 28      | 0       | 0       | 2       | 58      |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 0      | 8      | 0       | 0       | 6       | 2       | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 16     | 2      | 6       | 0       | 0       | 14      | 12      |
@@ -894,6 +935,8 @@ As in Appendix A.
 | 5     | 1          | Sonnet 5.5            | all at once from the step | 67     | 64     | 64      | 66      | 66      | 67      | –       |
 | 7     | 3          | Sonnet 5.5            | after the step            | 14     | 18     | 23      | 28      | 31      | 35      | 38      |
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 40     | 27     | 41      | 41      | 39      | 40      | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 42     | 46     | 50      | 55      | 59      | 61      | 65      |
+| 9     | 1          | Opus 5.5              | all at once from the step | 41     | 45     | 65      | 53      | 64      | 64      | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 42     | 44     | 47      | 50      | 49      | 49      | 51      |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 63     | 69     | 47      | 65      | 57      | 49      | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 14     | 15     | 17      | 28      | 31      | 38      | 40      |
@@ -907,6 +950,8 @@ As in Appendix A.
 | 5     | 1          | Sonnet 5.5            | all at once from the step | 0.0026 | 0.0026 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 7     | 3          | Sonnet 5.5            | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0054  | 0.0051  |
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 0.0051 | 0.0051 | 0.0051  | 0.0051  | 0.0051  | 0.0051  | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
+| 9     | 1          | Opus 5.5              | all at once from the step | 0.0026 | 0.0026 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 0.0037 | 0.0034 | 0.0032  | 0.0030  | 0.0028  | 0.0027  | 0.0026  |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 0.0026 | 0.0026 | 0.0026  | 0.0026  | 0.0026  | 0.0026  | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 0.0074 | 0.0068 | 0.0064  | 0.0060  | 0.0057  | 0.0054  | 0.0051  |
@@ -920,6 +965,8 @@ As in Appendix A.
 | 5     | 1          | Sonnet 5.5            | all at once from the step | 11.46  | 11.78  | 12.18   | 11.78   | 11.33   | 11.76   | –       |
 | 7     | 3          | Sonnet 5.5            | after the step            | 7.96   | 8.09   | 8.24    | 8.44    | 8.61    | 8.76    | 8.92    |
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 8.95   | 10.15  | 8.80    | 8.86    | 8.91    | 8.87    | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 9.56   | 9.93   | 10.29   | 10.85   | 11.26   | 11.59   | 11.93   |
+| 9     | 1          | Opus 5.5              | all at once from the step | 13.39  | 14.30  | 11.59   | 12.86   | 12.00   | 12.06   | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 9.56   | 10.23  | 11.05   | 11.51   | 11.97   | 12.49   | 12.92   |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 13.32  | 12.36  | 13.77   | 14.13   | 12.72   | 12.89   | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 7.96   | 8.32   | 8.67    | 10.65   | 11.06   | 11.20   | 11.53   |
@@ -933,6 +980,8 @@ As in Appendix A.
 | 5     | 1          | Sonnet 5.5            | all at once from the step | 6      | 10     | 12      | 10      | 10      | 12      | –       |
 | 7     | 3          | Sonnet 5.5            | after the step            | 16     | 10     | 12      | 16      | 8       | 4       | 2       |
 | 7     | 3          | Sonnet 5.5            | all at once from the step | 18     | 16     | 8       | 16      | 4       | 2       | –       |
+| 9     | 1          | Opus 5.5              | after the step            | 8      | 10     | 8       | 10      | 6       | 6       | 6       |
+| 9     | 1          | Opus 5.5              | all at once from the step | 34     | 10     | 10      | 20      | 4       | 4       | –       |
 | 1     | 1          | DeepSeek adapter, low | after the step            | 8      | 10     | 14      | 14      | 14      | 16      | 14      |
 | 1     | 1          | DeepSeek adapter, low | all at once from the step | 24     | 10     | 30      | 34      | 12      | 22      | –       |
 | 3     | 3          | DeepSeek adapter, low | after the step            | 16     | 12     | 18      | 16      | 14      | 16      | 10      |

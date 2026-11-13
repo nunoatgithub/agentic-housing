@@ -6,7 +6,9 @@ Every number in the report is computed here from the saved records of the five r
 runs_100_rooms_no_hallways/, runs_100_rooms_refactor/, runs_100_rooms_refactor_cost/ and runs_100_rooms_cost/), and every
 claim the text makes about them is checked here. The runs are described, not tested.
 """
+import hashlib
 import json
+import pickle
 import re
 import statistics as st
 import sys
@@ -20,10 +22,11 @@ from house.model import set_grid_size  # noqa: E402
 from house.scores import score  # noqa: E402
 
 set_grid_size(15)
+CACHE = ROOT / "paper" / ".report_cache"     # what each call's layout gives the report, so a rebuild parses nothing it has seen
 SCORES = ("corridor_rooms", "privacy_order", "walking_distance", "compactness")
 NAMES = ("Corridor rooms", "Privacy order", "Walking distance", "Compactness")
 DIGITS = {"corridor_rooms": 0, "privacy_order": 4, "walking_distance": 2, "compactness": 0}
-MODELS = {"sonnet55": "Sonnet 5.5", "gpt6luna": "GPT-6 Luna", "deepseekflash": "DeepSeek adapter, low"}
+MODELS = {"sonnet55": "Sonnet 5.5", "opus55": "Opus 5.5", "gpt6luna": "GPT-6 Luna", "deepseekflash": "DeepSeek adapter, low"}
 KINDS = (("step", "One room at a time"), ("all", "All at once"))
 LABEL = re.compile(r"^(\w+)-(\w+)-h(\d+)-c(\d+)-(step|all)(\d+)$")
 ALONG = (0, 5, 10, 15, 20, 25, 30)          # the steps the along-the-chain tables show
@@ -79,6 +82,57 @@ class Run:
                 self.calls[(m[1], int(m[3]), int(m[4]))][(m[5], int(m[6]))] = r
         self.chains = sorted(self.calls, key=lambda c: (list(MODELS).index(c[0]), c[2]))
         self._layouts = {}
+        self._seed_scores = {}
+        self._seed_derived = {}
+        self._derived = {}
+        self._cache_file = CACHE / (folder + ".pkl")
+        self._cache = pickle.loads(self._cache_file.read_bytes()) if self._cache_file.exists() else {}
+        self._dirty = False
+        self._changes = {}
+
+    def seed_score(self, house):
+        """The scores of a seed house, computed once: scoring a 70-room house compares every pair of rooms."""
+        if house not in self._seed_scores:
+            self._seed_scores[house] = vars(score(self.seeds[house]))
+        return self._seed_scores[house]
+
+    @staticmethod
+    def derive(layout):
+        """What the report takes from a house: its rooms as (cells, type), how many hallways it has, its doors."""
+        return key(layout), sum(r.type == "hallway" for r in layout.rooms.values()), frozenset(layout.doors)
+
+    def derived(self, chain, kind, step):
+        """derive() of the house a call left, from the cache on disk when its layout is unchanged."""
+        k = (chain, kind, step)
+        if k not in self._derived:
+            r = self.calls[chain][(kind, step)]
+            token = (r["run_id"], hashlib.md5(r["layout"].encode()).hexdigest())
+            hit = self._cache.get(r["run_id"])
+            if hit is None or hit[0] != token:
+                hit = (token, self.derive(self.layout(chain, kind, step)))
+                self._cache[r["run_id"]] = hit
+                self._dirty = True
+            self._derived[k] = hit[1]
+        return self._derived[k]
+
+    def start_derived(self, chain, kind, step):
+        before = step - 1 if kind == "step" else step
+        if before == 0:
+            if chain[1] not in self._seed_derived:
+                self._seed_derived[chain[1]] = self.derive(self.seeds[chain[1]])
+            return self._seed_derived[chain[1]]
+        return self.derived(chain, "step", before)
+
+    def keys(self, chain, kind, step):
+        return self.derived(chain, kind, step)[0]
+
+    def start_keys(self, chain, kind, step):
+        return self.start_derived(chain, kind, step)[0]
+
+    def save_cache(self):
+        if self._dirty:
+            CACHE.mkdir(exist_ok=True)
+            self._cache_file.write_bytes(pickle.dumps(self._cache))
 
     def layout(self, chain, kind, step):
         k = (chain, kind, step)
@@ -97,7 +151,9 @@ class Run:
 
     def changes(self, model, kind):
         """Per call of this model and kind: (rooms gone from the house it started from, its size, hallways added,
-        doors added, rooms added, chain, step)."""
+        doors added, rooms added, chain, step); computed once per model and kind."""
+        if (model, kind) in self._changes:
+            return self._changes[(model, kind)]
         out = []
         for chain in self.chains:
             if chain[0] != model:
@@ -105,10 +161,9 @@ class Run:
             for (k, step) in sorted(self.calls[chain]):
                 if k != kind:
                     continue
-                a, b = self.start(chain, k, step), self.layout(chain, k, step)
-                ka, kb = key(a), key(b)
-                halls = lambda L: sum(r.type == "hallway" for r in L.rooms.values())
-                out.append((len(ka - kb), len(ka), halls(b) - halls(a), len(b.doors - a.doors), len(kb - ka), chain, step))
+                (ka, ha, da), (kb, hb, db) = self.start_derived(chain, k, step), self.derived(chain, k, step)
+                out.append((len(ka - kb), len(ka), hb - ha, len(db - da), len(kb - ka), chain, step))
+        self._changes[(model, kind)] = out
         return out
 
     def tries(self, model, kind):
@@ -140,7 +195,7 @@ def final_table(run, models):
     for h in range(1, 5):
         if not any(c[1] == h and c[0] in models for c in run.chains):
             continue
-        seed = vars(score(run.seeds[h]))
+        seed = run.seed_score(h)
         rows.append((str(h), "", "", "seed house (70 rooms)") + tuple(fmt(seed[s], s) for s in SCORES))
         for chain in run.chains:
             if chain[1] != h or chain[0] not in models:
@@ -159,7 +214,7 @@ def along_tables(run):
             for kind, kname in (("step", "after the step"), ("all", "all at once from the step")):
                 cells = []
                 for k in ALONG:
-                    sc = (vars(score(run.seeds[chain[1]])) if (kind, k) == ("step", 0) else
+                    sc = (run.seed_score(chain[1]) if (kind, k) == ("step", 0) else
                           run.scores(chain, kind, k) if kind == "step" or k <= LAST_ALL else None)
                     cells.append(fmt(sc[s], s) if sc else "–")
                 rows.append((str(chain[2]), str(chain[1]), MODELS[chain[0]], kname) + tuple(cells))
@@ -218,7 +273,7 @@ T["r1_final_deepseek"] = final_table(r1, ["deepseekflash"])
 T["r1_changes"] = change_table(r1, ["sonnet55", "deepseekflash"], hallways=True)
 T["r1_tries"] = tries_table(r1, ["sonnet55", "deepseekflash"])
 T["r1_along"] = along_tables(r1)
-seed_sc = {h: vars(score(r1.seeds[h])) for h in range(1, 5)}
+seed_sc = {h: r1.seed_score(h) for h in range(1, 5)}
 step30 = {c[1]: r1.scores(c, "step", 30) for c in S1}
 all00 = {c[1]: r1.scores(c, "all", 0) for c in S1}
 assert all(step30[h]["corridor_rooms"] > all00[h]["corridor_rooms"] for h in range(1, 5)), "run 1: corridor rooms worse after step 30 in every house"
@@ -357,7 +412,7 @@ assert T["r3_step30_zero"] == "five" and T["r3_all00_zero"] == "five", "run 3: f
 assert r3.scores(("sonnet55", 1, 1), "step", 30)["corridor_rooms"] == 1, "run 3: the Sonnet house 1 after step 30 has 1 corridor room"
 assert [c for c in r3.changes("deepseekflash", "all") if c[5] == ("deepseekflash", 1, 5) and c[6] == 0][0][0] == 1, \
     "run 3: the DeepSeek house 1 all at once from step 0 removed one room"
-assert r3.scores(("deepseekflash", 1, 5), "all", 0)["corridor_rooms"] == vars(score(r3.seeds[1]))["corridor_rooms"], \
+assert r3.scores(("deepseekflash", 1, 5), "all", 0)["corridor_rooms"] == r3.seed_score(1)["corridor_rooms"], \
     "run 3: the one all-at-once call that did not rebuild kept the seed's corridor rooms"
 
 for tag, model in (("s", "sonnet55"), ("d", "deepseekflash")):
@@ -469,7 +524,7 @@ for k in ("r5_s_step_calls", "r5_d_step_calls", "r5_d_all_calls", "r5_d_step_hal
     T.pop(k)
 s5_cost = script_costs(r5, "sonnet55", "step")
 assert set(s5_cost) == {5}, "run 5: every Sonnet one-room script cost 5, a room and a door"
-seed_corr = {h: vars(score(r5.seeds[h]))["corridor_rooms"] for h in (1, 3)}
+seed_corr = {h: r5.seed_score(h)["corridor_rooms"] for h in (1, 3)}
 assert all(r5.scores(c, "all", 0)["corridor_rooms"] > seed_corr[c[1]] for c in S5), \
     "run 5: the Sonnet houses built all at once from step 0 had more corridor rooms than their seed houses"
 T["r5_s_all00_corr"] = and_list("from %d to %d in house %d" % (seed_corr[c[1]], r5.scores(c, "all", 0)["corridor_rooms"], c[1]) for c in S5)
@@ -479,6 +534,29 @@ T["r5_s_versions"] = ", ".join(sorted({r["claude_code"].split()[0] for r in r5.r
 T["r145_adapter_version"] = and_list(sorted({r.get("agent_version") for run in (r1, r4, r5) for r in run.records if r["label"].startswith("deepseekflash")}))
 assert T["r145_adapter_version"] == T["r3_adapter_version"], "every DeepSeek chain used the same adapter version"
 T.pop("r145_adapter_version")
+
+# ---- how long a call takes
+def call_hours(model):
+    """Per chain, the hours its agent spent on calls (every try); the earliest runs saved no call times and are left out.
+    Waiting for a usage limit to reset is not time spent in a call, so a chain that was paused counts like any other."""
+    hours = defaultdict(float)
+    for run in (r1, r2, r3, r4, r5):
+        for r in run.records:
+            m = LABEL.match(r["label"])
+            if m[1] == model and r.get("call_duration_ms") is not None:
+                hours[(run.folder, m[3], m[4])] += r["call_duration_ms"] / 3.6e6
+    return list(hours.values())
+
+
+def call_seconds(model):
+    return [r["call_duration_ms"] / 1000 for run in (r1, r2, r3, r4, r5) for r in run.records
+            if r["label"].startswith(model) and r.get("call_duration_ms") is not None]
+
+
+T["call_s_sonnet"], T["call_s_deepseek"] = "%.0f" % st.mean(call_seconds("sonnet55")), "%.0f" % st.mean(call_seconds("deepseekflash"))
+T["chain_h_sonnet"], T["chain_h_deepseek"] = "%.1f" % st.mean(call_hours("sonnet55")), "%.1f" % st.mean(call_hours("deepseekflash"))
+assert st.mean(call_seconds("deepseekflash")) > 4 * st.mean(call_seconds("sonnet55")), "a DeepSeek call takes many times as long as a Sonnet call"
+assert st.mean(call_hours("deepseekflash")) > 4 * st.mean(call_hours("sonnet55")), "a DeepSeek chain takes many times as long as a Sonnet chain"
 
 # ---- the conclusion, as written: check every figure it gives
 first = lambda run, model, kind: [share(calls[0]) for calls in by_chain(run, model, kind)]
@@ -494,6 +572,55 @@ assert refactoring(r3, "deepseekflash", "step") == [23, 25], "conclusion: run 3,
 assert r3.calls[("deepseekflash", 1, 5)][("step", 1)]["command_count"] == 297, "conclusion: run 3, house 1's first DeepSeek step used 297 commands"
 assert refactoring(r4, "deepseekflash", "step") == [10, 13], "conclusion: run 4, 10 and 13 of 30 DeepSeek steps refactored 10% or more"
 
+O1 = sorted((c for c in r1.chains if c[0] == "opus55"), key=lambda c: c[1])
+O4 = [c for c in r4.chains if c[0] == "opus55"]
+O5 = [c for c in r5.chains if c[0] == "opus55"]
+assert [(c[1], c[2]) for c in O1] == [(1, 9), (2, 10)] and [(c[1], c[2]) for c in O4] == [(1, 9)] and [(c[1], c[2]) for c in O5] == [(1, 9)], \
+    "conclusion: Opus ran run 1 on houses 1 and 2, runs 4 and 5 on house 1"
+assert complete(r1, O1) and complete(r4, O4) and complete(r5, O5), "every Opus chain has all 59 houses"
+
+
+def opus_calls(run, chain):
+    """Per kind, the share of the house each call removed, step by step in order: {kind: [share, ...]}."""
+    return {kind: [share(c) for c in sorted(run.changes("opus55", kind), key=lambda x: x[6]) if c[5] == chain] for kind in ("step", "all")}
+
+
+o1 = [opus_calls(r1, c) for c in O1]
+assert [round(100 * x["step"][0]) for x in o1] == [65, 77] and [round(100 * x["all"][0]) for x in o1] == [67, 67], \
+    "conclusion: run 1, Opus's first step refactored 65% and 77%, its first all-at-once call 67% and 67%"
+assert all(v < 0.1 for x in o1 for kind in x for v in x[kind][1:]), "conclusion: run 1, no later Opus call refactored 10% or more"
+assert all(r1.scores(c, k, s)["corridor_rooms"] <= 1 for c in O1 for k, s in (("step", 30), ("all", 0), ("all", 15))), \
+    "conclusion: run 1, all the Opus final houses have 0 or 1 corridor rooms"
+o4 = opus_calls(r4, O4[0])
+assert round(100 * o4["step"][0]) == 39 and round(100 * o4["all"][0]) == 36, "conclusion: run 4, Opus's first step refactored 39% and its first all-at-once call 36%"
+assert all(v < 0.1 for kind in o4 for v in o4[kind][1:]), "conclusion: run 4, no later Opus call refactored 10% or more"
+assert all(r4.scores(O4[0], k, s)["corridor_rooms"] == 0 for k, s in (("step", 30), ("all", 0), ("all", 15))), "conclusion: run 4, all the Opus final houses have 0 corridor rooms"
+o5 = opus_calls(r5, O5[0])
+assert round(100 * max(v for kind in o5 for v in o5[kind]), 1) == 2.4, "conclusion: run 5, no Opus call refactored more than 2.4%"
+corridor5 = lambda c: [r5.scores(c, k, s)["corridor_rooms"] for k, s in (("step", 30), ("all", 0), ("all", 15))]
+assert corridor5(O5[0]) == [65, 41, 53], "conclusion: run 5, Opus's incremental house had 65 corridor rooms against 41 and 53"
+more_than_both = lambda c: corridor5(c)[0] > max(corridor5(c)[1:])
+assert more_than_both(O5[0]) and not more_than_both(S5[0]) and not more_than_both(D5[0]), \
+    "conclusion: run 5 house 1, only Opus's incremental house had more corridor rooms than both all-at-once houses"
+assert S5[0][1] == D5[0][1] == O5[0][1] == 1, "conclusion: the run 5 chains compared are all on house 1"
+
+
+def successive(run, model):
+    """The share of rooms two successive layouts have in common, step by step: the house a step received and the one it left."""
+    out = []
+    for c in run.chains:
+        if c[0] == model:
+            for k in range(1, 31):
+                before, after = run.start_keys(c, "step", k), run.keys(c, "step", k)
+                out.append(len(before & after) / len(before | after))
+    return out
+
+
+for run in (r3, r4):        # when asked to reorganise, DeepSeek's successive layouts are far more distinct than Sonnet's
+    s_, d_ = successive(run, "sonnet55"), successive(run, "deepseekflash")
+    assert st.median(d_) < st.median(s_) and sum(x < 0.5 for x in d_) / len(d_) > 10 * sum(x < 0.5 for x in s_) / len(s_) and any(x < 0.5 for x in d_), \
+        "conclusion: when asked to reorganise, DeepSeek's successive layouts share fewer rooms than Sonnet's"
+
 for k in ("r1_versions", "r2_s_versions", "r3_s_versions", "r4_s_versions", "r5_s_versions"):
     assert re.fullmatch(r"[0-9., ]+", T[k]), k
 
@@ -502,6 +629,8 @@ if __name__ == "__main__":
     unused = set(T) - set(re.findall(r"{{(\w+)}}", text))
     assert not unused, "computed but not in the template: %s" % sorted(unused)
     text = re.sub(r"{{(\w+)}}", lambda m: T[m.group(1)], text)
+    for run in (r1, r2, r3, r4, r5):
+        run.save_cache()
     assert "{{" not in text, "a placeholder has no value"
     (ROOT / "REPORT_100_rooms.md").write_text(text)
     print("wrote REPORT_100_rooms.md,", len(text.splitlines()), "lines,", len(text.split()), "words")
