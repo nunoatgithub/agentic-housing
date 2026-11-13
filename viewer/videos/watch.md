@@ -8,7 +8,7 @@ Each room is a square and the lines connecting them represent the doors. Lines w
 
 Three incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
 - left: agent is asked simply to add new room, without any other explicit instruction about reconstruction or cost
-- center:introducing request to reduce complexity before adding, plus awareness about construction costs
+- center: introducing request to reduce complexity before adding, plus awareness about construction costs
 - right: agent is told only about construction costs
 
 ### Opus 5.5 medium 
