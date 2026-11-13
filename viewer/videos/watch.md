@@ -1,4 +1,4 @@
-Here we show animations of the design patterns used by the agents as they construct the 100 room house.
+Here we show animations of the design strategies used by the agents as they construct the 100 room house.
 
 These are screenshots of the viewer tool, and help build a stronger intuition for the products of this research.  
 
