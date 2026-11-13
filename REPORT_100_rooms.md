@@ -14,7 +14,7 @@ asked. Refactoring was not the same as improving. In none of the runs did workin
 clear advantage in the final design; with cost and no request to reorganise, the conditions in which the small grid
 showed one, the houses built step by step ended no worse.
 
-[Whatch the videos](viewer/videos/watch.md)
+[Watch the videos](viewer/videos/watch.md)
 
 ## 1. Question
 

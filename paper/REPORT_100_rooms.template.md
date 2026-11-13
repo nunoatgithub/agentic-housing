@@ -14,6 +14,8 @@ asked. Refactoring was not the same as improving. In none of the runs did workin
 clear advantage in the final design; with cost and no request to reorganise, the conditions in which the small grid
 showed one, the houses built step by step ended no worse.
 
+[Watch the videos](viewer/videos/watch.md)
+
 ## 1. Question
 
 In the first report (`REPORT.md`), on a 5×5 grid with building and demolishing free, adding rooms one at a time never
