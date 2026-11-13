@@ -2,7 +2,7 @@
 
 These are screenshots of the viewer tool, and help build a stronger intuition for the products of this research.  
 
-Each room is a square and the lines connecting adjacent ones represent the doors, forming a corridor. Lines without a square represent hallways.
+Each room is a square and the lines connecting adjacent ones represent corridors through their shared doors. Lines without a square represent hallways.
 
 ## House 1 - default / reorganize + cost / cost 
 
