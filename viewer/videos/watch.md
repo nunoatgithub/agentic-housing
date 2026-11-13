@@ -1,4 +1,4 @@
-Here we show animations of the design strategies used by the agents as they construct the 100 room house.
+ Here we show animations of the design strategies used by the agents as they construct the 100 room house.
 
 These are screenshots of the viewer tool, and help build a stronger intuition for the products of this research.  
 
@@ -7,9 +7,9 @@ Each room is a square and the lines connecting them represent the doors. Lines w
 ## House 1 - default / reorganize + cost / cost 
 
 Three incremental step-by-step growth trajectories of the same base house (house #1 - a difficult seed) : 
-- agent is asked simply to add new room, without any other explicit instruction about reconstruction or cost (left)
-- introducing request to reduce complexity before adding, plus awareness about construction costs (center)
-- agent is told only about construction costs (right)
+- left: agent is asked simply to add new room, without any other explicit instruction about reconstruction or cost
+- center:introducing request to reduce complexity before adding, plus awareness about construction costs
+- right: agent is told only about construction costs
 
 ### Opus 5.5 medium 
 ![Opus 5.5 medium](./opus55.gif)
