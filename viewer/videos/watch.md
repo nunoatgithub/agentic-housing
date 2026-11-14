@@ -25,6 +25,6 @@ Three incremental step-by-step growth trajectories of the same base house (house
 The incremental step-by-step growth trajectories of the same base house, when three different agents are asked to simplify it before adding a room : 
 (left) opus 5.5 medium, (center) deepseek 41 flash low, (right) sonnet 5.5 medium
 
-It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. Opus is the balanced one.
+It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. Opus is more balanced, it also refactors boldly but builds better designs than DeepSeek at each step.
 
 ![3 agents refactor house 1](./3-agents-refactor-h1.gif)
