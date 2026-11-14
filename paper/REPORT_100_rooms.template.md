@@ -1,5 +1,7 @@
 # Patching versus planning in houses of 70 to 100 rooms
 
+![The viewer](./viewer/images/viewer_banner.png)
+
 ## Abstract
 
 Does a design patched for one new requirement at a time end up worse than one that takes all the remaining
@@ -22,7 +24,8 @@ the run with a cost and no request to reorganise, the same conditions in which t
 that run, Opus's house and one of DeepSeek's two ended with more corridor rooms when built one room at a time than when
 built all at once. Sonnet's houses did not.
 
-[Watch the videos](viewer/videos/watch.md)
+[Watch the videos](viewer/videos/watch.md) of the houses growing. They were recorded in [the viewer](viewer/README.md),
+and the viewer plays every chain of this report step by step.
 
 ## 1. Question
 

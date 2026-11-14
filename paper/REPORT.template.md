@@ -1,7 +1,5 @@
 # Does step-by-step patching degrade design? A controlled test with LLM agents building houses on a grid
 
-![The viewer](./viewer/images/viewer_banner.png)
-
 **Author:** Nuno Oliveira + Claude Opus 5.5 ·  **Date:** 20 October 2026
 
 ---

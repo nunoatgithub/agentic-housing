@@ -128,6 +128,7 @@ paper/                           the report templates and generators, and the an
 runs*/                           the data: one record per script sent, and the agents' raw replies
 examples/                        example layouts
 tests/                           the test suite
+viewer/                          a 3D viewer that plays the 100-room chains step by step, and videos of it
 ```
 
 ## Quick start
