@@ -15,7 +15,7 @@ Three incremental step-by-step growth trajectories of the same base house (house
 ![Opus 5.5 medium](./opus55.gif)
 
 ### Deepseek 4.1 flash low 
-![Opus 5.5 medium](./deepseek.gif)
+![Deepseek low](./deepseek.gif)
 
 ### Sonnet 5.5 medium
 ![Opus 5.5 medium](./sonnet55.gif)
@@ -23,8 +23,8 @@ Three incremental step-by-step growth trajectories of the same base house (house
 ## House 1 - reorganize only, using opus / deepseek / sonnet 
 
 The incremental step-by-step growth trajectories of the same base house, when three different agents are asked to simplify it before adding a room : 
-(left) opus 5.5 medium, (center) deepseek 41 flash low, (right) sonnet 5.5 medium
+(left) opus 5.5 medium, (center) deepseek 4.1 flash low, (right) sonnet 5.5 medium
 
-It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. Opus is more balanced, it also refactors boldly but builds better designs than DeepSeek at each step. The reorganizing Sonnet refactors as boldly as Opus on default behavior (see above).
+It's visible how eagerly Deepseek rebuilds, and how conservative Sonnet remains after the first rebuild. Opus is more balanced, it also refactors boldly but builds better designs than DeepSeek at each step. It's interesting to observe that a reorganizing Sonnet refactors as boldly as Opus on default behavior (see above).
 
 ![3 agents refactor house 1](./3-agents-refactor-h1.gif)

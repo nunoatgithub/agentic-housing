@@ -1,5 +1,7 @@
 # Agentic housing
 
+![The viewer](./viewer/images/viewer_banner.png)
+
 **Do AI agents make a design worse when they extend it one change at a time?**
 
 A controlled experiment with AI coding agents, in a small world where design quality can be measured exactly:
@@ -104,11 +106,15 @@ The code, analysis plan and data folder of each run are listed in
 Five later runs ask the same question with houses of 70 rooms grown to 100 on a 15×15 grid, from four seed houses
 ([the second report](REPORT_100_rooms.md)): with hallways, without hallways, with a request to reorganise the house
 before adding to it, with that request and a cost on every command, and with the cost alone. Claude Sonnet 5.5
-refactored only when asked to reorganise, and not even then once every command had a cost: cost prevailed, and it
-acted locally. DeepSeek, asked to reorganise, refactored far more than Sonnet, step by step and all at once, and cost
-only constrained it. In none of the runs did working step by step or all at once give a clear advantage in the final
-design. With cost and no request to reorganise, the conditions in which the small grid showed one, the houses built
-step by step ended no worse.
+refactored only when asked to reorganise. If every command also had a cost, it stopped refactoring and only added
+rooms to the house it was given, the cheapest way. Asked to reorganise, DeepSeek refactored far more than Sonnet, both
+step by step and all at once. A cost on every command made it refactor less, but DeepSeek did not stop refactoring.
+Claude Opus 5.5, left to itself, refactored once at the start and then built on what it had. Asked to reorganise, it
+kept refactoring as the house grew. With a cost on every command as well, it went back to refactoring once. With the
+cost and no request to reorganise, it did not refactor at all. In most runs it made no clear difference whether the
+rooms were added one at a time or all at once. The exception was the run with a cost and no request to reorganise, the
+same conditions in which the small grid showed a difference. In that run, Opus's house and one of DeepSeek's two ended
+with more corridor rooms when built one room at a time than when built all at once. Sonnet's houses did not.
 
 ## Repository
 

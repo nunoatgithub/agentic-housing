@@ -64,14 +64,14 @@ Among valid houses, quality is measured by four fitness functions. They are used
 
 **Good-house criteria (given to both agents as guidance, not hard rules):** bedrooms, bathrooms and the kitchen are destinations, never passages. Both agents receive the same written criteria so they can judge their own placements; neither gets an unfair advantage. Because these are criteria rather than rules, the bad house (living room → bedroom → bedroom → bathroom → bedroom) stays possible, so the failure can be observed.
 
-| Fitness function | What it measures | Typical patch symptom |
-| --- | --- | --- |
-| Corridor rooms | How many bedrooms, bathrooms and kitchens lie on a best route between two other rooms (one crossing as few of them as possible) | Bathroom reachable only through a bedroom |
-| Privacy order | Public rooms (living room, kitchen) near the entrance, private rooms (bedrooms, bathrooms) further in | Bathroom off the living room, bedroom as a passage |
-| Walking distance | Average number of doors between every pair of rooms | New room added at the far end of a chain |
-| Compactness | How close the outline is to a compact shape (perimeter against area) | Bathroom sticking out as an add-on |
+| Fitness function | What it measures                                                                                                                                                                                                                                | Typical patch symptom                              |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Corridor rooms   | The kitchens, bedrooms and bathrooms that people have to walk through to get from one room to another, taking the way that crosses as few of them as possible. Each such room counts once.                                                      | Bathroom reachable only through a bedroom          |
+| Privacy order    | How often a bedroom or bathroom is nearer the entrance than a living room or kitchen. Over every pair of one of each, it is the share of pairs in which the bedroom or bathroom is nearer, counting doors from the entrance; a tie counts half. | Bathroom off the living room, bedroom as a passage |
+| Walking distance | The average, over every pair of rooms, of the fewest doors between them.                                                                                                                                                                        | New room added at the far end of a chain           |
+| Compactness      | How much outside wall the house has beyond the least a house of its size could have: the number of outside wall edges minus 2⌈2√n⌉, for a house of n cells.                                                                                     | Bathroom sticking out as an add-on                 |
 
-The four scores are reported separately, never combined. Together with the drawings, they are the only way to characterise a solution.
+Lower is better for every score. The four scores are reported separately, never combined. Together with the drawings, they are the only way to characterise a solution.
 
 ## Experiment design
 
@@ -134,7 +134,8 @@ The seed houses hold 5, 5, 47 and 45 hallways besides their 70 other rooms. All 
 
 A chain has 59 calls, made in this order: all at once from step 0, step 1, all at once from step 1, step 2, and so on. Every agent is fresh, with no tools, no memory and no score feedback. A failed call (script rejected or house invalid) is tried again with a fresh agent, up to 3 tries. If a one-room step still fails, that chain's one-room steps stop, and the all-at-once calls from the steps already reached are still made. A reply cut off by the output limit is recorded as cut off, not as an invalid house. No agent builds the 100-room house from scratch.
 
-**Agents.** The Sonnet and GPT-6 Luna chains are at medium effort. DeepSeek chains 5 and 7 in the hallway run and in
+**Agents.** The Sonnet, Opus and GPT-6 Luna chains are at medium effort. Opus 5.5 ran chain 9 on seed house 1 in the
+hallway, reorganising, cost and cost-only runs, and chain 10 on seed house 2 in the hallway run. DeepSeek chains 5 and 7 in the hallway run and in
 the reorganising run (seed houses 1 and 3; chains 6 and 8 not run) and chains 1 and 3 in the cost run and in the
 cost-only run (seed houses 1 and 3) use a standalone DeepSeek adapter at low thinking, with the model `deepseek-flash`
 (DeepSeek-V4.1-Flash-1017): it posts the house prompt to DeepSeek's Anthropic-compatible
@@ -146,15 +147,19 @@ and is reported separately. DeepSeek is many times slower than Sonnet (a mean of
 | ------------ | ------ | ----------- | -------------- | -------------------------------------------------------------- |
 | Hallways     | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.310                                            |
 | Hallways     | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
+| Hallways     | 9, 10  | 1, 2        | Opus 5.5       | Claude Code 2.1.322                                            |
 | No hallways  | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.311 (chains 1 and 3), 2.1.312 (chains 2 and 4) |
 | No hallways  | 5–8    | 1–4         | GPT-6 Luna     | GitHub Copilot CLI 1.0.105                                     |
 | No hallways  | 9–12   | 1–4         | Sonnet 5.5     | Claude Code 2.1.314                                            |
 | Reorganising | 1–4    | 1–4         | Sonnet 5.5     | Claude Code 2.1.314 (chain 1), 2.1.319 (chains 2–4)            |
 | Reorganising | 5, 7   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
+| Reorganising | 9      | 1           | Opus 5.5       | Claude Code 2.1.325                                            |
 | Cost         | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
 | Cost         | 5–8    | 1–4         | Sonnet 5.5     | Claude Code 2.1.322                                            |
+| Cost         | 9      | 1           | Opus 5.5       | Claude Code 2.1.322                                            |
 | Cost only    | 1, 3   | 1, 3        | deepseek-flash | DeepSeek API adapter (low effort)                              |
 | Cost only    | 5, 7   | 1, 3        | Sonnet 5.5     | Claude Code 2.1.322                                            |
+| Cost only    | 9      | 1           | Opus 5.5       | Claude Code 2.1.322                                            |
 
 The models are reported separately, never pooled.
 
@@ -282,7 +287,7 @@ Slot values by use case:
 
 ## Visualisation
 
-Every program renders as an ASCII floor plan: walls, doors, windows and room labels drawn with plain characters, so the difference between a patched and a planned house is visible at a glance. No graphical front end. A side-by-side view (patched and planned) with the four scores underneath is the core exhibit.
+Every program renders as an ASCII floor plan: walls, doors, windows and room labels drawn with plain characters, so the difference between a patched and a planned house is visible at a glance. A side-by-side view (patched and planned) with the four scores underneath is the core exhibit. For the houses of 70 to 100 rooms there is also a 3D viewer that plays a chain step by step; see [the viewer](../viewer/README.md).
 
 ## Implementation
 

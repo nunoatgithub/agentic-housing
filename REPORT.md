@@ -1,5 +1,7 @@
 # Does step-by-step patching degrade design? A controlled test with LLM agents building houses on a grid
 
+![The viewer](./viewer/images/viewer_banner.png)
+
 **Author:** Nuno Oliveira + Claude Opus 5.5 ·  **Date:** 20 October 2026
 
 ---
@@ -63,14 +65,9 @@ A house is valid only if all six rules hold:
 
 ### 2.4 Quality
 
-Four scores, computed for valid houses only, reported separately, lower is better. Rooms are nodes and doors are edges of a graph; *depth* is the number of doors from the entrance room.
-
-| Score | Definition |
-|---|---|
-| **Corridor rooms** | For each kitchen, bedroom or bathroom *X*, the number of other rooms that cannot be reached from the entrance without passing through *X*; summed over all such *X*. |
-| **Privacy order** | Over all pairs of a public room (living room, kitchen) and a private room (bedroom, bathroom): 1 if the private room has smaller depth, ½ if equal, 0 otherwise; the mean over pairs. |
-| **Walking distance** | The mean, over all pairs of rooms, of the fewest doors between them. |
-| **Compactness** | The number of outer-wall edges minus the smallest possible for that number of cells, 2⌈2√*n*⌉. |
+Four scores, computed for valid houses only, reported separately, lower is better: corridor rooms, privacy order,
+walking distance and compactness. They are defined in
+[the study design](docs/study-design.md#quality-score-fitness-functions).
 
 The agents are told the corresponding principles in words (Appendix B), so the scores measure how well an agent met stated principles.
 

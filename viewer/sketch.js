@@ -28,6 +28,9 @@ renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+// The picture is drawn only while something moves (see loop); anything that changes it calls wake().
+let last = performance.now(), looping = false;
+function wake() { if (looping) return; looping = true; last = performance.now(); requestAnimationFrame(loop); }
 document.body.prepend(renderer.domElement);
 
 const scene = new THREE.Scene();
@@ -613,7 +616,7 @@ const st = { cur: 0, T: 0, intro: false, anim: false, playing: false, once: fals
 function setFrame(i) {
   st.cur = clamp(i, 0, frames.length - 1); st.T = 0; st.anim = false; st.intro = false; st.once = false;
   $('scrub').value = st.cur;
-  applyState(st.cur, 0, false); updateInfo();
+  applyState(st.cur, 0, false); updateInfo(); wake();
 }
 // the seed house builds up room by room, spreading outwards along the links
 const INTRO_DUR = 9;
@@ -636,12 +639,12 @@ function applyIntro(p) {
   wallPool.forEach(o => { o.group.visible = false; });
   updateRails(0, false);
 }
-function startIntro() { st.intro = true; st.T = 0; st.anim = false; applyIntro(0); }
+function startIntro() { st.intro = true; st.T = 0; st.anim = false; applyIntro(0); wake(); }
 function startTransition(once) {
   if (st.cur >= frames.length - 1) { st.playing = false; syncPlay(); return false; }
-  st.anim = true; st.T = 0; st.once = once; return true;
+  st.anim = true; st.T = 0; st.once = once; wake(); return true;
 }
-function syncPlay() { $('play').textContent = st.playing ? '⏸ Pause' : '▶ Play'; }
+function syncPlay() { $('play').textContent = st.playing ? '⏸ Pause' : '▶ Play'; wake(); }
 function updateInfo() {
   const f = frames[st.cur], prev = frames[Math.max(0, st.cur - 1)];
   const had = new Set(prev.rooms.map(roomKey)), has = new Set(f.rooms.map(roomKey));
@@ -672,7 +675,7 @@ function placeCam(d, azDeg, elDeg) {
   controls.update();
 }
 function camFromSliders() { placeCam(DMAX * Math.pow(DMIN / DMAX, $('zoom').value / 1000), +$('rot').value, +$('tilt').value); }
-controls.addEventListener('change', syncCamSliders);
+controls.addEventListener('change', () => { syncCamSliders(); wake(); });
 ['zoom', 'rot', 'tilt'].forEach(id => $(id).addEventListener('input', camFromSliders));
 function resetView() {
   const rs = frames[frames.length - 1].rooms;
@@ -742,7 +745,7 @@ const overIcon = e => { mouse.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY 
 renderer.domElement.addEventListener('pointerdown', e => { downAt = [e.clientX, e.clientY]; });
 renderer.domElement.addEventListener('pointerup', e => {
   if (downAt && Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) < 5 && overIcon(e)) {
-    gridOnly = !gridOnly; drawGridIcon(); if (EMBED) parent.postMessage({ gridOnly }, '*');
+    gridOnly = !gridOnly; drawGridIcon(); wake(); if (EMBED) parent.postMessage({ gridOnly }, '*');
   }
   downAt = null;
 });
@@ -755,17 +758,18 @@ function fitToHouse(dt) {
   const fs = st.intro ? [frames[0]] : st.anim ? [frames[st.cur], frames[st.cur + 1]] : [frames[st.cur]];
   let x0 = 1e9, x1 = -1e9, z0 = 1e9, z1 = -1e9;
   fs.forEach(f => f && f.rooms.forEach(r => { x0 = Math.min(x0, wx(r.c)); x1 = Math.max(x1, wx(r.c)); z0 = Math.min(z0, wz(r.r)); z1 = Math.max(z1, wz(r.r)); }));
-  if (x0 > x1) return;
+  if (x0 > x1) return false;
   const hw = (x1 - x0) / 2 + CELL / 2, hh = (z1 - z0) / 2 + CELL / 2, t = Math.tan(camera.fov * Math.PI / 360);
   const d = Math.min(DMAX, Math.max(DMIN, Math.max(hw / (t * camera.aspect * 0.8), hh / (t * 0.62)))), k = fitSnap ? 1 : 1 - Math.exp(-dt * 3);
   fitSnap = false;
-  const cur = camera.position.clone().sub(controls.target).length();
+  const cur = camera.position.clone().sub(controls.target).length(), was = camera.position.clone();
   controls.target.x += ((x0 + x1) / 2 - controls.target.x) * k; controls.target.z += ((z0 + z1) / 2 - controls.target.z) * k;
   placeCam(cur + (d - cur) * k, 0, 89);
+  return camera.position.distanceTo(was) > 1e-3;
 }
 
 // ---------- main loop ----------
-let last = performance.now();
+// Runs only while something moves; a still picture costs nothing until wake() is called.
 function loop(now) {
   const dt = Math.min(0.1, (now - last) / 1000); last = now;
   if (st.intro) {
@@ -784,10 +788,11 @@ function loop(now) {
   const gt = gridOnly ? 1 : 0;
   if (gv !== gt || gv > 0) { gv = gt > gv ? Math.min(gt, gv + dt / GRID_DUR) : Math.max(gt, gv - dt / GRID_DUR); applyGridView(); }
   placeGridIcon(); growGridBlade(dt);
-  if (EMBED && autoFit) fitToHouse(dt);
-  controls.update();
+  const fitting = EMBED && autoFit && fitToHouse(dt);
+  const settling = controls.update();               // true while the camera still glides after a drag
   renderer.render(scene, camera);
-  requestAnimationFrame(loop);
+  if (st.intro || st.anim || st.playing || gv !== gt || gridIcon.userData.t < 1 || fitting || settling) requestAnimationFrame(loop);
+  else looping = false;
 }
 
 // ---------- wiring ----------
@@ -842,6 +847,7 @@ function fitView() {
 addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight); fitView();
   lineMats.forEach(m => m.resolution.set(innerWidth, innerHeight));
+  wake();
 });
 
 data = await (await fetch(EMBED && Q.get('data') || 'data.json', { cache: 'no-cache' })).json();
@@ -861,6 +867,7 @@ let custom = false;
 if (EMBED) {
   addEventListener('message', e => {
     const m = e.data || {};
+    wake();
     if (m.speed) st.speed = m.speed;
     if ('gridOnly' in m) gridOnly = m.gridOnly; // the main loop animates the change of view
     if (m.light) { // direction the light comes from: azimuth/elevation in degrees, plus the sun and ambient strengths
@@ -889,4 +896,4 @@ if (EMBED) {
 resetView();
 fitView();
 window.__viewer = { st, setFrame, startTransition, scene, camera, controls, planFor, applyState };
-requestAnimationFrame(loop);
+wake();

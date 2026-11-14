@@ -1,0 +1,84 @@
+label: opus55-medium-h1-c9-all28   at 2026-11-14T02:18:17+00:00   commands: 8
+
+SCRIPT
+room R560 bedroom M1
+room R561 hallway N1
+room R562 bathroom M11
+room R563 hallway N11
+door N1|N2
+door M1|N1
+door N10|N11
+door M11|N11
+
+run_0436
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  |  R401 |  R402 |  R403 |  R404 |  R405 |  R406 |  R407 |  R408 |  R409 |  R410 |  R411 |
+A |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R412 |  R413 |  R414 |  R415 |  R416 |  R417 |  R418 |  R419 |  R420 |  R421 |  R422 |
+B |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R423 |  R424 |  R425 |  R426 |  R427 |  R428 |  R429 |  R430 |  R431 |  R432 |  R433 |
+C |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+
+  |  R434 |  R435 |  R436 |  R437 |  R438 |  R439 |  R440 |  R441 |  R442 |  R443 |  R444 |
+D |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R445 |  R446 |  R447 |  R448 |  R449 |  R450 |  R451 |  R452 |  R453 |  R454 |  R455 |
+E |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R456 |  R457 |  R458 |  R459 |  R460 |  R461 |  R462 |  R463 |  R464 |  R465 |  R466 |
+F |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+
+  |  R467 |  R468 |  R469 |  R470 |  R471 |  R472 |  R473 |  R474 |  R475 |  R476 |  R477 |
+G |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R478 |  R479 |  R480 |  R481 |  R482 |  R483 |  R484 |  R485 |  R486 |  R487 |  R488 |
+H |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R489 |  R490 |  R491 |  R492 |  R493 |  R494 |  R495 |  R496 |  R497 |  R498 |  R499 |
+I |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+
+  |  R500 |  R501 |  R502 |  R503 |  R504 |  R505 |  R506 |  R507 |  R508 |  R509 |  R510 |
+J |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R511 |  R512 |  R513 |  R514 |  R515 |  R516 |  R517 |  R518 |  R519 |  R520 |  R521 |
+K |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R522 |  R523 |  R524 |  R525 |  R526 |  R527 |  R528 |  R529 |  R530 |  R531 |  R532 |
+L |  bath |bedroom|  bath |bedroom|  bath |hallway|bedroom|  bath |bedroom|  bath |bedroom|
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+
+  |  R560 |  R533 |  R534 |  R535 |  R536 |  R537 |  R538 |  R539 |  R540 |  R541 |  R562 |
+M |bedroom|  bath |bedroom|  bath |bedroom|hallway|  bath |bedroom|  bath |bedroom|  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R561 |  R542 |  R543 |  R544 |  R545 |  R546 |  R547 |  R548 |  R549 |  R550 |  R563 |
+N |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                       |
+  +-------+-[   ]-+-[   ]-+-[   ]-+-------+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+
+          |  R551 |  R552 |  R553 |  R554 |  R555 |  R556 |  R557 |  R558 |  R559 |
+O         |  bath |bedroom|  bath |kitchen| living|bedroom|  bath |bedroom|  bath |
+          |       |       |       |               |       |       |       |       |
+          +-------+-------+-------+-------+[ENTRY]+-------+-------+-------+-------+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  11.10
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window

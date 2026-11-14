@@ -132,6 +132,18 @@ reorganising run each have DeepSeek chains 5 and 7, on seed houses 1 and 3:
   --agent deepseek --effort low --house 1 --chain 5
 ```
 
+The Opus 5.5 chains run through Claude Code at medium effort: chain 9 on seed house 1 in the hallway, reorganising,
+cost and cost-only runs, and chain 10 on seed house 2 in the hallway run:
+
+```
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms --model opus55 --effort medium --house 1 --chain 9
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_refactor --refactor --model opus55 --effort medium --house 1 --chain 9
+.venv/bin/python -m house.run_100_rooms --refactor --cost --model opus55 --effort medium --house 1 --chain 9
+.venv/bin/python -m house.run_100_rooms --runs runs_100_rooms_cost --cost --model opus55 --effort medium --house 1 --chain 9
+```
+
+House 2 in the hallway run takes chain 10.
+
 ## Running by hand
 
 The same chain can be run with any agent, one step at a time, in the order A to J:

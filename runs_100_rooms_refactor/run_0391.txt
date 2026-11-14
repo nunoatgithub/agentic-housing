@@ -1,0 +1,95 @@
+label: opus55-medium-h1-c9-step07   at 2026-11-13T21:36:26+00:00   commands: 19
+
+SCRIPT
+remove room R415
+remove room R416
+remove room R427
+remove room R421
+remove room R422
+remove room R424
+remove room R425
+room R428 bathroom C14
+door B14|C14
+window C14|east
+room R429 bedroom D14
+door D14|E14
+window D14|east
+room R430 bathroom F14
+door E14|F14
+window F14|east
+room R431 bedroom G14
+door G14|H14
+window G14|east
+
+run_0391
+VALID
+
+      1       2       3       4       5       6       7       8       9       10      11      12      13      14      15
+  +--###--+--###--+--###--+--###--+--###--+--###--+[ENTRY]+--###--+--###--+--###--+--###--+--###--+--###--+--###--+
+  |  R346 |  R347 |  R348 |  R349 |  R350 |  R351 |  R344 |  R345 |  R352 |  R353 |  R354 |  R355 |  R356 |  R419 |
+A |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom| living|kitchen|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  |       |       |       |       |       |       |               |       |       |       |       |       |       #
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R301 |  R302 |  R303 |  R304 |  R305 |  R306 |  R307 |  R308 |  R309 |  R310 |  R311 |  R312 |  R313 |  R420 |
+B |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                               |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R357 |  R358 |  R359 |  R360 |  R361 |  R362 |  R340 |  R363 |  R364 |  R365 |  R366 |  R367 |  R368 |  R428 |
+C |  bath |  bath |  bath |  bath |  bath |  bath |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       #
+  +-------+-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R369 |  R370 |  R371 |  R372 |  R373 |  R374 |  R341 |  R375 |  R376 |  R377 |  R378 |  R379 |  R380 |  R429 |
+D |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  #       |       |       |       |       |       |       |       |       |       |       |       |       |       #
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R314 |  R315 |  R316 |  R317 |  R318 |  R319 |  R320 |  R321 |  R322 |  R323 |  R324 |  R325 |  R326 |  R423 |
+E |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                               |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R381 |  R382 |  R383 |  R384 |  R385 |  R386 |  R342 |  R387 |  R388 |  R389 |  R390 |  R391 |  R392 |  R430 |
+F |  bath |  bath |  bath |  bath |  bath |  bath |hallway|  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  |       |       |       |       |       |       |       |       |       |       |       |       |       |       #
+  +-------+-------+-------+-------+-------+-------+-[   ]-+-------+-------+-------+-------+-------+-------+-------+
+  |  R393 |  R394 |  R395 |  R396 |  R397 |  R398 |  R343 |  R399 |  R400 |  R401 |  R402 |  R403 |  R404 |  R431 |
+G |bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|hallway|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|bedroom|
+  #       |       |       |       |       |       |       |       |       |       |       |       |       |       #
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+
+  |  R327 |  R328 |  R329 |  R330 |  R331 |  R332 |  R333 |  R334 |  R335 |  R336 |  R337 |  R338 |  R339 |  R426 |
+H |hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|hallway|
+  |                                                                                                               |
+  +-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-[   ]-+-------+-------+-------+
+  |  R417 |  R405 |  R406 |  R407 |  R408 |  R409 |  R410 |  R411 |  R412 |  R413 |  R414 |
+I |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |  bath |
+  #       |       |       |       |       |       |       |       |       |       |       |
+  +--###--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+J
+
+
+
+K
+
+
+
+L
+
+
+
+M
+
+
+
+N
+
+
+
+O
+
+
+
+corridor rooms    0
+privacy order     0.00
+walking distance  10.08
+compactness       0
+
+Legend: | - + wall   -[   ]- door   [ENTRY] entrance   --###-- window
