@@ -1,5 +1,7 @@
 # House growth viewer
 
+![The viewer](./images/viewer_zoom.png)
+
 Animates how the houses grew, step by step: the incremental agent against the all-at-once agent,
 with the four quality scores shown as changes against the original house.
 
